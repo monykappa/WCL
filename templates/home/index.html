@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/index.css' %} ">
+    {% block css %}{% endblock css %}
+    <title>Index</title>
+</head>
+<body>
+    <nav>
+        <div class="top-nav-bar">
+            <div class="logo">
+                <img src="{% static 'img/logo/image-removebg-preview.png' %}" alt="" width="120px">
+            </div>            
+            <div class="menu-bar">
+                <ul>
+                    <li><a href="#">Home</a>
+                    <li><a href="#">Product</a></li>
+                    <li><a href="#">Contact</a></li> 
+                    <li><a href="#">About us</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</body>
+</html>

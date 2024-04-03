@@ -12,7 +12,7 @@ from django.conf import settings
 
 app_name = 'home'
 urlpatterns = [
-    
+    path('index/', views.index, name='index'),
 ]
 
 
