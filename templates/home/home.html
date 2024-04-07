@@ -33,14 +33,18 @@
         }, 1000); // 1 second delay before applying the animation
     
         // Start the slide change interval after a delay
-        setTimeout(startSlideChange, 7000);
+        setTimeout(startSlideChange, 1000);
     });
     
     let slideIndex = 0;
     const slides = document.querySelector('.slides');
     const totalSlides = document.querySelectorAll('.slide').length;
+    let slideChangeTimeout; // Variable to hold the slide change timeout
     
     function moveSlide(n) {
+        // Clear the automatic slide change timeout
+        clearTimeout(slideChangeTimeout);
+    
         slideIndex += n;
     
         // Ensure slideIndex stays within the range of slides
@@ -69,7 +73,7 @@
     
     function startSlideChange() {
         // Automatic slide change every 7 seconds
-        setTimeout(() => {
+        slideChangeTimeout = setTimeout(() => {
             moveSlide(1);
         }, 7000);
     }

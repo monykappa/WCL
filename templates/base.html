@@ -40,7 +40,7 @@
                             class="d-none d-md-inline-block">www.wcl.com.kh</span></a>
                     <span class="mx-md-2 d-inline-block"></span>
                     <a href="#" class=""><span class="mr-2  icon-phone"></span> <span
-                            class="d-none d-md-inline-block">1+ (234) 5678 9101</span></a>
+                            class="d-md-inline-block">1+ (234) 5678 9101</span></a>
                     <div class="float-right">
                         <a href="#" class=""><span class="fab fa-youtube"></span> <span
                                 class="d-none d-md-inline-block">Youtube</span></a>
@@ -62,14 +62,14 @@
                 <div class="col-12">
                     <nav class="site-navigation text-right ml-auto " role="navigation">
                         <ul class="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
-                            <li><a href="#home-section" class="nav-link">Home</a></li>
+                            <li><a href="{% url 'home:home'%}" class="nav-link">Home</a></li>
                             <li class="has-children">
                                 <a href="#about-section" class="navs-link">Our Product
                                     <img src="{% static 'img/icons/icons8-arrow-down-50.png'%}" width="15px"
                                         class="dropdown-icon" />
                                 </a>
                                 <ul class="dropdown arrow-top">
-                                    <li><a href="#team-section" class="nav-link">Paracetamol</a></li>
+                                    <li><a href="{% url 'product:anti_infective'%}" class="nav-link">Anti Infection</a></li>
                                     <li><a href="#pricing-section" class="nav-link">Vitamin</a></li>
                                     <li><a href="#faq-section" class="nav-link">Anti-Virus</a></li>
                                 </ul>
@@ -127,7 +127,7 @@
                 <div class="col-md-3 mb-3">
                     <h3>Website Pages</h3>
                     <ul class="list-unstyled">
-                        <li><a href="#">Home</a></li>
+                        <li><a href="{% url 'home:home' %}">Home</a></li>
                         <li><a href="#">Manufacturing Facility</a></li>
                         <li><a href="#">Quality Management</a></li>
                         <li><a href="#">Contract Manufacturing</a></li>
