@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Home {% endblock title %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/home/home.css' %}">
+{% endblock css%}
+
+
+
+{% block content %}
+<div class="slider">
+    <div class="slides">
+        {% for news_item in news_items %}
+        <div class="slide {% if forloop.first %}active{% endif %}">
+            <div class="slide-title">
+                <h1>{{ news_item.title }}</h1>
+            </div>
+            <img src="{{ news_item.image.url }}" alt="{{ news_item.title }}">
+        </div>
+        {% endfor %}
+    </div>
+    <button class="prev" onclick="moveSlide(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+    <button class="next" onclick="moveSlide(1)"><i class="fa-solid fa-chevron-right"></i></button>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Delay before applying fly-in animation
+        setTimeout(() => {
+            const titleElement = document.querySelector('.slide.active .slide-title h1');
+            titleElement.style.animation = 'flyIn 1s forwards'; // Apply fly-in animation
+        }, 1000); // 1 second delay before applying the animation
+    
+        // Start the slide change interval after a delay
+        setTimeout(startSlideChange, 7000);
+    });
+    
+    let slideIndex = 0;
+    const slides = document.querySelector('.slides');
+    const totalSlides = document.querySelectorAll('.slide').length;
+    
+    function moveSlide(n) {
+        slideIndex += n;
+    
+        // Ensure slideIndex stays within the range of slides
+        if (slideIndex >= totalSlides) {
+            slideIndex = 0;
+        } else if (slideIndex < 0) {
+            slideIndex = totalSlides - 1;
+        }
+    
+        // Hide all slides
+        document.querySelectorAll('.slide').forEach(slide => {
+            slide.classList.remove('active');
+        });
+    
+        // Show current slide
+        const currentSlide = document.querySelectorAll('.slide')[slideIndex];
+        currentSlide.classList.add('active');
+    
+        // Apply fly-in animation to the title
+        const titleElement = currentSlide.querySelector('.slide-title h1');
+        titleElement.style.animation = 'flyIn 1s forwards'; // Apply fly-in animation
+    
+        // Start the slide change interval
+        startSlideChange();
+    }
+    
+    function startSlideChange() {
+        // Automatic slide change every 7 seconds
+        setTimeout(() => {
+            moveSlide(1);
+        }, 7000);
+    }
+    
+</script>
+
+{% endblock content %}
+
+
+
+
+
+<!-- {% block js %}
+<script src="{% static 'js/home/home.css'%}"></script>
+{% endblock js %} -->

@@ -12,7 +12,8 @@ from django.conf import settings
 
 app_name = 'home'
 urlpatterns = [
-    path('index/', views.index, name='index'),
+    path('base/', views.base, name='base'),
+    path('home/', views.home, name='home'),
 ]
 
 
