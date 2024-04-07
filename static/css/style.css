@@ -78,7 +78,7 @@ a:hover {
 }
 
 .site-logo {
-  border: 1px solid red;
+  /* border: 1px solid blue; */
 }
 
 .site-navbar {
@@ -117,8 +117,11 @@ a:hover {
     float: left;
     position: relative;
   }
+  .top-bar{
+    display: none;
+  }
   img.logo{
-    width:70px;
+    width:80px;
   }
 }
 
@@ -147,13 +150,14 @@ a:hover {
   margin-left: 15px;
   margin-right: 15px;
   padding: 20px 0px;
-  color: #716759 !important;
+  color: #000 !important;
   display: inline-block;
   text-decoration: none !important;
+  transition: 0.3s ease;
 }
 
 .site-navbar .site-navigation .site-menu>li>a:hover {
-  color: #007bff;
+  color: #d82628 !important;
 }
 
 .site-navbar .site-navigation .site-menu .has-children {
@@ -167,7 +171,7 @@ a:hover {
 
 .site-navbar .site-navigation .site-menu .has-children>a:before {
   position: absolute;
-  content: "\e313";
+  /* content: "\e313"; */
   font-size: 16px;
   top: 50%;
   right: 0;
@@ -183,13 +187,13 @@ a:hover {
   top: 100%;
   position: absolute;
   text-align: left;
-  border-top: 2px solid #A59985;
+  border-top: 2px solid #d1dff1;
   -webkit-box-shadow: 0 2px 10px -2px rgba(0, 0, 0, 0.1);
   box-shadow: 0 2px 10px -2px rgba(0, 0, 0, 0.1);
   padding: 0px 0;
   margin-top: 20px;
   margin-left: 0px;
-  background: #e3d5c2;
+  background: #d1dff1;
   -webkit-transition: 0.2s 0s;
   -o-transition: 0.2s 0s;
   transition: 0.2s 0s;
@@ -223,8 +227,8 @@ a:hover {
   letter-spacing: normal;
   -webkit-transition: 0s all;
   -o-transition: 0s all;
-  transition: 0s all;
-  color: #000 !important;
+  transition: 0.5s all;
+  color: #2a2929 !important;
 }
 
 .site-navbar .site-navigation .site-menu .has-children .dropdown a.active {
@@ -245,8 +249,8 @@ a:hover {
 }
 
 .site-navbar .site-navigation .site-menu .has-children .dropdown>li>a:hover {
-  background: #A59985;
-  color: #ced4da;
+  background: #83bade;
+  color: #fff;
 }
 
 .site-navbar .site-navigation .site-menu .has-children .dropdown>li.has-children>a:before {
@@ -263,8 +267,8 @@ a:hover {
 .site-navbar .site-navigation .site-menu .has-children .dropdown>li.has-children:hover>a,
 .site-navbar .site-navigation .site-menu .has-children .dropdown>li.has-children:active>a,
 .site-navbar .site-navigation .site-menu .has-children .dropdown>li.has-children:focus>a {
-  background: #f8f9fa;
-  color: #ced4da;
+  background: #fff;
+  color: #fff;
 }
 
 .site-navbar .site-navigation .site-menu .has-children:hover>a,
@@ -413,7 +417,7 @@ a:hover {
   background: #f8f9fa;
 }
 
-.site-mobile-menu .site-nav-wrap .arrow-collapse:before {
+/* .site-mobile-menu .site-nav-wrap .arrow-collapse:before {
   font-size: 12px;
   z-index: 20;
   font-family: "icomoon";
@@ -427,7 +431,7 @@ a:hover {
   -webkit-transition: .3s all ease;
   -o-transition: .3s all ease;
   transition: .3s all ease;
-}
+} */
 
 .site-mobile-menu .site-nav-wrap .arrow-collapse.collapsed:before {
   -webkit-transform: translate(-50%, -50%);
