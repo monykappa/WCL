@@ -14,6 +14,7 @@ from django.conf import settings
 app_name = 'product'
 urlpatterns = [
     path('products/', views.products, name='products'),
+    path('product_detail/', views.product_detail, name='product_detail'),
 ]
 
 

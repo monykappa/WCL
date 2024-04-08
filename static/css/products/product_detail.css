@@ -1,0 +1,33 @@
+section.product-detail {
+    margin-top: 7rem;
+    /* border: 1px solid red; */
+}
+
+section.product-detail p {
+    font-family: var(--secondary-font);
+    color: #000 !important;
+}
+
+.hidden-left {
+    transform: translateX(-10%) !important;
+}
+
+.hidden-right {
+    transform: translateX(40%) !important;
+}
+
+.show {
+    transform: translateX(0) !important;
+}
+
+@media (max-width: 767px) {
+    section.product-detail {
+        margin-top: 1rem;
+    }
+    section.product-detail img{
+        display: flex;
+        margin:0 auto;
+        margin-bottom: 3rem;
+        width:60%;
+    }
+}

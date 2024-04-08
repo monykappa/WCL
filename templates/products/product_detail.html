@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Product detail | WCL {% endblock title %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/products/product_detail.css'%}">
+<link rel="stylesheet" href="{% static 'css/animation/animation.css'%}">
+
+
+{% endblock css %}
+
+
+
+{% block content %}
+<section class="product-detail">
+    <div class="container hidden-left">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product Image"
+                    class="img-fluid">
+            </div>
+            <div class="col-md-6 hidden-right">
+                <h2>Product Name</h2>
+                <p>Description of the product goes here. You can add more details about the product.</p>
+                <ul>
+                    <li>Feature 1</li>
+                    <li>Feature 2</li>
+                    <li>Feature 3</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+<script src="{% static 'js/animation/hidden_scroll.js'%}"></script>
+
+{% endblock content %}
