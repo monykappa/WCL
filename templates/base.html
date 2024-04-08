@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/style.css' %} ">
+    <link rel="stylesheet" href="{% static 'css/base.css' %} ">
     <link rel="stylesheet" href=" {% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="/fonts/icomoon/style.css">
     <link rel="stylesheet" href="/css/header/owl.carousel.min.css">
@@ -38,14 +38,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                    
-
-
                         <a href="#" class=""><span class="mr-2  icon-envelope-open-o"></span> <span
-                                class="d-none d-md-inline-block">www.wcl.com.kh</span></a>
+                                class="d-none d-md-inline-block">www.wcl.com</span></a>
                         <span class="mx-md-2 d-inline-block"></span>
-                        <a href="#" class=""><span class="mr-2  icon-phone"></span> <span class="d-md-inline-block">1+
-                                (234) 5678 9101</span></a>
+                        <a href="#" class=""><span class="mr-2  icon-phone"></span> <span
+                                class="d-md-inline-block">(+855) 12 345 678</span></a>
                         <div class="float-right">
                             <a href="#" class=""><span class="fab fa-youtube"></span> <span
                                     class="d-none d-md-inline-block">Youtube</span></a>
@@ -58,6 +55,8 @@
             </div>
         </div>
 
+
+        <!-- Header -->
         <header class="site-navbar js-sticky-header site-navbar-target" role="banner">
             <div class="container">
                 <div class="row align-items-center position-relative">
@@ -68,23 +67,22 @@
                     <div class="col-12">
                         <nav class="site-navigation text-right ml-auto " role="navigation">
                             <ul class="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
-                                <li><a href="{% url 'home:home'%}" class="nav-link">Home</a></li>
+                                <li><a href="{% url 'home:home'%}" id="home-link" class="nav-link">Home</a></li>
                                 <li class="has-children">
-                                    <a href="#about-section" class="navs-link">Our Product
-                                        <img src="{% static 'img/icons/icons8-arrow-down-50.png'%}" width="15px"
-                                            class="dropdown-icon" />
-                                    </a>
+                                    <a href="{% url 'product:products'%}" id="product-link" class="navs-link">Our Product</a>
                                     <ul class="dropdown arrow-top">
-                                        <li><a href="{% url 'product:anti_infective'%}" class="nav-link">Anti
-                                                Infection</a></li>
-                                        <li><a href="#pricing-section" class="nav-link">Vitamin</a></li>
-                                        <li><a href="#faq-section" class="nav-link">Anti-Virus</a></li>
+                                        <li><a href="#" id="anti-infective-link"
+                                                class="nav-link">Anti Infection</a></li>
+                                        <li><a href="#pricing-section" id="vitamin-link" class="nav-link">Vitamin</a>
+                                        </li>
+                                        <li><a href="#faq-section" id="anti-virus-link" class="nav-link">Anti-Virus</a>
+                                        </li>
                                     </ul>
                                 </li>
-                                <li><a href="#why-us-section" class="nav-link">Why Us</a></li>
-                                <li><a href="#testimonials-section" class="nav-link">About Us</a></li>
-                                <!-- <li><a href="#blog-section" class="nav-link">Blog</a></li> -->
-                                <li><a href="#contact-section" class="nav-link">Contact</a </li>
+                                <!-- <li><a href="#why-us-section" id="why-us-link" class="nav-link">Why Us</a></li> -->
+                                <li><a href="#testimonials-section" id="about-us-link" class="nav-link">About Us</a>
+                                </li>
+                                <li><a href="#contact-section" id="contact-link" class="nav-link">Contact</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -97,43 +95,31 @@
             </div>
         </header>
 
-
+        <!-- Main content -->
         <div class="main-content">
             {% block content %}
-
             {% endblock content %}
         </div>
+
 
 
         <footer class="footer mt-auto py-3 ">
             <div class="container footer-ctn">
                 <div class="row">
                     <div class="col-md-3 mb-3">
-                        <p class="footer-description">
-                            Don Valley Pharma is a reputed generic pharmaceutical manufacturing company in Pakistan
-                            known
-                            for its quality and dedication for on-time delivery offering a range of high-quality generic
-                            medicines and is continually developing and expanding its product offering. Our products
-                            range
-                            from penicillins, cephalosporins, anti-cancer, psychotropic, injectables, general tablets,
-                            capsules, syrups and dry suspensions, cream and ointments and nutraceuticals covering all
-                            aspects of healthcare.
-                        </p>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <h3>Our Products</h3>
-                        <ul class="list-unstyled">
-                            <li><a href="#">Anti Infectives</a></li>
-                            <li><a href="#">Cardiovascular</a></li>
-                            <li><a href="#">Anti-Viral</a></li>
-                            <li><a href="#">Central Nervous System</a></li>
-                            <li><a href="#">Diabetes Care</a></li>
-                            <li><a href="#">Gastrointestinal Tract</a></li>
-                            <li><a href="#">Hepatic Care</a></li>
-                            <li><a href="#">Haematinics</a></li>
+                        <h3>Follow Us</h3>
+                        <ul class="list-unstyled d-flex justify-content-between social-media-list">
+
+                            <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+                            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                            <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
                         </ul>
                     </div>
-                    <div class="col-md-3 mb-3">
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
                         <h3>Website Pages</h3>
                         <ul class="list-unstyled">
                             <li><a href="{% url 'home:home' %}">Home</a></li>
@@ -147,24 +133,38 @@
                             <li><a href="#">Careers</a></li>
                         </ul>
                     </div>
-                    <div class="col-md-3 mb-3">
-                        <h3>Follow Us</h3>
-                        <ul class="list-unstyled d-flex justify-content-between social-media-list">
-
-                            <li><a href="#"><i class="fab fa-facebook"></i></a></li>
-                            <li><a href="#"><i class="fab fa-youtube"></i></a></li>
-                            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-                            <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                    <div class="col-md-4 mb-4">
+                        <h3>Our Products</h3>
+                        <ul class="list-unstyled">
+                            <li><a href="#">Anti Infectives</a></li>
+                            <li><a href="#">Cardiovascular</a></li>
+                            <li><a href="#">Anti-Viral</a></li>
+                            <li><a href="#">Central Nervous System</a></li>
+                            <li><a href="#">Diabetes Care</a></li>
+                            <li><a href="#">Gastrointestinal Tract</a></li>
+                            <li><a href="#">Hepatic Care</a></li>
+                            <li><a href="#">Haematinics</a></li>
                         </ul>
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <p class="footer-description">
+                            Don Valley Pharma is a reputed generic pharmaceutical manufacturing company in Pakistan
+                            known
+                            for its quality and dedication for on-time delivery offering a range of high-quality generic
+                            medicines and is continually developing and expanding its product offering. Our products
+                            range
+                            from penicillins, cephalosporins, anti-cancer, psychotropic, injectables, general tablets,
+                            capsules, syrups and dry suspensions, cream and ointments and nutraceuticals covering all
+                            aspects of healthcare.
+                        </p>
                     </div>
                 </div>
             </div>
             <div class="container text-center mt-3">
-                <p class="text-muted">Copyright © 2024 Don Valley Pharma</p>
+                <p class="text-muted">Copyright © 2024 WCL</p>
             </div>
         </footer>
-
-
     </div>
 
 
@@ -177,9 +177,6 @@
     <script src="{% static 'js/bootstrap.min.js' %} "></script>
     <script src="{% static 'js/jquery.sticky.js' %} "></script>
     <script src="{% static 'js/main.js' %} "></script>
-    
-    
-
     {% block js %}
     {% endblock js %}
 </body>

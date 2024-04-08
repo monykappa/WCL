@@ -4,6 +4,8 @@
 {% block title %} Home {% endblock title %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/home/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/products/products.css' %}">
+<link rel="stylesheet" href="{% static 'css/animation/animation.css'%}">
 {% endblock css%}
 
 
@@ -24,68 +26,93 @@
     <button class="next" onclick="moveSlide(1)"><i class="fa-solid fa-chevron-right"></i></button>
 </div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Delay before applying fly-in animation
-        setTimeout(() => {
-            const titleElement = document.querySelector('.slide.active .slide-title h1');
-            titleElement.style.animation = 'flyIn 1s forwards'; // Apply fly-in animation
-        }, 1000); // 1 second delay before applying the animation
-    
-        // Start the slide change interval after a delay
-        setTimeout(startSlideChange, 1000);
-    });
-    
-    let slideIndex = 0;
-    const slides = document.querySelector('.slides');
-    const totalSlides = document.querySelectorAll('.slide').length;
-    let slideChangeTimeout; // Variable to hold the slide change timeout
-    
-    function moveSlide(n) {
-        // Clear the automatic slide change timeout
-        clearTimeout(slideChangeTimeout);
-    
-        slideIndex += n;
-    
-        // Ensure slideIndex stays within the range of slides
-        if (slideIndex >= totalSlides) {
-            slideIndex = 0;
-        } else if (slideIndex < 0) {
-            slideIndex = totalSlides - 1;
-        }
-    
-        // Hide all slides
-        document.querySelectorAll('.slide').forEach(slide => {
-            slide.classList.remove('active');
-        });
-    
-        // Show current slide
-        const currentSlide = document.querySelectorAll('.slide')[slideIndex];
-        currentSlide.classList.add('active');
-    
-        // Apply fly-in animation to the title
-        const titleElement = currentSlide.querySelector('.slide-title h1');
-        titleElement.style.animation = 'flyIn 1s forwards'; // Apply fly-in animation
-    
-        // Start the slide change interval
-        startSlideChange();
-    }
-    
-    function startSlideChange() {
-        // Automatic slide change every 7 seconds
-        slideChangeTimeout = setTimeout(() => {
-            moveSlide(1);
-        }, 7000);
-    }
-    
-</script>
 
+
+<section class="welcome-ctn">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="hidden-left">Welcome to World Cure Life License</h1>
+                <p class="hidden-left">We are the premier Market Expansion Services provider for businesses aiming to expand their
+                    operations in Cambodia.</p>
+                <p  class="hidden-right">Dedicated to assisting our partners with our wide-ranging global connections and industry know-how,
+                    coupled with our deep understanding of Cambodia's markets and supported by a team of 1,700 experts,
+                    we enable companies to thrive in both established and emerging markets.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<hr>
+
+<section class="circle-box">
+    <h1 class="hidden-left">We provide you with best</h1>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="circle hidden-left">
+                    <h3>Price</h3>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="circle hidden-left">
+                    <h3>Quality</h3>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="circle hidden-left">
+                    <h3>Trust</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<hr>
+
+<section class="product-ctn-home container">
+    <h1 class="hidden-left">Our Products</h1>
+    <div class="row justify-content-start" id="product-grid">
+        <div class="col-6 col-md-4 col-3 hidden-left">
+            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1" class="img-fluid mx-auto d-block fade-in-left">
+            <p class="productName">Product 1</p>
+            <ul class="product-description hidden">
+                <li>vitamin a</li>
+                <li>vitamin b</li>
+            </ul>
+        </div>
+        <div class="col-6 col-md-4 col-3 hidden-left">
+            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1" class="img-fluid mx-auto d-block fade-in-left">
+            <p class="productName">Product 1</p>
+            <ul class="product-description hidden">
+                <li>vitamin a</li>
+                <li>vitamin b</li>
+            </ul>
+        </div>
+        <div class="col-6 col-md-4 col-3 hidden-left">
+            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1" class="img-fluid mx-auto d-block fade-in-left">
+            <p class="productName">Product 1</p>
+            <ul class="product-description hidden">
+                <li>vitamin a</li>
+                <li>vitamin b</li>
+            </ul>
+        </div>
+        <div class="col-6 col-md-4 col-3 hidden-left">
+            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1" class="img-fluid mx-auto d-block fade-in-left">
+            <p class="productName">Product 1</p>
+            <ul class="product-description hidden">
+                <li>vitamin a</li>
+                <li>vitamin b</li>
+            </ul>
+        </div>
+        <p><a href="{% url 'product:products'%}">See more></a></p>
+    </div>
+</section>
+
+
+
+
+
+<script src="{% static 'js/home/home.js'%}"></script>
+<script src="{% static 'js/animation/hidden_scroll.js'%}"></script>
 {% endblock content %}
-
-
-
-
-
-<!-- {% block js %}
-<script src="{% static 'js/home/home.css'%}"></script>
-{% endblock js %} -->

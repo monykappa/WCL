@@ -13,7 +13,7 @@ from django.conf import settings
 app_name = 'home'
 urlpatterns = [
     path('base/', views.base, name='base'),
-    path('home/', views.home, name='home'),
+    path('', views.home, name='home'),
 ]
 
 

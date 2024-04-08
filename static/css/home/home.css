@@ -1,15 +1,13 @@
 .slider {
   position: relative;
   width: 100%;
-  height: 550px;
+  height: 500px;
   margin: 0 auto;
   overflow: hidden;
 }
-
 .slide {
   display: none;
 }
-
 .slide.active {
   display: block;
   opacity: 0;
@@ -17,26 +15,24 @@
 }
 .slide img {
   filter: brightness(50%); 
-  animation: zoomIn 10s linear infinite; /* Apply the zoom-in animation */
+  animation: zoomIn 10s linear infinite; 
 }
 
 @keyframes zoomIn {
   0% {
-    transform: scale(1); /* Initial scale */
+    transform: scale(1); 
   }
   100% {
-    transform: scale(1.1); /* Scale to 110% */
+    transform: scale(1.1); 
   }
 }
 
-
-
 @keyframes fadeIn {
   from {
-    opacity: 0; /* Start with opacity 0 */
+    opacity: 0; 
   }
   to {
-    opacity: 1; /* End with opacity 1 */
+    opacity: 1; 
   }
 }
 .slide-title h1{
@@ -50,15 +46,14 @@
 }
 @keyframes flyIn {
   from {
-      transform: translateY(-100px); /* Start with translation up */
-      opacity: 0; /* Start with opacity 0 */
+      transform: translateY(-100px); 
+      opacity: 0; 
   }
   to {
-      transform: translateY(0); /* End with no translation */
-      opacity: 1; /* End with opacity 1 */
+      transform: translateY(0); 
+      opacity: 1; 
   }
 }
-
 
 .slide.active .slide-title {
   display: block;
@@ -77,28 +72,17 @@
   width: 60%;
   padding: 0 20px;
   box-sizing: border-box;
-  z-index: 1; /* Ensure the title is above the image */
-  color: white; /* Set text color */
+  z-index: 1; 
+  color: white; 
 }
 .slide h1 {
-  margin: 0; /* Remove default margin */
+  margin: 0; 
 }
-
-
 .slides {
   display: flex;
   transition: transform 0.5s ease;
   width: 100%;
 }
-
-
-
-/* img.news-img{
-  filter: brightness(70%);
-  
-} */
-
-
 
 .slides img {
   width: 100%;
@@ -126,6 +110,80 @@ button {
 button:hover {
   background-color: red;
 }
+section.welcome-ctn{
+  font-family: var(--secondary-font);
+  margin-top: 5rem;
+}
+section.welcome-ctn h1{
+  font-family: var(--primary-font);
+
+}
+section.welcome-ctn p{
+  text-align: justify;
+  text-justify: inter-word;
+  color:#000;
+  font-size: 18px;
+}
+.circle-box {
+  margin-top: 3rem;
+  margin-bottom: 5rem;
+  text-align: center;
+}
+
+.circle-box h1{
+  font-family: var(--secondary-font);
+}
+
+.circle {
+
+  content:'';
+  position: relative;
+  width: 200px;
+  height: 200px;
+  background-image: linear-gradient(to top right, #367bb6, #9cc8e3);
+  border-radius: 50%; 
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  margin: 20px;
+}
+
+.circle h3 {
+  font-family: var(--secondary-font);
+  margin: 0;
+  color:#fff;
+}
+
+
+
+
+
+/* Override animation */
+.hidden-left {
+  opacity: 0;
+  filter: blur(2px) !important;
+  transform: translateX(-10%) !important;
+  transition: all 1.5s;
+}
+.hidden-right {
+  opacity: 0;
+  filter: blur(2px) !important;
+  transform: translateX(10%) !important;
+  transition: all 1.5s ;
+}
+
+.show {
+  opacity: 1;
+  filter: blur(0) !important;
+  transform: translateX(0) !important;
+}
+
+
+section.product-ctn-home{
+  margin-top: 5rem !important;
+}
+
 
 @media (min-width: 250px) and (max-width: 304px) {
   button {
@@ -143,35 +201,48 @@ button:hover {
   .slide-title h1{
     font-size: 12px;
   }
+
 }
 @media (min-width: 305px) and (max-width: 524px) {
   button {
     position: absolute;
-    top: 25%;
+    top: 45%;
     margin: 0 2vh;
     transform: translateY(-50%);
   }
   .slide-title{
-    top:25%;
+    top:45%;
     /* border: 1px solid red; */
     width:60%;
-
+  }
+  .slider {
+    height:300px;
   }
   .slide-title h1{
     font-family: "Poppins", sans-serif !important;
     font-size: 22px;
+  }
+  section.welcome-ctn{
+    margin-top: 2rem;
+  }
+  section.welcome-ctn p{
+    text-align: justify;
+    text-justify: inter-word;
   }
 }
 
 @media (min-width: 525px) and (max-width: 761px) {
   button {
     position: absolute;
-    top: 35%;
+    top: 45%;
     margin: 0 5vh;
     transform: translateY(-50%);
   }
+  .slider {
+    height:350px;
+  }
   .slide-title{
-    top:35%;
+    top:45%;
     /* border: 1px solid red; */
     width:60%;
 
@@ -191,7 +262,13 @@ button:hover {
   .slide-title{
     top:40%;
     /* border: 1px solid red; */
-    width:80%;
+    width:75%;
+  }
+  .slide h1{
+    font-size: 24px;
+  }
+  .slider {
+    height:400px;
   }
 
 }
@@ -212,8 +289,6 @@ button:hover {
 
   }
 }
-
-
 
 .prev {
   left: 0;

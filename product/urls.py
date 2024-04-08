@@ -13,7 +13,7 @@ from django.conf import settings
 
 app_name = 'product'
 urlpatterns = [
-    path('anti_infective/', views.anti_infective, name='anti_infective'),
+    path('products/', views.products, name='products'),
 ]
 
 

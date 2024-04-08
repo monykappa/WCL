@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Anti Infective | WCL {% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/products/products.css'%}">
+<link rel="stylesheet" href="{% static 'css/animation/animation.css'%}">
+{% endblock css %}
+
+{% block content %}
+<section>
+    <div class="background-img">
+        <div class="row justify-content-center">
+            <div class="col-md-12 text-center">
+                <h1 class="display-4 hidden-left">Our Products</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="product-desc-ctn mb-5">
+    <div class="product-desc">
+        <p class="hidden-left">Anti-infectives are medicines that work to prevent or treat infections, they include
+            antibacterial,
+            antivirals, antifungals and antiparasitic medications. Don Valley Pharma is a leading anti-infectives
+            manufacturer in Pakistan.</p>
+    </div>
+</section>
+
+<hr>
+
+<section class="product-content container">
+    <h1 class="hidden-left ml-1">Anti-infectives</h1>
+    <div class="row justify-content-start" id="product-grid">
+        <div class="col-6 col-md-4 col-3 hidden-left">
+            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1" class="img-fluid mx-auto d-block fade-in-left">
+            <p class="productName">Product 1</p>
+            <ul class="product-description hidden">
+                <li>vitamin a</li>
+                <li>vitamin b</li>
+            </ul>
+        </div>
+        <div class="col-6 col-md-4 col-3 hidden-left">
+            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1" class="img-fluid mx-auto d-block fade-in-left">
+            <p class="productName">Product 1</p>
+            <ul class="product-description hidden">
+                <li>vitamin a</li>
+                <li>vitamin b</li>
+            </ul>
+        </div>
+        <div class="col-6 col-md-4 col-3 hidden-left">
+            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1" class="img-fluid mx-auto d-block fade-in-left">
+            <p class="productName">Product 1</p>
+            <ul class="product-description hidden">
+                <li>vitamin a</li>
+                <li>vitamin b</li>
+            </ul>
+        </div>
+        <div class="col-6 col-md-4 col-3 hidden-left">
+            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1" class="img-fluid mx-auto d-block fade-in-left">
+            <p class="productName">Product 1</p>
+            <ul class="product-description hidden">
+                <li>vitamin a</li>
+                <li>vitamin b</li>
+            </ul>
+        </div>
+        <p class="hidden-left ml-1"><a href="">See more>></a></p>
+    </div>
+</section>
+
+
+
+
+
+
+
+<script src="{% static 'js/products/products.js'%}"></script>
+<script src="{% static 'js/animation/hidden_scroll.js'%}"></script>
+{% endblock content %}
