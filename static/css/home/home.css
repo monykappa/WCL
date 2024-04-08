@@ -204,7 +204,7 @@ button:hover {
 
   }
 }
-@media (min-width: 1201px) and (max-width:12) {
+@media (min-width: 1201px) and (max-width:1300px  ) {
   .slide-title{
     top:50%;
     /* border: 1px solid red; */

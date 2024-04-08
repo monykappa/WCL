@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
 body {
   font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -8,7 +9,7 @@ body {
 }
 :root{
   --primary-font:"Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --secondary-font: 'Poppins', sans-serif;
+  --secondary-font: "Inter", sans-serif;
 }
 .content-wrapper {
   min-height: 100vh;
@@ -619,10 +620,10 @@ a:hover {
 }
 
 /* Styles for extra large devices */
-@media (min-width: 1200px) {
-  .footer-ctn .col-md-3 {
-    flex: 0 0 25%;
-    max-width: 100%;
+@media (min-width: 992px) and (max-width: 1027px) {
+  .footer .row > div {
+    flex-basis: 33.33%;
+    max-width: 33.33%;
   }
 }
 
@@ -646,11 +647,11 @@ footer .col-md-3 {
 }
 
 p.footer-description {
-  font-family: var(--primary-font);
+  font-family: var(--secondary-font);
   color:#000;
   text-align: justify; 
   text-justify: inter-word; 
-  word-spacing: -0.1em;
+  word-spacing: -0.3rem;
 }
 footer.footer{
   margin-top:10vh;

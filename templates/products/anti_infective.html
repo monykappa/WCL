@@ -10,36 +10,147 @@
 {% block content %}
 <section>
     <div class="background-img">
-        <h1>Anti Infectives</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-12 text-center">
+                <h1 class="display-4 hidden">Anti Infectives</h1>
+            </div>
+        </div>
     </div>
 </section>
+
 <section class="product-desc-ctn">
     <div class="product-desc">
-        <p>Anti-infectives are medicines that work to prevent or treat infections, they include antibacterial,
+        <p class="hidden">Anti-infectives are medicines that work to prevent or treat infections, they include
+            antibacterial,
             antivirals, antifungals and antiparasitic medications. Don Valley Pharma is a leading anti-infectives
             manufacturer in Pakistan.</p>
     </div>
 </section>
 
-<section class="product-content">
-    <div class="row">
-        <div class="col-md-3 mb-3 product-row">
-            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="">
-
+<section class="product-content container">
+    <div class="row justify-content-start" id="product-grid">
+        <div class="col-6 col-md-4 col-lg-3 scroll-fade-in product-item hidden" onclick="showModal(this)">
+            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1"
+                class="img-fluid mx-auto d-block fade-in-left">
+            <p class="productName">Product 1</p>
+            <ul class="product-description hidden">
+                <li>vitamin a</li>
+                <li>vitamin b</li>
+            </ul>
         </div>
-        <div class="col-md-3 mb-3 product-row">
-            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="">
 
+        <div class="col-6 col-md-4 col-lg-3 scroll-fade-in product-item hidden" onclick="showModal(this)">
+            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1"
+                class="img-fluid mx-auto d-block fade-in-left">
+            <p class="productName">Product 2</p>
+            <ul class="product-description hidden">
+                <li>vitamin a</li>
+                <li>vitamin b</li>
+            </ul>
         </div>
-        <div class="col-md-3 mb-3 product-row">
-            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="">
-
+        <div class="col-6 col-md-4 col-lg-3 scroll-fade-in product-item hidden" onclick="showModal(this)">
+            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1"
+                class="img-fluid mx-auto d-block fade-in-left">
+            <p class="productName">Product 3</p>
+            <ul class="product-description hidden">
+                <li>vitamin a</li>
+                <li>vitamin b</li>
+            </ul>
         </div>
-        <div class="col-md-3 mb-3 product-row">
-            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="">
-
+        <div class="col-6 col-md-4 col-lg-3 scroll-fade-in product-item hidden" onclick="showModal(this)">
+            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1"
+                class="img-fluid mx-auto d-block fade-in-left">
+            <p class="productName">Product 4</p>
+            <ul class="product-description hidden">
+                <li>vitamin a</li>
+                <li>vitamin b</li>
+            </ul>
         </div>
+    </div>
 </section>
+
+
+
+<!-- The Modal -->
+<div id="productModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div class="modal-image">
+            <img id="modal-image" src="" alt="Product Image" class="img-fluid mx-auto d-block">
+        </div>
+        <div class="modal-description">
+            <div id="productName"></div>
+            <p id="description"></p>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            console.log(entry)
+            if (entry.isIntersecting) {
+                entry.target.classList.add('show');
+            }
+            else {
+                entry.target.classList.remove('show')
+            }
+
+        });
+    });
+
+    const hiddenElement = document.querySelectorAll('.hidden');
+    hiddenElement.forEach((el) => observer.observe(el));
+</script>
+
+<script>
+    function showModal(productElement) {
+        var modal = document.getElementById("productModal");
+        var modalContent = document.querySelector(".modal-content");
+        var productName = productElement.querySelector(".productName").innerText;
+        var productDescription = productElement.querySelector(".product-description").innerHTML;
+        var imageURL = productElement.querySelector("img").src;
+
+        // Set content
+        document.getElementById("productName").innerText = productName;
+        document.getElementById("description").innerHTML = productDescription;
+        document.getElementById("modal-image").src = imageURL;
+
+        // Show modal with animation
+        modal.style.display = "block";
+        setTimeout(function () {
+            modalContent.style.opacity = "1";
+            modalContent.style.transform = "translate(-50%, -50%)"; /* Updated transform */
+            document.body.classList.add("modal-open"); // Prevent scrolling
+            document.querySelector(".product-description").classList.remove("hidden"); // Show product description
+        }, 50); // Delay to allow transition
+    }
+
+    // Function to close the modal with animation
+    function closeModal() {
+        var modal = document.getElementById("productModal");
+        var modalContent = document.querySelector(".modal-content");
+
+        modalContent.style.opacity = "0";
+        modalContent.style.transform = "translate(-50%, -200%)"; /* Updated transform */
+        setTimeout(function () {
+            modal.style.display = "none";
+            document.body.classList.remove("modal-open"); // Re-enable scrolling
+        }, 300); // Wait for the animation to finish (0.3s)
+    }
+
+    // Close the modal if the user clicks outside of it
+    window.onclick = function (event) {
+        var modal = document.getElementById("productModal");
+        if (event.target == modal) {
+            closeModal();
+        }
+    }
+</script>
+
+
 
 
 

@@ -1,5 +1,5 @@
-body{
-    font-family: var(--primary-family);
+body {
+    font-family: var(--secondary-font);
 }
 
 .background-img {
@@ -24,9 +24,7 @@ body{
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    /* Apply a semi-transparent overlay */
     mix-blend-mode: multiply;
-    /* Blend the overlay with the background image */
 }
 
 .background-img h1 {
@@ -35,37 +33,230 @@ body{
     font-weight: 600;
     text-transform: uppercase;
     color: white;
-    /* Ensure text color remains white */
     position: relative;
-    /* Ensure the text is positioned above the overlay */
     z-index: 1;
-    /* Make sure the text appears above the overlay */
 }
 
-section.product-desc-ctn{
-    width:60%;  
-    margin:0 auto;
-    margin-top:5rem;
+section.product-desc-ctn {
+    width: 70%;
+    margin: 0 auto;
+    margin-top: 5rem;
 }
-.product-desc p{
-    color:#000;
+
+.product-desc p {
+    color: #000;
+    /* font-weight: ; */
     font-size: 22px;
+    text-align: center;
+}
+
+section.product-content {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.product-content {
+    width: 100%;
+    padding: 0;
+}
+
+section.product-content .row img {
+    width: 150px;
+    height: 150px;
+}
+
+p.productName{
+    color:#000 !important;
+    margin:3px;
+    text-align: center;
+}
+#product-grid .col-6 {
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    margin: 5px;
+    padding:5px;
+    max-width: calc(25% - 10px);
+}
+#product-grid .col-6:hover {
+    transform: scale(1.06);
+}
+
+.hidden {
+    opacity: 0;
+    filter: blur(5px);
+    transform: translateX(-10%);
+    transition: all 0.5s;
+}
+
+.show {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateX(0);
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    transition: opacity 0.3s ease;
+}
+
+
+
+
+
+.modal-content {
+    background-color: #fefefe;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -200%);
+    padding: 20px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.modal-image {
+    width: 50%;
+    padding-right: 20px;
+}
+
+.modal-description {
+    font-family: var(--primary-font);
+    width: 50%;
+}
+
+.close {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 28px;
     font-weight: bold;
-    text-align:center;
-}
-section.product-content{
-    width:80%;
-    margin:0 auto;
+    transition: opacity 0.3s ease;
 }
 
-.col-md-3{
-    border:1px solid red;
-    flex-wrap: wrap;
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
 
-.product-row img{
-    /* display:flex; */
-    margin:0 auto;
-    width:200;
-    height:200px;
+.product-item{
+    cursor: pointer;
+    transition: 0.3s ease;
+    color:black !important;
 }
+#productName{
+    font-size: 20px;
+}
+p#description{
+    margin:10px;
+    color:#000 !important;
+}
+.product-description {
+    display: none;
+}
+
+/* .product-item:hover{
+    background-color: rgba(128, 128, 128, 0.415);
+} */
+
+@media(prefers-reduced-motion) {
+    .hidden {
+        transition: none;
+    }
+}
+
+
+@media (max-width: 767px) {
+    #product-grid .col-6 {
+        max-width: calc(50% - 10px);
+    }
+
+    section.product-desc-ctn {
+        width: 90%;
+        margin-top: 2rem;
+    }
+
+    .product-desc p {
+        font-size: 18px;
+    }
+
+    .modal-content {
+        width: 80%;
+        /* Adjust width for smaller screens */
+        flex-direction: column;
+        /* Change flex direction to column */
+    }
+
+    .modal-image {
+        display: flex;
+        margin:0 auto;
+        width: 60%;
+        /* Make the image full width on smaller screens */
+        padding-right: 0;
+        /* Remove padding on smaller screens */
+        margin-bottom: 20px;
+        /* Add margin at the bottom for spacing */
+    }
+
+    .modal-description {
+        width: 100%;
+    
+    }
+
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    #product-grid .col-md-4 {
+        max-width: calc(33.33% - 10px);
+    }
+
+    section.product-desc-ctn {
+        width: 90%;
+        margin-top: 2rem;
+    }
+
+    .product-desc p {
+        font-size: 18px;
+    }
+    .modal-content {
+        width:70%;
+        top: 40%;
+    }
+}
+
+/* Large Devices (Desktops) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    section.product-desc-ctn {
+        width: 90%;
+        margin-top: 2rem;
+    }
+
+    .product-desc p {
+        font-size: 20px;
+    }
+    .modal-content {
+        width:60%;
+        top: 55%;
+    }
+}
+
+/* Extra Large Devices (Large Desktops) */
+@media (min-width: 1200px) {}
