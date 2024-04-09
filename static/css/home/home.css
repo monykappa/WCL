@@ -152,25 +152,7 @@ section.welcome-ctn p{
   font-family: var(--secondary-font);
 }
 
-.top-radius{
-  display: flex;
-  margin:0 auto;
-  border-radius: 50% 50% 0 0;
-  background-image: linear-gradient(to top left, rgb(207, 11, 47), #bd291f);
-  width: 200px;
-  height: 200px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-}
-.bottom-radius{
-  display: flex;
-  margin:0 auto;
-  border-radius:0 0 50% 50%;
-  border:1px solid rgba(122, 119, 119, 0.196);
-  background-image: linear-gradient(to top left, rgb(255, 255, 255), #f8f6f2);
-  width: 200px;
-  height: 200px;
-  /* box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px; */
-}
+
 
 
 
