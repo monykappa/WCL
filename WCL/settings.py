@@ -49,6 +49,13 @@ INSTALLED_APPS = [
 
 ]
 
+CKEDITOR_CONFIGS = {
+    "default": {
+        "versionCheck": False
+    }
+}
+
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",

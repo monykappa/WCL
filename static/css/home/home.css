@@ -173,6 +173,22 @@ section.welcome-ctn p{
   transition: all 1.5s ;
 }
 
+.hidden-top {
+  opacity: 0;
+  filter: blur(2px) !important;
+  transform: translateY(-50%) !important;
+  transition: all 1.5s;
+}
+.hidden-bottom {
+  opacity: 0;
+  filter: blur(2px) !important;
+  transform: translateY(30%) !important;
+  transition: all 1.5s ;
+}
+
+
+/* End override animation */
+
 .show {
   opacity: 1;
   filter: blur(0) !important;

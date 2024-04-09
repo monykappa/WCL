@@ -61,18 +61,21 @@
             <div class="container">
                 <div class="row align-items-center position-relative">
                     <div class="site-logo">
-                        <img src="{% static 'img/logo/image-removebg-preview.png' %}" alt="logo" width="100px"
-                            class="logo">
+                        <a href="{% url 'home:home' %}">
+                            <img src="{% static 'img/logo/image-removebg-preview.png' %}" alt="logo" width="100px"
+                                class="logo">
+                        </a>
                     </div>
                     <div class="col-12">
                         <nav class="site-navigation text-right ml-auto " role="navigation">
                             <ul class="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
                                 <li><a href="{% url 'home:home'%}" id="home-link" class="nav-link">Home</a></li>
                                 <li class="has-children">
-                                    <a href="{% url 'product:products'%}" id="product-link" class="navs-link">Our Product</a>
+                                    <a href="{% url 'product:products'%}" id="product-link" class="navs-link">Our
+                                        Product</a>
                                     <ul class="dropdown arrow-top">
-                                        <li><a href="#" id="anti-infective-link"
-                                                class="nav-link">Anti Infection</a></li>
+                                        <li><a href="#" id="anti-infective-link" class="nav-link">Anti Infection</a>
+                                        </li>
                                         <li><a href="#pricing-section" id="vitamin-link" class="nav-link">Vitamin</a>
                                         </li>
                                         <li><a href="#faq-section" id="anti-virus-link" class="nav-link">Anti-Virus</a>

@@ -1,32 +1,28 @@
-const observerLeft = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-        console.log(entry)
-        if (entry.isIntersecting) {
-            entry.target.classList.add('show');
-        }
-        else {
-            entry.target.classList.remove('show')
-        }
-
+function createObserver(selector) {
+    return new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('show');
+            } else {
+                entry.target.classList.remove('show');
+            }
+        });
     });
-});
+}
 
-const hiddenElementLeft = document.querySelectorAll('.hidden-left');
-hiddenElementLeft.forEach((el) => observerLeft.observe(el));
+const observeElements = (observer, selector) => {
+    const elements = document.querySelectorAll(selector);
+    elements.forEach((el) => observer.observe(el));
+};
 
+const observerLeft = createObserver('.hidden-left');
+observeElements(observerLeft, '.hidden-left');
 
-const observerRight = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-        console.log(entry)
-        if (entry.isIntersecting) {
-            entry.target.classList.add('show');
-        }
-        else {
-            entry.target.classList.remove('show')
-        }
+const observerRight = createObserver('.hidden-right');
+observeElements(observerRight, '.hidden-right');
 
-    });
-});
+const observerTop = createObserver('.hidden-top');
+observeElements(observerTop, '.hidden-top');
 
-const hiddenElementRight = document.querySelectorAll('.hidden-right');
-hiddenElementRight.forEach((el) => observerRight.observe(el));
+const observerBottom = createObserver('.hidden-bottom');
+observeElements(observerBottom, '.hidden-bottom');

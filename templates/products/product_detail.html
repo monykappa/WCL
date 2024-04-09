@@ -3,26 +3,31 @@
 
 {% block title %} Product detail | WCL {% endblock title %}
 {% block css %}
+
+<link rel="stylesheet" href="{% static 'css/products/products.css'%}">
 <link rel="stylesheet" href="{% static 'css/products/product_detail.css'%}">
 <link rel="stylesheet" href="{% static 'css/animation/animation.css'%}">
-
-
 {% endblock css %}
 
 
-
 {% block content %}
+
+<div class="back-button-ctn">
+    <a href="#" id="backButton" class="hidden-top"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
+</div>
+
 <section class="product-detail">
-    <div class="container hidden-left">
+    <div class="container">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 product-detail-img" onclick="showFullScreen(this)">
                 <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product Image"
-                    class="img-fluid">
+                    class="img-fluid hidden-left" onclick="showFullScreen(this)">
             </div>
-            <div class="col-md-6 hidden-right">
-                <h2>Product Name</h2>
-                <p>Description of the product goes here. You can add more details about the product.</p>
-                <ul>
+            <div class="col-md-6">
+                <h2 class="hidden-top">Product Name</h2>
+                <p class="hidden-top">Description of the product goes here. You can add more details about the product.
+                </p>
+                <ul class="hidden-top">
                     <li>Feature 1</li>
                     <li>Feature 2</li>
                     <li>Feature 3</li>
@@ -30,10 +35,84 @@
             </div>
         </div>
     </div>
+</section>
 
+<hr class="container mt-5 hidden-top">
+
+<section class="related-product container mt-5">
+    <h1 class="hidden-top ml-1">Related product</h1>
+
+    <div class="row justify-content-start mt-5" id="product-grid">
+        <div class="col-6 col-md-4 col-3 hidden-left">
+            <a href="{% url 'product:product_detail'%}" class="product-link">
+                <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1"
+                    class="img-fluid mx-auto d-block fade-in-left">
+                <p class="productName">Product 1</p>
+                <ul class="product-d    escription hidden">
+                    <li>vitamin a</li>
+                    <li>vitamin b</li>
+                </ul>
+            </a>
+        </div>
+        <div class="col-6 col-md-4 col-3 hidden-left">
+            <a href="{% url 'product:product_detail'%}" class="product-link">
+                <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1"
+                    class="img-fluid mx-auto d-block fade-in-left">
+                <p class="productName">Product 1</p>
+                <ul class="product-d    escription hidden">
+                    <li>vitamin a</li>
+                    <li>vitamin b</li>
+                </ul>
+            </a>
+        </div>
+        <div class="col-6 col-md-4 col-3 hidden-right">
+            <a href="{% url 'product:product_detail'%}" class="product-link">
+                <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1"
+                    class="img-fluid mx-auto d-block fade-in-left">
+                <p class="productName">Product 1</p>
+                <ul class="product-d    escription hidden">
+                    <li>vitamin a</li>
+                    <li>vitamin b</li>
+                </ul>
+            </a>
+        </div>
+        <div class="col-6 col-md-4 col-3 hidden-right">
+            <a href="{% url 'product:product_detail'%}" class="product-link">
+                <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1"
+                    class="img-fluid mx-auto d-block fade-in-left">
+                <p class="productName">Product 1</p>
+                <ul class="product-d    escription hidden">
+                    <li>vitamin a</li>
+                    <li>vitamin b</li>
+                </ul>
+            </a>
+        </div>
+        <p class="hidden-left ml-1"><a href="">See more>></a></p>
+    </div>
 </section>
 
 
+
+<div id="fullscreen" class="fullscreen hidden-bottom" style="display: none;">
+    <span class="close-btn" onclick="closeFullScreen()">
+        <i class="fa fa-times" aria-hidden="true"></i>
+    </span>
+    <img id="fullscreen-img" src="" alt="Full Screen Image">
+    <div class="zoom-controls">
+        <button onclick="zoomIn()">Zoom In <i class="fa fa-plus" aria-hidden="true"></i>
+        </button>
+        <button onclick="zoomOut()">Zoom Out <i class="fa fa-minus" aria-hidden="true"></i>
+        </button>
+    </div>
+</div>
+
+
+
+
+
 <script src="{% static 'js/animation/hidden_scroll.js'%}"></script>
+<script src="{% static 'js/products/product_detail.js'%}"></script>
+<script src="{% static 'js/features/back_button.js'%}"></script>
+
 
 {% endblock content %}

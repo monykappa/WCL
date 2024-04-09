@@ -25,7 +25,7 @@ def images_directory_path(instance, filename):
 class News(models.Model):
     title = models.CharField(max_length=100)
     image = models.ImageField(upload_to=images_directory_path, validators=[validate_file_extension], blank=True, null=True)
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
