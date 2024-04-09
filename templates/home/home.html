@@ -3,8 +3,9 @@
 
 {% block title %} Home {% endblock title %}
 {% block css %}
-<link rel="stylesheet" href="{% static 'css/home/home.css' %}">
+
 <link rel="stylesheet" href="{% static 'css/products/products.css' %}">
+<link rel="stylesheet" href="{% static 'css/home/home.css' %}">
 <link rel="stylesheet" href="{% static 'css/animation/animation.css'%}">
 {% endblock css%}
 
@@ -28,45 +29,84 @@
 
 
 
-<section class="welcome-ctn">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1 class="hidden-top">Welcome to World Cure Life License</h1>
-                <p class="hidden-top">We are the premier Market Expansion Services provider for businesses aiming to expand their
-                    operations in Cambodia.</p>
-                <p  class="hidden-bottom">Dedicated to assisting our partners with our wide-ranging global connections and industry know-how,
-                    coupled with our deep understanding of Cambodia's markets and supported by a team of 1,700 experts,
-                    we enable companies to thrive in both established and emerging markets.</p>
+<section class="custom-shape hidden-top">
+    <div class="upper-curve">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill="#fff" fill-opacity="1"
+                d="M0,96L60,112C120,128,240,160,360,144C480,128,600,64,720,80C840,96,960,192,1080,213.3C1200,235,1320,181,1380,154.7L1440,128L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z">
+            </path>
+        </svg>
+
+    </div>
+    <section class="welcome-ctn">
+        <div class="container welcome-ctn ">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="hidden-top mb-3">Welcome to World Cure Life License</h1>
+                    <p class="hidden-top">With office in Phnom Penh, Kingdom of Cambodia, works with many of the
+                        world's leading companies through various agreements, partnerships and joint
+                        ventures, the group is a leading healthcare, dealing in medicines consumer care
+                        company in Cambodia, and is committed to meeting the growing needs of
+                        healthcare and pharmaceutical distribution in the country.</p>
+                    <p class="hidden-bottom mt-5">World Cure Life Sciences has a unique distribution and marketing
+                        network of
+                        more than 50 sates and medical representatives (comprising mostly of medical
+                        Sates Backgrounds), the company is managed by a highty• experienced team
+                        consisting of Cambodia and expatriates with diverse backgrounds and skitt sets.</p>
+                </div>
             </div>
         </div>
+    </section>
+    <div class="lower-curve">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill="#fff" fill-opacity="1"
+                d="M0,96L60,112C120,128,240,160,360,144C480,128,600,64,720,80C840,96,960,192,1080,213.3C1200,235,1320,181,1380,154.7L1440,128L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z">
+            </path>
+        </svg>
     </div>
 </section>
 
-<hr>
+
+
 
 <section class="circle-box">
     <h1 class="hidden-top">We provide you with best</h1>
     <div class="container mt-5">
         <div class="row">
-            <div class="col-md-4">
-                <div class="circle hidden-top">
+            <div class="col-md-4 pills">
+                <div class="top-radius  hidden-top">
+                </div>
+                <div class="">
                     <h3>Price</h3>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="circle hidden-top">
-                    <h3>Quality</h3>
+                <div class="bottom-radius  hidden-bottom">
                 </div>
+
             </div>
-            <div class="col-md-4">
-                <div class="circle hidden-top">
-                    <h3>Trust</h3>
+            <div class="col-md-4 pills">
+                <div class="top-radius  hidden-top">
                 </div>
+                <div class="">
+                    <h3>Price</h3>
+                </div>
+                <div class="bottom-radius  hidden-bottom">
+                </div>
+
+            </div>
+            <div class="col-md-4 pills">
+                <div class="top-radius  hidden-top">
+                </div>
+                <div class="">
+                    <h3>Price</h3>
+                </div>
+                <div class="bottom-radius  hidden-bottom">
+                </div>
+
             </div>
         </div>
-    </div>
+
 </section>
+
 
 <hr>
 
@@ -74,15 +114,18 @@
     <h1 class="hidden-top">Our Products</h1>
     <div class="row justify-content-start mt-5" id="product-grid">
         <div class="col-6 col-md-4 col-3 hidden-left">
-            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1" class="img-fluid mx-auto d-block fade-in-left">
+            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1"
+                class="img-fluid mx-auto d-block fade-in-left">
             <p class="productName">Product 1</p>
             <ul class="product-description hidden">
                 <li>vitamin a</li>
                 <li>vitamin b</li>
             </ul>
         </div>
+
         <div class="col-6 col-md-4 col-3 hidden-left">
-            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1" class="img-fluid mx-auto d-block fade-in-left">
+            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1"
+                class="img-fluid mx-auto d-block fade-in-left">
             <p class="productName">Product 1</p>
             <ul class="product-description hidden">
                 <li>vitamin a</li>
@@ -90,7 +133,8 @@
             </ul>
         </div>
         <div class="col-6 col-md-4 col-3 hidden-right">
-            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1" class="img-fluid mx-auto d-block fade-in-left">
+            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1"
+                class="img-fluid mx-auto d-block fade-in-left">
             <p class="productName">Product 1</p>
             <ul class="product-description hidden">
                 <li>vitamin a</li>
@@ -98,7 +142,8 @@
             </ul>
         </div>
         <div class="col-6 col-md-4 col-3 hidden-right">
-            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1" class="img-fluid mx-auto d-block fade-in-left">
+            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1"
+                class="img-fluid mx-auto d-block fade-in-left">
             <p class="productName">Product 1</p>
             <ul class="product-description hidden">
                 <li>vitamin a</li>
