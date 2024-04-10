@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{% static 'css/base.css' %} ">
     <link rel="stylesheet" href=" {% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="/fonts/icomoon/style.css">
-    <link rel="stylesheet" href="/css/header/owl.carousel.min.css">
+    <!-- <link rel="stylesheet" href="/css/header/owl.carousel.min.css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -83,7 +83,7 @@
                                     </ul>
                                 </li>
                                 <!-- <li><a href="#why-us-section" id="why-us-link" class="nav-link">Why Us</a></li> -->
-                                <li><a href="#testimonials-section" id="about-us-link" class="nav-link">About Us</a>
+                                <li><a href="{% url 'home:about_us'%}" id="about-us-link" class="nav-link">About Us</a>
                                 </li>
                                 <li><a href="#contact-section" id="contact-link" class="nav-link">Contact</a></li>
                             </ul>

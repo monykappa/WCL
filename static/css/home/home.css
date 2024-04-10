@@ -142,19 +142,39 @@ section.welcome-ctn p{
   color:rgb(255, 255, 255);
   font-size: 18px;
 }
-.circle-box {
+.goal-ctn {
   margin-top: 3rem;
   margin-bottom: 5rem;
   text-align: center;
 }
 
-.circle-box h1{
+.goal-ctn h1{
   font-family: var(--secondary-font);
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size:50px;
+}
+
+.goal-ctn h1 span{
+  font-size: 30px;
+  color:#b8444f;
+}
+
+h1.goal-heading{
+  display: inline-block; width: max-content;
+  border-bottom:4px solid red;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
 }
 
 
 
-
+.goal-ctn p{
+  text-align: justify;
+  text-justify: inter-word;
+  color:#000;
+  font-size: 18px;
+}
 
 .circle {
   content:'';
@@ -233,19 +253,22 @@ section.product-ctn-home{
   margin-top: 5rem !important;
 }
 
+/* @media (max-width: 250px){
+
+
+} */
 
 @media (min-width: 250px) and (max-width: 304px) {
   button {
     position: absolute;
-    top: 15%;
+    top: 35%;
     margin: 0 2vh;
     transform: translateY(-50%);
   }
   .slide-title{
-    top:15%;
+    top:35%;
     /* border: 1px solid red; */
     width:60%;
-
   }
   .slide-title h1{
     font-size: 12px;
@@ -253,17 +276,20 @@ section.product-ctn-home{
   section.welcome-ctn h1{
     font-size: 22px;
   }
+  .slider{
+    height: 200px;
+  }
 
 }
 @media (min-width: 305px) and (max-width: 524px) {
   button {
     position: absolute;
-    top: 45%;
+    top: 35%;
     margin: 0 2vh;
     transform: translateY(-50%);
   }
   .slide-title{
-    top:45%;
+    top:35%;
     /* border: 1px solid red; */
     width:60%;
   }
@@ -274,9 +300,6 @@ section.product-ctn-home{
     font-family: "Poppins", sans-serif !important;
     font-size: 22px;
   }
-  /* section.welcome-ctn{
-    margin-top: 2rem;
-  } */
   section.welcome-ctn h1{
     font-size: 32px;
   }
@@ -284,6 +307,14 @@ section.product-ctn-home{
     text-align: justify;
     text-justify: inter-word;
   }
+  .goal-ctn h1{
+    font-size:40px;
+  }
+  
+  .goal-ctn h1 span{
+    font-size: 20px;
+  }
+  
 }
 
 

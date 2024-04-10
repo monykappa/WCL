@@ -14,6 +14,7 @@ app_name = 'home'
 urlpatterns = [
     path('base/', views.base, name='base'),
     path('', views.home, name='home'),
+    path('about_us/', views.about_us, name='about_us'),
 ]
 
 

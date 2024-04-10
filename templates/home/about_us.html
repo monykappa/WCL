@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+About Us | WCL
+{% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/products/products.css' %}">
+<link rel="stylesheet" href="{% static 'css/home/about_us.css' %}">
+<link rel="stylesheet" href="{% static 'css/home/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/animation/animation.css'%}">
+{% endblock css %}
+
+
+{% block content %}
+<section>
+    <div class="background-img">
+        <div class="row justify-content-center">
+            <div class="col-md-12 text-center">
+                <h1 class="display-4 hidden-top">About Us</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="quote">
+    <div class="container">
+        <h1 class="hidden-top">Price, Quality, Trust</h1>
+    </div>
+</section>
+
+
+<section class="about-us mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center mt-5">
+                <p class="hidden-top  mt-2">Our World Cure Life Sciences company was established in 2018 in Phnom Penh,
+                    Cambodia. From the
+                    beginning, the company has provided a diversified range of high-quality health care products,
+                    including those in Cardiology, Gynecology, Neuropsychiatry, Ophthalmology, Diabetes, Nutrition, and
+                    Dietary supplements. World Cure Life Sciences is a company focused on growth, innovation, and
+                    delivering quality products throughout Cambodia.</p>
+            </div>
+            <div class="col-md-12 text-center mt-3">
+                <img src="{% static 'img/logo/about-company.jpg' %}" alt="" class="img-fluid hidden-top">
+            </div>
+        </div>
+    </div>
+</section>
+
+<hr>
+
+
+<section class="goal-ctn mt-5">
+    <h1 class="hidden-top">PROFESSIONAL <span>RELIABLE & EFFICIENT</span></h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-left mt-5">
+                <p class="hidden-right mt-3">We pride ourselves on being one of the most professional and efficient
+                    partners in our industry within Cambodia, the team is unrivaled regarding
+                    experience, background training and efficiency in delivering results. The
+                    company's activities range from commercial agency, product distribution
+                    and services, on-site project management and registration services to
+                    solutions for pharmaceutical and medical logistics.</p>
+
+
+                <p class="hidden-right mt-5">Our office in Phnom Penh, allow us to interface With our partners and
+                    suppliers to provide efficient distribution channels and wett-
+                    established networks with a clear focus on the Cambodia market, the
+                    founders of World Cure Life Sciences have a truly distinctive track
+                    record of creating market leaders in healthcare and other sectors.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="person">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h5>Chief Executive Officer</h5>
+                <h1>Mr. CEO</h1>
+                <p class="mt-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum ea odit aspernatur
+                    magni nihil
+                    similique rem inventore quos, suscipit obcaecati? Provident ipsam autem doloremque cumque, minima ad
+                    totam rem omnis.</p>
+            </div>
+            <div class="col-md-6">
+                <img src="https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <img src="https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg" />
+            </div>
+            <div class="col-md-6">
+                <h5>Chief Executive Officer</h5>
+                <h1>Mr. CEO</h1>
+                <p class="mt-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum ea odit aspernatur
+                    magni nihil
+                    similique rem inventore quos, suscipit obcaecati? Provident ipsam autem doloremque cumque, minima ad
+                    totam rem omnis.</p>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<script src="{% static 'js/home/about_us.js'%}"></script>
+<script src="{% static 'js/animation/hidden_scroll.js'%}"></script>
+{% endblock content %}

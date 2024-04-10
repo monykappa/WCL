@@ -7,6 +7,12 @@ body {
   height: 100%;
   position: relative;
 }
+body p{
+  text-align: justify;
+  text-justify: inter-word;
+  word-spacing: 0.1em;
+  color:#000;
+}
 
 :root {
   --primary-font: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
