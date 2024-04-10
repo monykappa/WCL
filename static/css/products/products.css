@@ -2,6 +2,68 @@ body {
     font-family: var(--secondary-font);
 }
 
+body.modal-open {
+    overflow: hidden;
+}
+
+
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Added transform */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -200%); /* Updated initial position */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 70%;
+    display: flex;
+    flex-direction: row;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Added transform */
+}
+
+.modal-image {
+    width: 50%;
+    padding-right: 20px;
+}
+
+.modal-description {
+    width: 50%;
+}
+
+.close {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 28px;
+    font-weight: bold;
+    transition: opacity 0.3s ease;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+
 .background-img {
     position: relative;
     /* Make sure the container is positioned relatively */
@@ -50,16 +112,16 @@ section.product-desc-ctn {
     text-align: center;
 }
 
-section.product-content {
+/* section.product-content {
     width: 100%;
     margin: 0 auto;
     margin-top: 3rem;
-}
+} */
 
-.product-content {
+/* .product-content {
     width: 100%;
     padding: 0;
-}
+} */
 
 section.product-content .row img {
     width: 150px;

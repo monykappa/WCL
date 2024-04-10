@@ -1,28 +1,38 @@
-// function showProductDetails(name, description) {
-//     // Create the popup element
-//     var popup = document.createElement('div');
-//     popup.classList.add('popup');
+    function showModal(productElement) {
+        var modal = document.getElementById("productModal");
+        var modalContent = modal.querySelector(".modal-content");
+        var productName = productElement.querySelector(".productName").innerText;
+        var productDescription = productElement.querySelector(".product-description").innerHTML;
+        var imageURL = productElement.querySelector("img").src;
 
-//     // Create the content for the popup
-//     var content = document.createElement('div');
-//     content.innerHTML = `
-//         <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="${name}" class="img-fluid mx-auto d-block">
-//         <p class="productName">${name}</p>
-//         <ul class="product-description">
-//             ${description.map(desc => `<li>${desc}</li>`).join('')}
-//         </ul>
-//     `;
+        // Set content
+        var modalProductName = modalContent.querySelector("#productName");
+        var modalDescription = modalContent.querySelector("#description");
+        var modalImage = modalContent.querySelector("#modal-image");
 
-//     // Add content to popup
-//     popup.appendChild(content);
+        modalProductName.innerText = productName;
+        modalDescription.innerHTML = productDescription;
+        modalImage.src = imageURL;
 
-//     // Add popup to the body
-//     document.body.appendChild(popup);
+        // Show modal with animation
+        modal.style.display = "block";
+        setTimeout(function () {
+            modalContent.style.opacity = "1";
+            modalContent.style.transform = "translate(-50%, -50%)";
+            document.body.classList.add("modal-open");
+            productElement.querySelector(".product-description").classList.remove("hidden");
+        }, 50);
+    }
 
-//     // Close popup when clicked outside
-//     popup.addEventListener('click', function(event) {
-//         if (!content.contains(event.target)) {
-//             popup.remove();
-//         }
-//     });
-// }
+    function closeModal() {
+        var modal = document.getElementById("productModal");
+        var modalContent = modal.querySelector(".modal-content");
+
+        // Hide modal with animation
+        modalContent.style.opacity = "0";
+        modalContent.style.transform = "translate(-50%, -200%)";
+        document.body.classList.remove("modal-open");
+        setTimeout(function () {
+            modal.style.display = "none";
+        }, 300);
+    }

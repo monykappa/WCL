@@ -31,61 +31,61 @@
 <hr>
 
 <section class="product-content container">
-    <h1 class="hidden-top ml-1">Anti-infectives</h1>
+    <div class="row justify-content-start" id="product-grid">
+        <div class="col-6 col-md-4 col-lg-3 scroll-fade-in product-item hidden" onclick="showModal(this)" href="#">
+            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1"
+                class="img-fluid mx-auto d-block fade-in-left">
+            <p class="productName">Product 1</p>
+            <ul class="product-description hidden">
+                <li>vitamin a</li>
+                <li>vitamin b</li>
+            </ul>
+        </div>
 
-    <div class="row justify-content-start mt-5" id="product-grid">
-        <div class="col-6 col-md-4 col-3 hidden-left">
-            <a href="{% url 'product:product_detail'%}" class="product-link">
-                <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1"
-                    class="img-fluid mx-auto d-block fade-in-left">
-                <p class="productName">Product 1</p>
-                <ul class="product-d    escription hidden">
-                    <li>vitamin a</li>
-                    <li>vitamin b</li>
-                </ul>
-            </a>
+        <div class="col-6 col-md-4 col-lg-3 scroll-fade-in product-item hidden" onclick="showModal(this)">
+            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1"
+                class="img-fluid mx-auto d-block fade-in-left">
+            <p class="productName">Product 1</p>
+            <ul class="product-description hidden">
+                <li>vitamin a</li>
+                <li>vitamin b</li>
+            </ul>
         </div>
-        <div class="col-6 col-md-4 col-3 hidden-left">
-            <a href="{% url 'product:product_detail'%}" class="product-link">
-                <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1"
-                    class="img-fluid mx-auto d-block fade-in-left">
-                <p class="productName">Product 1</p>
-                <ul class="product-d    escription hidden">
-                    <li>vitamin a</li>
-                    <li>vitamin b</li>
-                </ul>
-            </a>
+        <div class="col-6 col-md-4 col-lg-3 scroll-fade-in product-item hidden" onclick="showModal(this)">
+            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1"
+                class="img-fluid mx-auto d-block fade-in-left">
+            <p class="productName">Product 1</p>
+            <ul class="product-description hidden">
+                <li>vitamin a</li>
+                <li>vitamin b</li>
+            </ul>
         </div>
-        <div class="col-6 col-md-4 col-3 hidden-right">
-            <a href="{% url 'product:product_detail'%}" class="product-link">
-                <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1"
-                    class="img-fluid mx-auto d-block fade-in-left">
-                <p class="productName">Product 1</p>
-                <ul class="product-d    escription hidden">
-                    <li>vitamin a</li>
-                    <li>vitamin b</li>
-                </ul>
-            </a>
+        <div class="col-6 col-md-4 col-lg-3 scroll-fade-in product-item hidden" onclick="showModal(this)">
+            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1"
+                class="img-fluid mx-auto d-block fade-in-left">
+            <p class="productName">Product 1</p>
+            <ul class="product-description hidden">
+                <li>vitamin a</li>
+                <li>vitamin b</li>
+            </ul>
         </div>
-        <div class="col-6 col-md-4 col-3 hidden-right">
-            <a href="{% url 'product:product_detail'%}" class="product-link">
-                <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1"
-                    class="img-fluid mx-auto d-block fade-in-left">
-                <p class="productName">Product 1</p>
-                <ul class="product-d    escription hidden">
-                    <li>vitamin a</li>
-                    <li>vitamin b</li>
-                </ul>
-            </a>
-        </div>
-        <p class="hidden-left ml-1"><a href="">See more>></a></p>
     </div>
 </section>
 
 
-
-
-
+<!-- The Modal -->
+<div id="productModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div class="modal-image">
+            <img id="modal-image" src="" alt="Product Image" class="img-fluid mx-auto d-block">
+        </div>
+        <div class="modal-description">
+            <div id="productName"></div>
+            <p id="description"></p>
+        </div>
+    </div>
+</div>
 
 
 <script src="{% static 'js/products/products.js'%}"></script>
