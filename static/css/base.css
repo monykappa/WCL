@@ -107,7 +107,7 @@ a:hover {
   margin-bottom: 0px;
   z-index: 1999;
   position: relative;
-  width: 100% !important;
+    width: 100% !important;
   padding: 1rem;
 }
 
@@ -664,8 +664,8 @@ footer .col-md-3 {
 p.footer-description {
   font-family: var(--secondary-font);
   color: #fff;
-  text-align: justify;
-  text-justify: inter-word;
+  text-align: justify !important;
+  text-justify: inter-word !important;
   word-spacing: -0.3rem;
 }
 
