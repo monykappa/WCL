@@ -5,6 +5,7 @@
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/products/products.css'%}">
+<link rel="stylesheet" href="{% static 'css/products/product_detail.css'%}">
 <link rel="stylesheet" href="{% static 'css/animation/animation.css'%}">
 {% endblock css %}
 
@@ -32,7 +33,7 @@
 
 <section class="product-content container">
     <div class="row justify-content-start" id="product-grid">
-        <div class="col-6 col-md-4 col-lg-3 scroll-fade-in product-item hidden" onclick="showModal(this)" href="#">
+        <div class="col-6 col-md-4 col-lg-3 scroll-fade-in product-item hidden-left" onclick="showModal(this)" href="#">
             <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1"
                 class="img-fluid mx-auto d-block fade-in-left">
             <p class="productName">Product 1</p>
@@ -42,7 +43,7 @@
             </ul>
         </div>
 
-        <div class="col-6 col-md-4 col-lg-3 scroll-fade-in product-item hidden" onclick="showModal(this)">
+        <div class="col-6 col-md-4 col-lg-3 scroll-fade-in product-item hidden-left" onclick="showModal(this)">
             <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1"
                 class="img-fluid mx-auto d-block fade-in-left">
             <p class="productName">Product 1</p>
@@ -51,7 +52,7 @@
                 <li>vitamin b</li>
             </ul>
         </div>
-        <div class="col-6 col-md-4 col-lg-3 scroll-fade-in product-item hidden" onclick="showModal(this)">
+        <div class="col-6 col-md-4 col-lg-3 scroll-fade-in product-item hidden-right" onclick="showModal(this)">
             <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1"
                 class="img-fluid mx-auto d-block fade-in-left">
             <p class="productName">Product 1</p>
@@ -60,7 +61,7 @@
                 <li>vitamin b</li>
             </ul>
         </div>
-        <div class="col-6 col-md-4 col-lg-3 scroll-fade-in product-item hidden" onclick="showModal(this)">
+        <div class="col-6 col-md-4 col-lg-3 scroll-fade-in product-item hidden-right" onclick="showModal(this)">
             <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1"
                 class="img-fluid mx-auto d-block fade-in-left">
             <p class="productName">Product 1</p>
@@ -73,11 +74,26 @@
 </section>
 
 
+<div id="fullscreen" class="fullscreen hidden-bottom" style="display: none;">
+    <span class="close-btn" onclick="closeFullScreen()">
+        <i class="fa fa-times" style="color:red;" aria-hidden="true"></i>
+    </span>
+    <img id="fullscreen-img" src="" alt="Full Screen Image">
+    <div class="zoom-controls">
+        <button onclick="zoomIn()">Zoom In <i class="fa fa-plus" aria-hidden="true"></i>
+        </button>
+        <button onclick="zoomOut()">Zoom Out <i class="fa fa-minus" aria-hidden="true"></i>
+        </button>
+    </div>
+</div>
+
+
+
 <!-- The Modal -->
 <div id="productModal" class="modal">
     <div class="modal-content">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <div class="modal-image">
+        <span class="close" style="color:red;" onclick="closeModal()">&times;</span>
+        <div class="modal-image" onclick="showFullScreen(this)" >
             <img id="modal-image" src="" alt="Product Image" class="img-fluid mx-auto d-block">
         </div>
         <div class="modal-description">
@@ -89,5 +105,6 @@
 
 
 <script src="{% static 'js/products/products.js'%}"></script>
+<script src="{% static 'js/products/product_detail.js'%}"></script>
 <script src="{% static 'js/animation/hidden_scroll.js'%}"></script>
 {% endblock content %}

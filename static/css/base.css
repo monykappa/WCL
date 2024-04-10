@@ -107,7 +107,7 @@ a:hover {
   margin-bottom: 0px;
   z-index: 1999;
   position: relative;
-  width: 100%;
+  width: 100% !important;
   padding: 1rem;
 }
 
