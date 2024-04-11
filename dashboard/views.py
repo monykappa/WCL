@@ -26,6 +26,20 @@ def edit_manufacturer(request, manufacturer_id):
         form = ManufacturerForm(instance=manufacturer)
     
     return render(request, 'dashboard/edit_manufacturer.html', {'form': form})
+
+
+def edit_category(request, category_id):
+    category = get_object_or_404(Category, id=category_id)
+
+    if request.method == 'POST':
+        form = CategoryForm(request.POST, instance=category)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard:category') 
+    else:
+        form = CategoryForm(instance=category)
+
+    return render(request, 'dashboard/edit_category.html', {'form': form})
     
 
 
@@ -69,6 +83,14 @@ def dashboard(request):
 @login_required
 def products(request):
     return render(request, 'dashboard/products.html')
+
+@login_required
+def category(request):
+    # object all
+    category = Category.objects.all()
+    
+    return render(request, 'dashboard/category.html', {'categories': category})
+
 
 
 

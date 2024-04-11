@@ -15,6 +15,8 @@ urlpatterns = [
     path('dashboard/products/', views.products, name='products'),
     path('dashboard/manufacturer/', views.manufacturer, name='manufacturer'),
     path('manufacturers/<int:manufacturer_id>/edit/', views.edit_manufacturer, name='edit_manufacturer'),
+    path('dashboard/category/', views.category, name='category'),
+    path('category/<int:category_id>/edit/', views.edit_category, name='edit_category'),
     
     #sign in 
     path('sign_in/', views.sign_in, name='sign_in'),

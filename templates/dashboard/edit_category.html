@@ -2,8 +2,7 @@
 
 <!-- edit_manufacturer.html -->
 
-<h1 class="d-inline-block ml-auto">{% block dashboard_title %}Edit Manufacturer{% endblock dashboard_title%}</h1>
-
+<h1 class="d-inline-block ml-auto">{% block dashboard_title %}Edit Category{% endblock dashboard_title%}</h1>
 
 {% block content %}
 <div class="container mt-5">
@@ -12,23 +11,13 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
-                        <h1 class="card-title text-center">Edit Manufacturer</h1>
+                        <h1 class="card-title text-center">Edit Category</h1>
                         <form method="post">
                             {% csrf_token %}
                             <div class="form-group">
                                 <label for="name">Name:</label>
                                 <input type="text" class="form-control" id="name" name="name" value="{{ form.name.value }}">
                             </div>
-                            <div class="form-group">
-                                <label for="country">Country:</label>
-                                <select class="form-control" id="country" name="country">
-                                    {% for country_value, country_label in form.country.field.choices %}
-                                        <option value="{{ country_value }}" {% if country_value == form.country.value %}selected{% endif %}>{{ country_label }}</option>
-                                    {% endfor %}
-                                </select>
-                                
-                            </div>
-                            
                             <div class="form-group">
                                 <label for="description">Description:</label>
                                 <textarea class="form-control" id="description" name="description">{{ form.description.value }}</textarea>
@@ -43,4 +32,3 @@
 </div>
 
 {% endblock content %}
-
