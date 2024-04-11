@@ -1,9 +1,6 @@
 body {
     font-family: var(--secondary-font);
 }
-
-
-
 body.modal-open {
     overflow: hidden;
 }
@@ -24,7 +21,7 @@ body.modal-open {
 .modal-content {
     background-color: #fefefe;
     position: absolute;
-    top: 60%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -200%); /* Updated initial position */
     padding: 20px;
@@ -273,31 +270,41 @@ p.productName {
 
 @media(min-width:200px) and (max-width:450px){
     .modal-content{
-        top:40%;
+        top:50%;
         display: block;
         width:90%;
         max-height:auto;
     }
     .modal-image{
-        width: 300px;
+        width: auto;
         display: flex;
         margin:0 auto;
         padding:0;
+    }
+    .modal-description{
+        text-align: center;
+        width:100%;  
     }
 }
 
 @media(min-width:451px) and (max-width:767px){
     .modal-content{
+        display: block;
+        top:55%;
         width:90%;
         /* height: 400px; */
+        margin:0 auto;
         max-height: auto;
     }
     .modal-description{
-        padding-left:10px;  
+        width:100%;
+        padding-right:1rem;  
+    }
+    .modal-description #productName{
+        font-size: 22px;
     }
     .modal-image{
-        width: 300px;
-    
+        width: auto;
     }
 }
 
@@ -319,6 +326,7 @@ p.productName {
         max-width: calc(33.33% - 10px);
     }
     .modal-content{
+        top:50%;
         width:80%;
     }
 

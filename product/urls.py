@@ -8,9 +8,6 @@ from . import views
 from django.conf import settings 
 
 
-
-
-
 app_name = 'product'
 urlpatterns = [
     path('products/', views.products, name='products'),

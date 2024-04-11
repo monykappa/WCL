@@ -30,48 +30,22 @@
 </section>
 
 <hr>
-
 <section class="product-content container">
     <div class="row justify-content-start" id="product-grid">
+        {% for drug in drugs %}
         <div class="col-6 col-md-4 col-lg-3 scroll-fade-in product-item hidden-left" onclick="showModal(this)" href="#">
-            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1"
+            <img src="{{ drug.image.url }}" alt="{{ drug.name }}"
                 class="img-fluid mx-auto d-block fade-in-left">
-            <p class="productName">Product 1</p>
+            <p class="productName">{{ drug.name }}</p>
             <ul class="product-description hidden">
-                <li>vitamin a</li>
-                <li>vitamin b</li>
+                <li>{{ drug.description }}</li>
             </ul>
         </div>
-
-        <div class="col-6 col-md-4 col-lg-3 scroll-fade-in product-item hidden-left" onclick="showModal(this)">
-            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1"
-                class="img-fluid mx-auto d-block fade-in-left">
-            <p class="productName">Product 1</p>
-            <ul class="product-description hidden">
-                <li>vitamin a</li>
-                <li>vitamin b</li>
-            </ul>
-        </div>
-        <div class="col-6 col-md-4 col-lg-3 scroll-fade-in product-item hidden-right" onclick="showModal(this)">
-            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1"
-                class="img-fluid mx-auto d-block fade-in-left">
-            <p class="productName">Product 1</p>
-            <ul class="product-description hidden">
-                <li>vitamin a</li>
-                <li>vitamin b</li>
-            </ul>
-        </div>
-        <div class="col-6 col-md-4 col-lg-3 scroll-fade-in product-item hidden-right" onclick="showModal(this)">
-            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1"
-                class="img-fluid mx-auto d-block fade-in-left">
-            <p class="productName">Product 1</p>
-            <ul class="product-description hidden">
-                <li>vitamin a</li>
-                <li>vitamin b</li>
-            </ul>
-        </div>
+        {% endfor %}
     </div>
 </section>
+
+
 
 
 <div id="fullscreen" class="fullscreen hidden-bottom" style="display: none;">

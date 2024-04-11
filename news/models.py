@@ -22,7 +22,7 @@ def images_directory_path(instance, filename):
     directory_path = f'content/{unique_id}/'
     return os.path.join(directory_path, filename)
 
-class News(models.Model):
+class New(models.Model):
     title = models.CharField(max_length=100)
     image = models.ImageField(upload_to=images_directory_path, validators=[validate_file_extension], blank=True, null=True)
     description = models.TextField(null=True, blank=True)

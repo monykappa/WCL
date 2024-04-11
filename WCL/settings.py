@@ -125,9 +125,19 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
+from django.utils import timezone
+import pytz
+
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+
+utc_now = timezone.now()
+
+# Set the desired time zone (Asia/Phnom_Penh for UTC+7)
+TIME_ZONE = 'Asia/Bangkok'
+
+
+# TIME_ZONE = "UTC"
 
 USE_I18N = True
 

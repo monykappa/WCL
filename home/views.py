@@ -11,7 +11,7 @@ def base(request):
 
 
 def home(request):
-    news_items = News.objects.all()
+    news_items = New.objects.all()
     return render(request, 'home/home.html', {'news_items': news_items})
 
 def about_us(request):
