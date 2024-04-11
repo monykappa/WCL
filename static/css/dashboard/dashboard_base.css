@@ -37,6 +37,10 @@ a:focus {
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
+.navbar h1{
+    color:#fff;
+}
+
 .navbar-btn {
     box-shadow: none;
     outline: none !important;
@@ -195,4 +199,9 @@ a.article:hover {
     #sidebarCollapse span {
         display: none;
     }
+}
+
+
+table tbody td{
+    border:1px solid rgb(73, 71, 71);
 }

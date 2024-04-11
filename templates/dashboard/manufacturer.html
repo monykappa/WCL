@@ -8,6 +8,7 @@ Dashboard Manufacturer
 
 <h1 class="d-inline-block ml-auto">{% block dashboard_title %}Manufacturer{% endblock dashboard_title%}</h1>
 {% block content %}
+
 <div class="container mt-5">
     <h1>Manufacturer List</h1>
     <table class="table">
@@ -16,17 +17,126 @@ Dashboard Manufacturer
                 <th>Name</th>
                 <th>Country</th>
                 <th>Description</th>
+                <th>Actions</th> <!-- Add this column for edit button -->
             </tr>
         </thead>
         <tbody>
             {% for manufacturer in manufacturers %}
             <tr>
                 <td>{{ manufacturer.name }}</td>
-                <td>{{ manufacturer.country }}</td>
+                <td>{{ manufacturer.get_country_display }}</td>
                 <td>{{ manufacturer.description }}</td>
+                <td>
+                    <a href="{% url 'dashboard:edit_manufacturer' manufacturer.id %}" class="btn btn-primary">Edit</a>
+                </td>
+                <!-- Edit button -->
             </tr>
             {% endfor %}
         </tbody>
     </table>
 </div>
+
+
+
+<!-- Modal
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit Manufacturer</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editForm">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="edit-name">Name</label>
+                        <input type="text" class="form-control" id="edit-name" name="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-country">Country</label>
+                        <input type="text" class="form-control" id="edit-country" name="country">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-description">Description</label>
+                        <textarea class="form-control" id="edit-description" name="description"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const editBtns = document.querySelectorAll('.edit-btn');
+
+        editBtns.forEach(editBtn => {
+            editBtn.addEventListener('click', () => {
+                const manufacturerId = editBtn.dataset.id;
+
+                // Retrieve data of the manufacturer with Fetch API
+                fetch(`/get_manufacturer_data/?manufacturer_id=${manufacturerId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Populate the pop-up form fields with the retrieved data
+                        document.getElementById('edit-name').value = data.name;
+                        document.getElementById('edit-country').value = data.country;
+                        document.getElementById('edit-description').value = data.description;
+
+                        // Show the pop-up
+                        const editModal = new bootstrap.Modal(document.getElementById('editModal'));
+                        editModal.show();
+
+                        // Set the manufacturer id for the form
+                        document.getElementById('editForm').dataset.manufacturerId = manufacturerId;
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        });
+
+        document.getElementById('editForm').addEventListener('submit', (event) => {
+            event.preventDefault(); // Prevent default form submission
+
+            // Get the manufacturer id from the form
+            const manufacturerId = document.getElementById('editForm').dataset.manufacturerId;
+
+            // Serialize form data
+            const formData = new FormData(event.target);
+            formData.append('manufacturer_id', manufacturerId);
+
+            // Send AJAX request to update manufacturer data
+            fetch('/update_manufacturer/', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error in the request');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Handle success response
+                console.log('Data updated successfully:', data);
+                // Close the modal or perform any other actions
+                const editModal = bootstrap.Modal.getInstance(document.getElementById('editModal'));
+                editModal.hide();
+            })
+            .catch(error => {
+                // Handle error response
+                console.error('Error updating data:', error);
+            });
+        });
+    });
+</script> -->
+
 {% endblock content %}

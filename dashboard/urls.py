@@ -14,7 +14,7 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('dashboard/products/', views.products, name='products'),
     path('dashboard/manufacturer/', views.manufacturer, name='manufacturer'),
-    
+    path('manufacturers/<int:manufacturer_id>/edit/', views.edit_manufacturer, name='edit_manufacturer'),
     
     #sign in 
     path('sign_in/', views.sign_in, name='sign_in'),
