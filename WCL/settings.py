@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     "product",
     "home",
     "news",
-
+    "dashboard",
 ]
 
 CKEDITOR_CONFIGS = {
@@ -142,6 +142,12 @@ TIME_ZONE = 'Asia/Bangkok'
 USE_I18N = True
 
 USE_TZ = True
+
+
+
+LOGIN_URL = 'dashboard:sign_in'
+LOGIN_REDIRECT_URL = 'dashboard:dashboard' 
+LOGOUT_REDIRECT_URL = 'dashboard:sign_in'
 
 
 # Static files (CSS, JavaScript, Images)
