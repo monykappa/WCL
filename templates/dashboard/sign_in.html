@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Sign-in</title>
+</head>
+<style>
+    .container {
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    form{
+        border: 1px solid grey;
+        padding:2rem;
+    }
+
+    .sign-in-ctn {
+        width: 50%;
+        margin: 0 auto;
+        text-align: left;
+    }
+
+    @media screen and (max-width: 768px) {
+        .sign-in-ctn {
+            width: 80%;
+        }
+    }
+</style>
+
+<body>
+    <div class="container mt-5">
+        <img src="{% static 'img/logo/image-removebg-preview.png' %}" width="200px"/>
+        <div class="sign-in-ctn">
+            <form method="post" action="{% url 'dashboard:sign_in' %}">
+                <h1 class="h3 mb-3 font-weight-normal">Sign in / ចូលគណនី</h1>
+                {% csrf_token %}
+                <label for="username" class="sr-only">Username</label>
+                <p>Username:</p>
+                <input type="text" name="username" class="form-control" placeholder="Username" required>
+                <label for="password" class="sr-only">Password</label>
+                <p>Password:</p>
+                <input type="password" name="password" class="form-control" placeholder="Password" required>
+                <button type="submit" class="btn btn-primary mt-5">Sign In</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+
+</html>

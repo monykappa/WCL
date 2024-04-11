@@ -1,0 +1,32 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% load static %}
+
+{% block title %}
+Dashboard Manufacturer
+{% endblock title %}
+
+
+<h1 class="d-inline-block ml-auto">{% block dashboard_title %}Manufacturer{% endblock dashboard_title%}</h1>
+{% block content %}
+<div class="container mt-5">
+    <h1>Manufacturer List</h1>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>Name</th>
+                <th>Country</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for manufacturer in manufacturers %}
+            <tr>
+                <td>{{ manufacturer.name }}</td>
+                <td>{{ manufacturer.country }}</td>
+                <td>{{ manufacturer.description }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}
