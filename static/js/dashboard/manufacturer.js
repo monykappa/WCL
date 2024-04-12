@@ -20,3 +20,8 @@ function filterManufacturerTable() {
 }
 
 document.getElementById('searchManufacturerInput').addEventListener('input', filterManufacturerTable);
+
+document.getElementById('clearManufacturerInput').addEventListener('click', function () {
+    document.getElementById('searchManufacturerInput').value = '';
+    filterManufacturerTable();
+});

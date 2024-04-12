@@ -2,3 +2,6 @@
 p{
     color:#000 !important;
 }
+option{
+    font-weight: bold !important;
+}

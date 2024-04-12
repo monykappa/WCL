@@ -12,16 +12,20 @@
 
     <h1>Category List</h1>
     <div class="row mb-3">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <a href="{% url 'dashboard:add_category' %}" class="bg-success p-2 text-light rounded"><i class="fa fa-add text-light mr-1"></i>Add</a>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-8 mt-2">
             <div class="input-group">
                 <input type="text" class="form-control" id="searchInput" placeholder="Search...">
                 <div class="input-group-append">
                     <button class="btn btn-primary" type="button" id="searchButton">
                         <i class="fa fa-search"></i>
                     </button>
+                </div>
+                <div class="input-group-append">
+                    <span class="input-group-text bg-danger text-light ml-2" id="clearSearchInput" style="cursor: pointer;"><i
+                            class="fa-solid fa-eraser"></i></span>
                 </div>
             </div>
         </div>

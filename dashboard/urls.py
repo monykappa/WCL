@@ -34,6 +34,9 @@ urlpatterns = [
     path('dashboard/edit_product_type/<int:drug_type_id>/', views.edit_product_type, name='edit_product_type'),
     path('delete_product_type/<int:drug_type_id>/', views.delete_product_type, name='delete_product_type'),
     
+    # News
+    path('dashboard/news/', views.news, name='news'),
+    
     #sign in 
     path('sign_in/', views.sign_in, name='sign_in'),
 

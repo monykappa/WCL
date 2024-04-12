@@ -9,19 +9,23 @@ Dashboard | Manufacturer
 <h1 class="d-inline-block ml-auto">{% block dashboard_title %}Manufacturer{% endblock dashboard_title%}</h1>
 
 {% block content %}
-<div class="container mt-5" id="manufacturerListContainer">
     <h1>Manufacturer List</h1>
     <div class="row mb-3">
-        <div class="col-md-6">
-            <a href="{% url 'dashboard:add_manufacturer' %}" class="bg-success p-2 text-light rounded"><i class="fa fa-add text-light mr-1"></i>Add</a>
+        <div class="col-md-4">
+            <a href="{% url 'dashboard:add_manufacturer' %}" class="bg-success p-2 text-light rounded"><i
+                    class="fa fa-add text-light mr-1"></i>Add</a>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-8 mt-2">
             <div class="input-group">
                 <input type="text" class="form-control" id="searchManufacturerInput" placeholder="Search...">
                 <div class="input-group-append">
                     <button class="btn btn-primary" type="button" id="searchManufacturerButton">
                         <i class="fa fa-search"></i>
                     </button>
+                </div>
+                <div class="input-group-append">
+                    <span class="input-group-text bg-danger text-light ml-2" id="clearManufacturerInput"
+                        style="cursor: pointer;"><i class="fa-solid fa-eraser"></i></span>
                 </div>
             </div>
         </div>
@@ -32,7 +36,7 @@ Dashboard | Manufacturer
                 <th>Name</th>
                 <th>Country</th>
                 <th>Description</th>
-                <th>Actions</th> 
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -42,11 +46,16 @@ Dashboard | Manufacturer
                 <td>{{ manufacturer.get_country_display }}</td>
                 <td>{{ manufacturer.description }}</td>
                 <td>
-                    <a href="{% url 'dashboard:edit_manufacturer' manufacturer.id %}" class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                    <button type="button" class="btn btn-danger" onclick="confirmDeleteManufacturer('{{ manufacturer.id }}')"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                    <a href="{% url 'dashboard:edit_manufacturer' manufacturer.id %}" class="btn btn-primary"><i
+                            class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <button type="button" class="btn btn-danger"
+                        onclick="confirmDeleteManufacturer('{{ manufacturer.id }}')"><i class="fa fa-trash"
+                            aria-hidden="true"></i></button>
 
                     <!-- Form for deletion, hidden initially -->
-                    <form id="deleteForm-{{ manufacturer.id }}" action="{% url 'dashboard:delete_manufacturer' manufacturer.id %}" method="post" style="display: none;">
+                    <form id="deleteForm-{{ manufacturer.id }}"
+                        action="{% url 'dashboard:delete_manufacturer' manufacturer.id %}" method="post"
+                        style="display: none;">
                         {% csrf_token %}
                     </form>
                 </td>
@@ -54,5 +63,4 @@ Dashboard | Manufacturer
             {% endfor %}
         </tbody>
     </table>
-</div>
 {% endblock content %}

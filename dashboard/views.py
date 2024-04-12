@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from .forms import *
 from product.models import *
+from news.models import *
 from .models import *
 
 
@@ -194,3 +195,8 @@ def delete_product_type(request, drug_type_id):
         drug_type.delete()
         return redirect('dashboard:product_type')
     return render(request, 'dashboard/delete_product_type.html', {'drug_type': drug_type})
+
+# News
+def news(request):
+    news_items = New.objects.all()
+    return render(request, 'dashboard/news.html', {'news_items': news_items})
