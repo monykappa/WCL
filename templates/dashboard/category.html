@@ -1,18 +1,37 @@
 {% extends 'dashboard/dashboard_base.html' %}
 {% load static %}
 
+{% block title %}
+    Dashboard | Category
+{% endblock title %}
 
 <h1 class="d-inline-block ml-auto​ text-light​">{% block dashboard_title %}Category{% endblock dashboard_title%}
 </h1>
+
 {% block content %}
-<div class="container mt-5">
+
     <h1>Category List</h1>
-    <table class="table">
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <a href="{% url 'dashboard:add_category' %}" class="bg-success p-2 text-light rounded"><i class="fa fa-add text-light mr-1"></i>Add</a>
+        </div>
+        <div class="col-md-6">
+            <div class="input-group">
+                <input type="text" class="form-control" id="searchInput" placeholder="Search...">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" id="searchButton">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="table" id="categoryTable">
         <thead class="thead-dark">
             <tr>
-                <th>Name</th>
+                <th>Category Name</th>
                 <th>Description</th>
-                <th>Actions</th> 
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -21,14 +40,21 @@
                 <td>{{ category.name }}</td>
                 <td>{{ category.description }}</td>
                 <td>
-                    <a href="{% url 'dashboard:edit_category' category.id %}" class="btn btn-primary">Edit</a>
+                    <div class="row">
+                        <div class="col-md-6"></div>
+                    </div>
+                    <a href="{% url 'dashboard:edit_category' category.id %}" class="btn btn-primary"><i
+                            class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <button type="button" class="btn btn-danger" onclick="confirmDelete('{{ category.id }}')"><i
+                            class="fa fa-trash" aria-hidden="true"></i></button>
+                    <!-- Form for deletion, hidden initially -->
+                    <form id="deleteForm-{{ category.id }}" action="{% url 'dashboard:delete_category' category.id %}"
+                        method="post" style="display: none;">
+                        {% csrf_token %}
+                    </form>
                 </td>
-                
-                <!-- Edit button -->
             </tr>
             {% endfor %}
         </tbody>
     </table>
-</div>
-
 {% endblock content %}

@@ -147,6 +147,15 @@ a[data-toggle="collapse"] {
     transform: translateY(-50%);
 } */
 
+form input, select, textarea{
+    font-weight: bold !important;
+}
+#backButton{
+    padding:10px 15px;
+    color:white;
+    border-radius: 5px;
+}
+
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;

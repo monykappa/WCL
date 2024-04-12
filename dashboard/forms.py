@@ -11,3 +11,9 @@ class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = ['name', 'description']
+        
+
+class DrugTypeForm(forms.ModelForm):
+    class Meta:
+        model = DrugType
+        fields = ['name', 'description']
