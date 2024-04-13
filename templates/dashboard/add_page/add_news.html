@@ -1,0 +1,68 @@
+{% extends 'dashboard/add_page/add.html' %}
+
+{% block dashboard_title %}
+    Add News
+{% endblock dashboard_title %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h1>Add News</h1>
+        <form method="post" id="myForm" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="title" class="form-label">Title:</label>
+                <input type="text" class="form-control" id="title" name="title" value="{% if form.title.value %}{{ form.title.value }}{% endif %}">
+            </div>
+            <div class="form-group">
+                <label for="description" class="form-label">Description:</label>
+                <textarea class="form-control" id="description" name="description" rows="3">{% if form.description.value %}{{ form.description.value }}{% endif %}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="image" class="form-label">Image:</label>
+                <input type="file" class="form-control-file" id="image" name="image" onchange="previewImage(event)">
+            </div>
+            <div class="form-group">
+                <img id="imagePreview" src="#" alt="Preview Image" style="max-width: 100%; height: auto; display: none;">
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="publishCheckbox" name="publishCheckbox">
+                <label class="form-check-label" for="publishCheckbox">Publish this news</label>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="validateForm()">Save</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var imagePreview = document.getElementById('imagePreview');
+                imagePreview.src = reader.result;
+                imagePreview.style.display = 'block';
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    
+        function validateForm() {
+            try {
+                var titleInput = document.getElementById('title').value.trim();
+                if (titleInput === '') {
+                    Swal.fire("Error", "Please enter the title", "error");
+                } else {
+                    // Show SweetAlert immediately upon form submission
+                    Swal.fire("Success", "News added", "success");
+    
+                    // Submit the form after a slight delay to allow SweetAlert to appear
+                    setTimeout(function() {
+                        document.getElementById('myForm').submit();
+                    }, 5000); // Adjust the delay time as needed (in milliseconds)
+                }
+            } catch (error) {
+                console.error("Error in validateForm:", error);
+            }
+        }
+    </script>
+    
+{% endblock %}

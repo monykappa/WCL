@@ -9,6 +9,8 @@ from .forms import *
 from product.models import *
 from news.models import *
 from .models import *
+from django.views.decorators.http import require_POST
+
 
 
 def sign_in(request):
@@ -198,5 +200,76 @@ def delete_product_type(request, drug_type_id):
 
 # News
 def news(request):
-    news_items = New.objects.all()
+    news_items = New.objects.all().order_by('-updated_at')
     return render(request, 'dashboard/news.html', {'news_items': news_items})
+
+
+
+@login_required
+def add_news(request):
+    if request.method == 'POST':
+        form = NewsForm(request.POST, request.FILES)
+        if form.is_valid():
+            news_instance = form.save(commit=False)
+            if 'publishCheckbox' in request.POST:
+                news_instance.is_published = True
+            news_instance.save()
+            return redirect('dashboard:news')
+    else:
+        form = NewsForm()
+    return render(request, 'dashboard/add_page/add_news.html', {'form': form})
+
+
+
+@login_required
+def edit_news(request, new_id):
+    new = get_object_or_404(New, id=new_id)
+    if request.method == 'POST':
+        form = NewsForm(request.POST, request.FILES, instance=new)
+        # Capture previous values before saving the form
+        previous_title = new.title
+        previous_image = new.image
+        previous_description = new.description
+        if form.is_valid():
+            news_instance = form.save(commit=False)
+            if 'publishCheckbox' in request.POST:
+                news_instance.is_published = True
+            else:
+                news_instance.is_published = False  # Update is_published field if checkbox is unchecked
+            form.save()
+
+            # Create UpdateHistory object with previous and new values
+            UpdateHistory.objects.create(
+                news=new,
+                user=request.user,
+                title_before=previous_title,
+                image_before=previous_image,
+                description_before=previous_description,
+                title_after=new.title,
+                image_after=new.image,
+                description_after=new.description
+            )
+
+            return redirect('dashboard:news')
+    else:
+        form = NewsForm(instance=new)
+    return render(request, 'dashboard/edit_page/edit_news.html', {'form': form, 'new': new})
+
+
+
+
+
+def update_history(request, new_id):
+    new = get_object_or_404(New, id=new_id)
+    update_history_entries = new.updatehistory_set.all().order_by('-update_time')
+    return render(request, 'dashboard/history/update_new_history.html', {'new': new, 'update_history_entries': update_history_entries})
+
+
+@login_required
+def delete_news(request, new_id):
+    new = get_object_or_404(New, id=new_id)
+    if request.method == 'POST':
+        new.delete()
+        return redirect('dashboard:news')
+    else:
+        pass

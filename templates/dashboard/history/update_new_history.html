@@ -1,0 +1,83 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% load static %}
+
+{% block title %}
+Update History
+{% endblock title %}
+
+<h1 class="d-inline-block ml-auto​ text-light​">{% block dashboard_title %}Update History{% endblock dashboard_title%}
+</h1>
+{% block content %}
+<style>
+    p {
+        color: #000 !important;
+    }
+
+    img {
+        max-width: 150px;
+        max-height: 150px;
+    }
+
+    .update-news-row {
+        border-radius: 10px;
+    }
+</style>
+
+<div class="back-button-ctn">
+    <a href="#" id="backButton" class="btn-primary ml-4"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
+</div>
+
+
+<div class="container update-news-ctn">
+    <h1 class="mt-4">Update History for "{{ new.title }}"</h1>
+    {% if update_history_entries %}
+        {% for update in update_history_entries %}
+            <div class="row border p-3 mb-3 update-news-row">
+                <div class="col-md-4">
+                    <h5>Previous</h5>
+                    <p><strong>Title:</strong> {{ update.title_before }}</p>
+                    <p><strong>Description:</strong> {{ update.description_before }}</p>
+                    {% if update.image_before %}
+                        <img src="{{ update.image_before.url }}" alt="Previous Image" class="img-fluid">
+                    {% else %}
+                        None
+                    {% endif %}
+                </div>
+                <div class="col-md-4 d-flex align-items-center justify-content-center">
+                    <i class="fa-solid fa-arrow-right-long" style="font-size: 100px;"></i>
+                </div>
+                <div class="col-md-4">
+                    <h5>New</h5>
+                    <p><strong>Title:</strong> {{ update.title_after }}</p>
+                    <p><strong>Description:</strong> {{ update.description_after }}</p>
+                    {% if update.image_after %}
+                        <img src="{{ update.image_after.url }}" alt="New Image" class="img-fluid">
+                    {% else %}
+                        None
+                    {% endif %}
+                    <p><strong>New Update Time:</strong> {{ update.update_time }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No update history available.</p>
+    {% endif %}
+</div>
+
+
+
+
+<div id="fullscreen" style="display: none;">
+    <div class="fullscreen-container">
+        <img id="fullscreen-img" src="" alt="Full Screen Image" onclick="closeFullScreen()">
+        <div class="fullscreen-controls">
+            <button onclick="zoomIn()">+</button>
+            <button onclick="zoomOut()">-</button>
+        </div>
+    </div>
+</div>
+
+
+<script src="{% static 'js/features/back_button.js'%}"></script>
+
+{% endblock content %}

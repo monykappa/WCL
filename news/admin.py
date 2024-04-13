@@ -23,3 +23,4 @@ class NewsAdmin(admin.ModelAdmin):
     image_display.short_description = 'Image'  # Set a custom column header for the image
 
 admin.site.register(New, NewsAdmin)
+admin.site.register(UpdateHistory)

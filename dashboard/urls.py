@@ -36,6 +36,10 @@ urlpatterns = [
     
     # News
     path('dashboard/news/', views.news, name='news'),
+    path('dashboard/add_news/', views.add_news, name='add_news'),
+    path('dashboard/edit_news/<int:new_id>/', views.edit_news, name='edit_news'),
+    path('delete_news/<int:new_id>/', views.delete_news, name='delete_news'),
+    path('update-history/<int:new_id>/', views.update_history, name='update_history'),
     
     #sign in 
     path('sign_in/', views.sign_in, name='sign_in'),

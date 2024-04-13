@@ -1,14 +1,38 @@
 {% extends 'dashboard/dashboard_base.html' %}
 
 {% block title %}
-    Dashboard | News
+Dashboard | News
 {% endblock title %}
 
-
-<h1 class="d-inline-block ml-auto​ text-light​">{% block dashboard_title %}News{% endblock dashboard_title%}
+<h1 class="d-inline-block ml-auto text-light">
+    {% block dashboard_title %}News{% endblock dashboard_title%}
 </h1>
 
 {% block content %}
+
+<h1>Category List</h1>
+<div class="row mb-3">
+    <div class="col-md-4">
+        <a href="{% url 'dashboard:add_news' %}" class="bg-success p-2 text-light rounded">
+            <i class="fa fa-add text-light mr-1"></i>Add
+        </a>
+    </div>
+    <div class="col-md-8 mt-2">
+        <div class="input-group">
+            <input type="text" class="form-control" id="searchInput" placeholder="Search...">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button" id="searchButton">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+            <div class="input-group-append">
+                <span class="input-group-text bg-danger text-light ml-2" id="clearSearchInput" style="cursor: pointer;">
+                    <i class="fa-solid fa-eraser"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
 <table class="table">
     <thead class="thead-dark">
         <tr>
@@ -16,7 +40,9 @@
             <th>Description</th>
             <th>Image</th>
             <th>Created At</th>
-            <th>Updated At</th>
+            <th>Last Updated At</th>
+            <th>Status</th>  <!-- Add new column for status -->
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -26,13 +52,23 @@
             <td>{{ news_item.description }}</td>
             <td>
                 {% if news_item.image %}
-                    <img src="{{ news_item.image.url }}" alt="{{ news_item.title }}" width="100" class="img-fluid rounded">
+                <img src="{{ news_item.image.url }}" alt="{{ news_item.title }}" width="100" class="img-fluid rounded">
                 {% else %}
-                    No Image
+                No Image
                 {% endif %}
             </td>
             <td>{{ news_item.created_at }}</td>
             <td>{{ news_item.updated_at }}</td>
+            <td>{% if news_item.is_published %}Published{% else %}Not Published{% endif %}</td>
+            <td style="white-space: nowrap; width: 1%;">
+                <a href="{% url 'dashboard:edit_news' news_item.id %}" class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                <a href="{% url 'dashboard:update_history' news_item.id %}" class="btn btn-warning"><i class="fa-solid fa-clock-rotate-left"></i></a>
+                <button type="button" class="btn btn-danger" onclick="confirmDelete('{{ news_item.id }}')"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                <!-- Form for deletion, hidden initially -->
+                <form id="deleteForm-{{ news_item.id }}" action="{% url 'dashboard:delete_news' news_item.id %}" method="post" style="display: none;">
+                    {% csrf_token %}
+                </form>
+            </td>
         </tr>
         {% endfor %}
     </tbody>
