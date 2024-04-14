@@ -13,8 +13,9 @@ Dashboard | Product Type
 <h1>Drug Type List</h1>
 <div class="row mb-3">
     <div class="col-md-4">
-        <a href="{% url 'dashboard:add_product_type' %}" class="bg-success p-2 text-light rounded"><i
-                class="fa fa-add text-light mr-1"></i>Add</a>
+        <a href="#" class="bg-success p-2 text-light rounded" data-toggle="modal" data-target="#productTypePopup">
+            <i class="fa fa-add text-light mr-1"></i>Add
+        </a>
     </div>
     <div class="col-md-8 mt-2">
         <div class="input-group">
@@ -25,8 +26,8 @@ Dashboard | Product Type
                 </button>
             </div>
             <div class="input-group-append">
-                <span class="input-group-text bg-danger text-light ml-2" id="clearSearchInput" style="cursor: pointer;"><i
-                        class="fa-solid fa-eraser"></i></span>
+                <span class="input-group-text bg-danger text-light ml-2" id="clearSearchInput"
+                    style="cursor: pointer;"><i class="fa-solid fa-eraser"></i></span>
             </div>
         </div>
     </div>
@@ -67,4 +68,36 @@ Dashboard | Product Type
     </tbody>
 </table>
 
+
+<!-- Product Type Modal -->
+<div class="modal fade" id="productTypePopup" tabindex="-1" role="dialog" aria-labelledby="productTypePopupLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productTypePopupLabel">Add Product Type</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Product Type Form -->
+                <form method="post" id="productTypeForm">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_name" class="form-label">Product Type Name:</label>
+                        <input type="text" class="form-control" id="id_name" name="name"
+                            value="{% if form.name.value %}{{ form.name.value }}{% endif %}">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_description" class="form-label">Description:</label>
+                        <textarea class="form-control" id="id_description"
+                            name="description">{% if form.description.value %}{{ form.description.value }}{% endif %}</textarea>
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="validateForm()">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}

@@ -15,12 +15,14 @@
 <div class="slider">
     <div class="slides">
         {% for news_item in news_items %}
-        <div class="slide {% if forloop.first %}active{% endif %}">
-            <div class="slide-title">
-                <h1>{{ news_item.title }}</h1>
-            </div>
-            <img src="{{ news_item.image.url }}" alt="{{ news_item.title }}">
-        </div>
+            {% if news_item.is_published %}
+                <div class="slide {% if forloop.first %}active{% endif %}">
+                    <div class="slide-title">
+                        <h1>{{ news_item.title }}</h1>
+                    </div>
+                    <img src="{{ news_item.image.url }}" alt="{{ news_item.title }}">
+                </div>
+            {% endif %}
         {% endfor %}
     </div>
     <button class="prev" onclick="moveSlide(-1)"><i class="fa-solid fa-chevron-left"></i></button>

@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Sign-in</title>
 </head>
 <style>
@@ -16,9 +17,10 @@
         margin: 0 auto;
         text-align: center;
     }
-    form{
+
+    form {
         border: 1px solid grey;
-        padding:2rem;
+        padding: 2rem;
     }
 
     .sign-in-ctn {
@@ -36,7 +38,7 @@
 
 <body>
     <div class="container mt-5">
-        <img src="{% static 'img/logo/image-removebg-preview.png' %}" width="200px"/>
+        <img src="{% static 'img/logo/image-removebg-preview.png' %}" width="200px" />
         <div class="sign-in-ctn">
             <form method="post" action="{% url 'dashboard:sign_in' %}">
                 <h1 class="h3 mb-3 font-weight-normal">Sign in / ចូលគណនី</h1>
@@ -51,7 +53,50 @@
             </form>
         </div>
     </div>
-</body>
 
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelector("form").addEventListener("submit", function(event) {
+                event.preventDefault();
+                var formData = new FormData(this);
+                fetch(this.action, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if(data.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Sign in successful!',
+                            showConfirmButton: true, // Show the "OK" button
+                            timer: 7000, // Timer set to 7 seconds
+                            timerProgressBar: true,
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = "{% url 'dashboard:dashboard' %}";
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: data.message,
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+        });
+        
+        
+    </script>
+
+
+</body>
 
 </html>

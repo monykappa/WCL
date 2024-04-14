@@ -7,15 +7,12 @@ from django.shortcuts import render
 from . import views
 from django.conf import settings 
 
-
-
-
 app_name = 'home'
 urlpatterns = [
-    path('base/', views.base, name='base'),
-    path('', views.home, name='home'),
-    path('about_us/', views.about_us, name='about_us'),
-    path('contact_us/', views.contact_us, name='contact_us'),
+    # path('base/', views.BaseView.as_view(), name='base'),
+    path('', views.HomeView.as_view(), name='home'),
+    path('about_us/', views.AboutUsView.as_view(), name='about_us'),
+    path('contact_us/', views.ContactUsView.as_view(), name='contact_us'),
 ]
 
 

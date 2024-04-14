@@ -25,3 +25,56 @@ document.getElementById('clearSearchInput').addEventListener('click', function()
     document.getElementById('searchInput').value = ''; 
     filterTable(); 
 });
+
+    // Function to validate the form
+    function validateForm() {
+        try {
+            var nameInput = document.getElementById('id_name').value.trim();
+            if (nameInput === '') {
+                Swal.fire("Error", "Please enter the product type name", "error");
+            } else {
+                submitForm();
+            }
+        } catch (error) {
+            console.error("Error in validateForm:", error);
+        }
+    }
+
+    // Function to handle form submission
+    function submitForm() {
+        var form = document.getElementById('productTypeForm');
+        var formData = new FormData(form);
+
+        fetch(form.action, {
+            method: form.method,
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                // Show success message
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Product type added successfully!',
+                    icon: 'success',
+                    timer: 1000, // 1 second
+                    timerProgressBar: true,
+                    showConfirmButton: false
+                });
+
+                setTimeout(function () {
+                    location.reload();
+                }, 1500); // Reload page after 1.5 seconds
+            } else {
+                // Show error message if form submission failed
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Failed to add product type. Please try again later.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }

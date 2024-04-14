@@ -2,60 +2,105 @@
 {% load static %}
 
 {% block title %}
-    Dashboard | Category
+Dashboard | Category
 {% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/dashboard/popup/popup.css' %}">
+{% endblock css %}
+
+
 
 <h1 class="d-inline-block ml-auto​ text-light​">{% block dashboard_title %}Category{% endblock dashboard_title%}
 </h1>
 
 {% block content %}
+<h1>Category List</h1>
+<div class="row mb-3">
+    <div class="col-md-4">
+        <a href="#" id="addCategoryBtn" class="bg-success p-2 text-light rounded" data-toggle="modal"
+            data-target="#categoryPopup">
+            <i class="fa fa-add text-light mr-1"></i>Add
+        </a>
 
-    <h1>Category List</h1>
-    <div class="row mb-3">
-        <div class="col-md-4">
-            <a href="{% url 'dashboard:add_category' %}" class="bg-success p-2 text-light rounded"><i class="fa fa-add text-light mr-1"></i>Add</a>
-        </div>
-        <div class="col-md-8 mt-2">
-            <div class="input-group">
-                <input type="text" class="form-control" id="searchInput" placeholder="Search...">
-                <div class="input-group-append">
-                    <button class="btn btn-primary" type="button" id="searchButton">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </div>
-                <div class="input-group-append">
-                    <span class="input-group-text bg-danger text-light ml-2" id="clearSearchInput" style="cursor: pointer;"><i
-                            class="fa-solid fa-eraser"></i></span>
-                </div>
+    </div>
+    <div class="col-md-8 mt-2">
+        <div class="input-group">
+            <input type="text" class="form-control" id="searchInput" placeholder="Search...">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button" id="searchButton">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+            <div class="input-group-append">
+                <span class="input-group-text bg-danger text-light ml-2" id="clearSearchInput"
+                    style="cursor: pointer;"><i class="fa-solid fa-eraser"></i></span>
             </div>
         </div>
     </div>
-    <table class="table" id="categoryTable">
-        <thead class="thead-dark">
-            <tr>
-                <th>Category Name</th>
-                <th>Description</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for category in categories %}
-            <tr>
-                <td>{{ category.name }}</td>
-                <td>{{ category.description }}</td>
-                <td>
-                    <a href="{% url 'dashboard:edit_category' category.id %}" class="btn btn-primary"><i
-                            class="fa fa-pencil" aria-hidden="true"></i></a>
-                    <button type="button" class="btn btn-danger" onclick="confirmDelete('{{ category.id }}')"><i
-                            class="fa fa-trash" aria-hidden="true"></i></button>
-                    <!-- Form for deletion, hidden initially -->
-                    <form id="deleteForm-{{ category.id }}" action="{% url 'dashboard:delete_category' category.id %}"
-                        method="post" style="display: none;">
-                        {% csrf_token %}
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+</div>
+<table class="table" id="categoryTable">
+    <thead class="thead-dark">
+        <tr>
+            <th>Category Name</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for category in categories %}
+        <tr>
+            <td>{{ category.name }}</td>
+            <td>{{ category.description }}</td>
+            <td>
+                <a href="{% url 'dashboard:edit_category' category.id %}" class="btn btn-primary">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                </a>
+                <button type="button" class="btn btn-danger" onclick="confirmDelete('{{ category.id }}')"><i
+                        class="fa fa-trash" aria-hidden="true"></i></button>
+                <!-- Form for deletion, hidden initially -->
+                <form id="deleteForm-{{ category.id }}" action="{% url 'dashboard:delete_category' category.id %}"
+                    method="post" style="display: none;">
+                    {% csrf_token %}
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Hidden form -->
+<div class="modal fade" id="categoryPopup" tabindex="-1" role="dialog" aria-labelledby="categoryPopupLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="categoryPopupLabel">Add Category</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" id="categoryForm">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="category_name">Category Name:</label>
+                        <input type="text" class="form-control" id="category_name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="category_description">Description:</label>
+                        <textarea class="form-control" id="category_description" name="description"></textarea>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="saveCategoryBtn">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
 {% endblock content %}

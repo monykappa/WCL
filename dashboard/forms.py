@@ -3,10 +3,11 @@ from product.models import *
 from news.models import *
 
 class ManufacturerForm(forms.ModelForm):
+    country = CountryField().formfield()  # This will generate the appropriate form field for the CountryField
+
     class Meta:
         model = Manufacturer
         fields = ['name', 'country', 'description']
-        
         
 class CategoryForm(forms.ModelForm):
     class Meta:

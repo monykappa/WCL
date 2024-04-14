@@ -1,19 +1,15 @@
 {% extends 'dashboard/edit_page/edit.html' %}
 {% load static %}
-
 <h1 class="d-inline-block ml-auto">{% block dashboard_title %}Edit News{% endblock dashboard_title%}</h1>
-
-
 {% block content %}
 <style>
     .hidden {
         display: none;
     }
-    p{
-        color:#000 !important;
+    p {
+        color: #000 !important;
     }
 </style>
-
 <div class="modal fade" id="pop-up" tabindex="-1" role="dialog" aria-labelledby="pop-up-label" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -33,20 +29,17 @@
                             <li>{{ update.update_time }} - Editor: <b>{{ update.user.username }}</b></li>
                             {% endfor %}
                         </ul>
-                        <a href="{% url 'dashboard:update_history' new.id %}" class="btn btn-primary mt-2">View<i class="fa-solid fa-eye ml-2"></i> </a>
+                        <a href="{% url 'dashboard:update_history' new.id %}" class="btn btn-primary mt-2">View<i
+                                class="fa-solid fa-eye ml-2"></i> </a>
                         {% else %}
                         <p>No update history available.</p>
                         {% endif %}
-
                     </ul>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
-
 <form method="post" id="editNewsForm" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="form-group">
@@ -76,11 +69,13 @@
     </div>
     <div class="form-group">
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="publishCheckbox" name="publishCheckbox" {% if new.is_published %}checked{% endif %}>
+            <input class="form-check-input" type="checkbox" id="publishCheckbox" name="publishCheckbox" 
+            {% if new.is_published %}
+            checked
+            {% endif %}>
             <label class="form-check-label" for="publishCheckbox">Publish</label>
         </div>
     </div>
-    
     <div class="form-group">
         <label for="update_count">Update Count:</label>
         <input type="text" class="form-control" id="update_count" name="update_count" value="{{ new.update_count }}"
@@ -91,14 +86,11 @@
     <button type="submit" class="btn btn-primary" id="saveNewsChangesButton"><i
             class="fa-solid fa-floppy-disk"></i></button>
 </form>
-
-
 <script>
     function removeImage() {
         var currentImageContainer = document.getElementById('currentImageContainer');
         currentImageContainer.innerHTML = '<p>No image available</p>';
     }
-
     function previewImage(event) {
         var reader = new FileReader();
         reader.onload = function () {
@@ -112,11 +104,9 @@
         };
         reader.readAsDataURL(event.target.files[0]);
     }
-
     // Function to show SweetAlert confirmation for form submission
     function confirmFormSubmission(event) {
         event.preventDefault(); // Prevent the default form submission
-
         Swal.fire({
             title: 'Save Changes?',
             text: 'Are you sure you want to save the changes?',
@@ -132,22 +122,18 @@
             }
         });
     }
-
     // Attach the confirmation function to the Enter key press event
     document.addEventListener('keydown', function (event) {
         if (event.key === 'Enter') {
             confirmFormSubmission(event);
         }
     });
-
     // Attach the confirmation function to the form submission event
     document.getElementById('saveNewsChangesButton').addEventListener('click', confirmFormSubmission);
 
-
-
+    
     document.getElementById('show-data-btn').addEventListener('click', function () {
         document.getElementById('pop-up').classList.remove('hidden');
     });
-
 </script>
 {% endblock content %}

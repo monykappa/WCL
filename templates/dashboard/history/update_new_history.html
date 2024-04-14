@@ -30,6 +30,7 @@ Update History
 
 <div class="container update-news-ctn">
     <h1 class="mt-4">Update History for "{{ new.title }}"</h1>
+    <p><strong>Created At:</strong> {{ new.created_at }}</p>
     {% if update_history_entries %}
         {% for update in update_history_entries %}
             <div class="row border p-3 mb-3 update-news-row">
@@ -55,7 +56,10 @@ Update History
                     {% else %}
                         None
                     {% endif %}
-                    <p><strong>New Update Time:</strong> {{ update.update_time }}</p>
+                    <p><strong>Updated Time:</strong> {{ update.update_time }}</p>
+                    {% if update.user %}
+                        <p><strong>Editor:</strong> {{ update.user.username }}</p>
+                    {% endif %}
                 </div>
             </div>
         {% endfor %}
@@ -63,6 +67,7 @@ Update History
         <p>No update history available.</p>
     {% endif %}
 </div>
+
 
 
 

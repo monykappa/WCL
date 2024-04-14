@@ -28,3 +28,74 @@ document.addEventListener("DOMContentLoaded", function() {
         filterTable(); 
     });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Function to validate the form
+    function validateForm() {
+        var categoryName = document.getElementById('category_name').value.trim();
+        if (categoryName === '') {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Please enter a category name.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+            return false;
+        }
+        return true;
+    }
+
+    // Function to handle form submission without confirmation
+    function confirmFormSubmission(event) {
+        event.preventDefault();
+        if (validateForm()) {
+            // Submit the form
+            var form = document.getElementById('categoryForm');
+            var formData = new FormData(form);
+
+            fetch(form.action, {
+                method: form.method,
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Show success message
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Category added successfully!',
+                        icon: 'success',
+                        timer: 1000, // 2 seconds
+                        timerProgressBar: true,
+                        showConfirmButton: false
+                    });
+                    
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1500);
+                } else {
+                    // Show error message if form submission failed
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Failed to add category. Please try again later.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    }
+
+    // Attach the form submission function to the "Save" button click event
+    document.getElementById('saveCategoryBtn').addEventListener('click', confirmFormSubmission);
+
+    // Attach the form submission function to the Enter key press event
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' && $('#categoryPopup').hasClass('show')) {
+            confirmFormSubmission(event);
+        }
+    });
+});
+
