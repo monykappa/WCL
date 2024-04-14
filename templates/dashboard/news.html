@@ -1,15 +1,29 @@
 {% extends 'dashboard/dashboard_base.html' %}
-
+{% load static %}
 {% block title %}
 Dashboard | News
 {% endblock title %}
+
+{% block css %}
+{% endblock css %}
 
 <h1 class="d-inline-block ml-auto text-light">
     {% block dashboard_title %}News{% endblock dashboard_title%}
 </h1>
 
 {% block content %}
-
+<style>
+    .published {
+        color: #fff;
+        background-color: green;
+    }
+    
+    .not-published {
+        color: #fff;
+        background-color: red;
+    }
+    
+</style>
 <h1>News List</h1>
 <div class="row mb-3">
     <div class="col-md-4">
@@ -33,6 +47,7 @@ Dashboard | News
         </div>
     </div>
 </div>
+
 <table class="table">
     <thead class="thead-dark">
         <tr>
@@ -52,14 +67,17 @@ Dashboard | News
             <td>{{ news_item.description }}</td>
             <td>
                 {% if news_item.image %}
-                <img src="{{ news_item.image.url }}" alt="{{ news_item.title }}" width="100" class="img-fluid rounded">
+                <img src="{{ news_item.image.url }}" alt="{{ news_item.title }}" width="100" class="img-fluid rounded image-fullscreen-trigger">
                 {% else %}
                 No Image
                 {% endif %}
             </td>
             <td>{{ news_item.created_at }}</td>
             <td>{{ news_item.updated_at }}</td>
-            <td>{% if news_item.is_published %}Published{% else %}Not Published{% endif %}</td>
+            <td class="{% if news_item.is_published %}published{% else %}not-published{% endif %}">
+                {% if news_item.is_published %}Published{% else %}Not Published{% endif %}
+            </td>
+            
             <td style="white-space: nowrap; width: 1%;">
                 <a href="{% url 'dashboard:edit_news' news_item.id %}" class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                 <a href="{% url 'dashboard:update_history' news_item.id %}" class="btn btn-warning"><i class="fa-solid fa-clock-rotate-left"></i></a>
@@ -73,5 +91,16 @@ Dashboard | News
         {% endfor %}
     </tbody>
 </table>
+
+<div id="fullscreen" class="fullscreen hidden-bottom" style="display: none;">
+    <span class="close-btn" onclick="closeFullScreen()">
+        <i class="fa fa-times" style="color:red;" aria-hidden="true"></i>
+    </span>
+    <img id="fullscreen-img" src="" alt="Full Screen Image">
+    <div class="zoom-controls">
+        <button onclick="zoomIn()">Zoom In <i class="fa fa-plus" aria-hidden="true"></i></button>
+        <button onclick="zoomOut()">Zoom Out <i class="fa fa-minus" aria-hidden="true"></i></button>
+    </div>
+</div>
 
 {% endblock content %}

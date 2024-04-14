@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'css/dashboard/dashboard_base.css'%}">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="{% static 'css/dashboard/fullscreen_image/fullscreen_img.css'%}">
     {% block css %}{% endblock css %}
 </head>
 
@@ -108,6 +109,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="{% static 'js/features/back_button.js'%}"></script>
     <script src="{% static 'js/dashboard/edit/confirm_save.js'%}"></script>
+    <script src="{% static 'js/dashboard/fullscreen_image/fullscreen_img.js'%}"></script>
     <script>
         $(document).ready(function () {
             $('#sidebarCollapse').on('click', function () {

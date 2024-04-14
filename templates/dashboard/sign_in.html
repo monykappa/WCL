@@ -67,17 +67,19 @@
                 .then(response => response.json())
                 .then(data => {
                     if(data.success) {
+                        // Show the success message with a timer for 2 seconds
                         Swal.fire({
                             icon: 'success',
                             title: 'Success',
-                            text: 'Sign in successful!',
-                            showConfirmButton: true, // Show the "OK" button
-                            timer: 7000, // Timer set to 7 seconds
+                            text: 'You will be taken to the dashboard shortly.',
+                            timer: 2000,
                             timerProgressBar: true,
-                        }).then((result) => {
-                            if (result.isConfirmed) {
+                            showConfirmButton: false, // Hide the "OK" button
+                        }).then(() => {
+                            // Redirect to the dashboard after 2 seconds
+                            setTimeout(function() {
                                 window.location.href = "{% url 'dashboard:dashboard' %}";
-                            }
+                            }, 1000); 
                         });
                     } else {
                         Swal.fire({
@@ -92,9 +94,8 @@
                 });
             });
         });
+        </script>
         
-        
-    </script>
 
 
 </body>

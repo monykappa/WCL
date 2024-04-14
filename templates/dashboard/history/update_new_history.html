@@ -39,7 +39,7 @@ Update History
                     <p><strong>Title:</strong> {{ update.title_before }}</p>
                     <p><strong>Description:</strong> {{ update.description_before }}</p>
                     {% if update.image_before %}
-                        <img src="{{ update.image_before.url }}" alt="Previous Image" class="img-fluid">
+                        <img src="{{ update.image_before.url }}" alt="Previous Image" class="img-fluid image-fullscreen-trigger">
                     {% else %}
                         None
                     {% endif %}
@@ -52,7 +52,7 @@ Update History
                     <p><strong>Title:</strong> {{ update.title_after }}</p>
                     <p><strong>Description:</strong> {{ update.description_after }}</p>
                     {% if update.image_after %}
-                        <img src="{{ update.image_after.url }}" alt="New Image" class="img-fluid">
+                        <img src="{{ update.image_after.url }}" alt="New Image" class="img-fluid image-fullscreen-trigger">
                     {% else %}
                         None
                     {% endif %}
@@ -70,19 +70,18 @@ Update History
 
 
 
-
-
-<div id="fullscreen" style="display: none;">
-    <div class="fullscreen-container">
-        <img id="fullscreen-img" src="" alt="Full Screen Image" onclick="closeFullScreen()">
-        <div class="fullscreen-controls">
-            <button onclick="zoomIn()">+</button>
-            <button onclick="zoomOut()">-</button>
-        </div>
+<div id="fullscreen" class="fullscreen hidden-bottom" style="display: none;">
+    <span class="close-btn" onclick="closeFullScreen()">
+        <i class="fa fa-times" style="color:red;" aria-hidden="true"></i>
+    </span>
+    <img id="fullscreen-img" src="" alt="Full Screen Image">
+    <div class="zoom-controls">
+        <button onclick="zoomIn()">Zoom In <i class="fa fa-plus" aria-hidden="true"></i></button>
+        <button onclick="zoomOut()">Zoom Out <i class="fa fa-minus" aria-hidden="true"></i></button>
     </div>
 </div>
 
 
-<script src="{% static 'js/features/back_button.js'%}"></script>
 
+<script src="{% static 'js/features/back_button.js'%}"></script>
 {% endblock content %}
