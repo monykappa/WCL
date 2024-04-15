@@ -30,8 +30,6 @@ def images_directory_path(instance, filename):
 class TimeStampedModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
-
-
     class Meta:
         abstract = True
 
@@ -74,7 +72,7 @@ class Category(TimeStampedModel):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = generate_slug(self.name)  # Generate slug from the name field
+            self.slug = generate_slug(self.name) 
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -83,6 +81,7 @@ class Category(TimeStampedModel):
 
 class Drug(TimeStampedModel):
     name = models.CharField(max_length=100)
+    slug = models.SlugField(unique=True, max_length=100, null=True, blank=True)
     image = models.ImageField(upload_to=images_directory_path, validators=[validate_file_extension], blank=True, null=True)
     description = models.CharField(max_length=500, null=True, blank=True)
     manufacturer = models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
@@ -94,8 +93,9 @@ class Drug(TimeStampedModel):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = generate_slug(self.name)  # Generate slug from the name field
+            self.slug = generate_slug(self.name)  # Generate unique slug from the name field
         super().save(*args, **kwargs)
+
 
     def __str__(self):
         return self.name

@@ -5,6 +5,7 @@ body.modal-open {
     overflow: hidden;
 }
 
+
 .modal {
     display: none;
     position: fixed;
@@ -270,13 +271,13 @@ p.productName {
 
 @media(min-width:200px) and (max-width:450px){
     .modal-content{
-        top:50%;
+        top:55%;
         display: block;
         width:90%;
         max-height:auto;
     }
     .modal-image{
-        width: auto;
+        width: 200px;
         display: flex;
         margin:0 auto;
         padding:0;

@@ -71,6 +71,8 @@ section.product-detail p {
     display: flex;
     margin:0 auto;
     max-width: 70% !important;
+    height: 80% !important;
+    object-fit: contain;
 }
 .product-detail-img{
     cursor: pointer;
