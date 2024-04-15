@@ -79,8 +79,8 @@ Dashboard | News
             </td>
             
             <td style="white-space: nowrap; width: 1%;">
-                <a href="{% url 'dashboard:edit_news' news_item.id %}" class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                <a href="{% url 'dashboard:update_history' news_item.id %}" class="btn btn-warning"><i class="fa-solid fa-clock-rotate-left"></i></a>
+                <a href="{% url 'dashboard:edit_news' news_item.slug %}" class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                <a href="{% url 'dashboard:update_history' news_item.slug %}" class="btn btn-warning"><i class="fa-solid fa-clock-rotate-left"></i></a>
                 <button type="button" class="btn btn-danger" onclick="confirmDelete('{{ news_item.id }}')"><i class="fa fa-trash" aria-hidden="true"></i></button>
                 <!-- Form for deletion, hidden initially -->
                 <form id="deleteForm-{{ news_item.id }}" action="{% url 'dashboard:delete_news' news_item.id %}" method="post" style="display: none;">

@@ -29,7 +29,7 @@
                             <li>{{ update.update_time }} - Editor: <b>{{ update.user.username }}</b></li>
                             {% endfor %}
                         </ul>
-                        <a href="{% url 'dashboard:update_history' new.id %}" class="btn btn-primary mt-2">View<i
+                        <a href="{% url 'dashboard:update_history' new.slug %}" class="btn btn-primary mt-2">View<i
                                 class="fa-solid fa-eye ml-2"></i> </a>
                         {% else %}
                         <p>No update history available.</p>

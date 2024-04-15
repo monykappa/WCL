@@ -8,6 +8,7 @@ import uuid
 from decimal import Decimal
 from django.utils import timezone
 import os
+from django.utils.text import slugify
 from datetime import datetime, date
 
 
@@ -23,6 +24,8 @@ def images_directory_path(instance, filename):
     return os.path.join(directory_path, filename)
 
 
+
+
 class New(models.Model):
     title = models.CharField(max_length=100)
     image = models.ImageField(upload_to=images_directory_path, validators=[validate_file_extension], blank=True, null=True)
@@ -31,16 +34,22 @@ class New(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     update_count = models.IntegerField(default=0)
     is_published = models.BooleanField(default=False) 
+    slug = models.SlugField(unique=True, max_length=100, null=True, blank=True)
+
 
     def __str__(self):
         return self.title
 
     def save(self, *args, **kwargs):
-        if self.pk:
-            self.update_count += 1
-        super(New, self).save(*args, **kwargs)
-        
-        
+        if not self.slug:
+            base_slug = slugify(self.title)
+            self.slug = base_slug
+            counter = 1
+            while New.objects.filter(slug=self.slug).exists():
+                self.slug = f"{base_slug}-{counter}"
+                counter += 1
+        super().save(*args, **kwargs)
+
 class UpdateHistory(models.Model):
     news = models.ForeignKey('New', on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
@@ -51,8 +60,12 @@ class UpdateHistory(models.Model):
     title_after = models.CharField(max_length=100,null=True, blank=True)
     image_after = models.ImageField(upload_to=images_directory_path, validators=[validate_file_extension], null=True, blank=True)
     description_after = models.TextField()
+    slug = models.SlugField(unique=True, max_length=100, null=True, blank=True)  # Add a slug field
 
     def __str__(self):
         return f"{self.news.title} - {self.update_time}"
 
-    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.news.title)  
+        super().save(*args, **kwargs)

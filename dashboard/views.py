@@ -68,17 +68,17 @@ class CategoryView(View):
 
 @method_decorator(login_required, name='dispatch')
 class EditCategoryView(View):
-    def get(self, request, category_id):
-        category = get_object_or_404(Category, id=category_id)
+    def get(self, request, category_slug):
+        category = get_object_or_404(Category, slug=category_slug)
         form = CategoryForm(instance=category)
         return render(request, 'dashboard/edit_page/edit_category.html', {'form': form})
 
-    def post(self, request, category_id):
-        category = get_object_or_404(Category, id=category_id)
+    def post(self, request, category_slug):
+        category = get_object_or_404(Category, slug=category_slug)
         form = CategoryForm(request.POST, instance=category)
         if form.is_valid():
             form.save()
-            return redirect('dashboard:category')
+            return redirect('dashboard:category_list')
         return render(request, 'dashboard/edit_page/edit_category.html', {'form': form})
 
 @method_decorator(login_required, name='dispatch')
@@ -129,14 +129,6 @@ class ManufacturerView(View):
         form = ManufacturerForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('dashboard:manufacturer')
-        return render(request, 'dashboard/manufacturer.html', {'form': form})
-
-
-    def post(self, request):
-        form = ManufacturerForm(request.POST)
-        if form.is_valid():
-            form.save()
             if request.headers.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
                 return JsonResponse({'success': 'Manufacturer added successfully'})
             else:
@@ -149,20 +141,23 @@ class ManufacturerView(View):
                 return render(request, 'dashboard/manufacturer.html', {'form': form})
 
 
+
 @method_decorator(login_required, name='dispatch')
 class EditManufacturerView(View):
-    def get(self, request, manufacturer_id):
-        manufacturer = get_object_or_404(Manufacturer, id=manufacturer_id)
+    def get(self, request, manufacturer_slug):
+        manufacturer = get_object_or_404(Manufacturer, slug=manufacturer_slug)
         form = ManufacturerForm(instance=manufacturer)
         return render(request, 'dashboard/edit_page/edit_manufacturer.html', {'form': form})
 
-    def post(self, request, manufacturer_id):
-        manufacturer = get_object_or_404(Manufacturer, id=manufacturer_id)
+    def post(self, request, manufacturer_slug):
+        manufacturer = get_object_or_404(Manufacturer, slug=manufacturer_slug)
         form = ManufacturerForm(request.POST, instance=manufacturer)
         if form.is_valid():
             form.save()
-            return redirect('dashboard:manufacturer')
+            return redirect('dashboard:manufacturer')  # Assuming this redirects to the manufacturer list page
         return render(request, 'dashboard/edit_page/edit_manufacturer.html', {'form': form})
+
+
 
 @method_decorator(login_required, name='dispatch')
 class DeleteManufacturerView(View):
@@ -204,13 +199,13 @@ class ProductTypeView(View):
 
 @method_decorator(login_required, name='dispatch')
 class EditProductTypeView(View):
-    def get(self, request, drug_type_id):
-        drug_type = get_object_or_404(DrugType, id=drug_type_id)
+    def get(self, request, slug):
+        drug_type = get_object_or_404(DrugType, slug=slug)
         form = DrugTypeForm(instance=drug_type)
         return render(request, 'dashboard/edit_page/edit_product_type.html', {'form': form})
 
-    def post(self, request, drug_type_id):
-        drug_type = get_object_or_404(DrugType, id=drug_type_id)
+    def post(self, request, slug):
+        drug_type = get_object_or_404(DrugType, slug=slug)
         form = DrugTypeForm(request.POST, instance=drug_type)
         if form.is_valid():
             form.save()
@@ -249,8 +244,8 @@ class AddNewsView(View):
 
 @method_decorator(login_required, name='dispatch')
 class EditNewsView(View):
-    def post(self, request, new_id):
-        new = get_object_or_404(New, id=new_id)
+    def post(self, request, new_slug):
+        new = get_object_or_404(New, slug=new_slug)
         form = NewsForm(request.POST, request.FILES, instance=new)
         # Capture previous values before saving the form
         previous_title = new.title
@@ -279,17 +274,17 @@ class EditNewsView(View):
             return redirect('dashboard:news')
         return render(request, 'dashboard/edit_page/edit_news.html', {'form': form, 'new': new})
 
-    def get(self, request, new_id):
-        new = get_object_or_404(New, id=new_id)
+    def get(self, request, new_slug):
+        new = get_object_or_404(New, slug=new_slug)
         form = NewsForm(instance=new)
         return render(request, 'dashboard/edit_page/edit_news.html', {'form': form, 'new': new})
 
 @method_decorator(login_required, name='dispatch')
 class UpdateHistoryView(View):
-    def get(self, request, new_id):
-        new = get_object_or_404(New, id=new_id)
-        update_history_entries = new.updatehistory_set.all().order_by('-update_time')
-        return render(request, 'dashboard/history/update_new_history.html', {'new': new, 'update_history_entries': update_history_entries})
+    def get(self, request, new_slug):
+        new_instance = get_object_or_404(New, slug=new_slug)
+        update_history_entries = new_instance.updatehistory_set.all().order_by('-update_time')
+        return render(request, 'dashboard/history/update_new_history.html', {'new': new_instance, 'update_history_entries': update_history_entries})
 
 @method_decorator(login_required, name='dispatch')
 class DeleteNewsView(View):

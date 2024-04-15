@@ -11,6 +11,7 @@ import os
 from datetime import datetime, date
 from django_countries.fields import CountryField
 import pytz 
+from django.utils.text import slugify
 
 
 
@@ -34,29 +35,51 @@ class TimeStampedModel(models.Model):
     class Meta:
         abstract = True
 
+def generate_slug(value):
+    return slugify(value)
+
 class DrugType(TimeStampedModel):
     name = models.CharField(max_length=100, null=True, blank=True)
     description = models.CharField(max_length=500, null=True, blank=True)
-    
+    slug = models.SlugField(unique=True, max_length=100, null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = generate_slug(self.name)  # Generate slug from the name field
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.name
-    
+
+
 class Manufacturer(TimeStampedModel):
     name = models.CharField(max_length=100, null=True, blank=True)
     country = CountryField()
     description = models.CharField(max_length=500, null=True, blank=True)
+    slug = models.SlugField(unique=True, max_length=100, null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)  # Generate slug from the name field
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
-    
+
 
 class Category(TimeStampedModel):
     name = models.CharField(max_length=100, null=True, blank=True)
     description = models.CharField(max_length=500, null=True, blank=True)
+    slug = models.SlugField(unique=True, max_length=100, null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = generate_slug(self.name)  # Generate slug from the name field
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
-    
+
 
 class Drug(TimeStampedModel):
     name = models.CharField(max_length=100)
@@ -68,6 +91,11 @@ class Drug(TimeStampedModel):
     expiry_date = models.DateField(null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     drug_type = models.ForeignKey(DrugType, on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = generate_slug(self.name)  # Generate slug from the name field
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name

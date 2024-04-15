@@ -48,8 +48,10 @@ Dashboard | Manufacturer
             <td>{{ manufacturer.get_country_display }}</td>
             <td>{{ manufacturer.description }}</td>
             <td>
-                <a href="{% url 'dashboard:edit_manufacturer' manufacturer.id %}" class="btn btn-primary"><i
-                        class="fa fa-pencil" aria-hidden="true"></i></a>
+                <a href="{% url 'dashboard:edit_manufacturer' manufacturer.slug %}" class="btn btn-primary">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                </a>
+                
                 <button type="button" class="btn btn-danger"
                     onclick="confirmDeleteManufacturer('{{ manufacturer.id }}')"><i class="fa fa-trash"
                         aria-hidden="true"></i></button>
