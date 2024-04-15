@@ -32,12 +32,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 ALLOWED_HOSTS = ["*"]
 
+
 SESSION_COOKIE_AGE = 86400  # 24 hours cookie to log out user from dashboard
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
 # Set session cookie secure
-SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = False
 
 
 # Application definition

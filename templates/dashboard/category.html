@@ -39,36 +39,40 @@ Dashboard | Category
         </div>
     </div>
 </div>
-<table class="table" id="categoryTable">
-    <thead class="thead-dark">
-        <tr>
-            <th>Category Name</th>
-            <th>Description</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for category in categories %}
-        <tr>
-            <td>{{ category.name }}</td>
-            <td>{{ category.description }}</td>
-            <td>
-                <a href="{% url 'dashboard:edit_category' category.slug %}" class="btn btn-primary">
-                    <i class="fa fa-pencil" aria-hidden="true"></i>
-                </a>
-                
-                <button type="button" class="btn btn-danger" onclick="confirmDelete('{{ category.id }}')"><i
-                        class="fa fa-trash" aria-hidden="true"></i></button>
-                <!-- Form for deletion, hidden initially -->
-                <form id="deleteForm-{{ category.id }}" action="{% url 'dashboard:delete_category' category.id %}"
-                    method="post" style="display: none;">
-                    {% csrf_token %}
-                </form>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="table-responsive">
+    <table class="table" id="categoryTable">
+        <thead class="thead-dark">
+            <tr>
+                <th>Category Name</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for category in categories %}
+            <tr>
+                <td>{{ category.name }}</td>
+                <td>{{ category.description }}</td>
+                <td>
+                    <a href="{% url 'dashboard:edit_category' category.slug %}" class="btn btn-primary">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </a>
+                    
+                    <button type="button" class="btn btn-danger" onclick="confirmDelete('{{ category.id }}')">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+
+                    <!-- Form for deletion, hidden initially -->
+                    <form id="deleteForm-{{ category.id }}" action="{% url 'dashboard:delete_category' category.id %}"
+                        method="post" style="display: none;">
+                        {% csrf_token %}
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
 <!-- Hidden form -->
 <div class="modal fade" id="categoryPopup" tabindex="-1" role="dialog" aria-labelledby="categoryPopupLabel"

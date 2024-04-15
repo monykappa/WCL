@@ -32,41 +32,45 @@ Dashboard | Manufacturer
         </div>
     </div>
 </div>
-<table class="table" id="manufacturerTable">
-    <thead class="thead-dark">
-        <tr>
-            <th>Name</th>
-            <th>Country</th>
-            <th>Description</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for manufacturer in manufacturers %}
-        <tr>
-            <td>{{ manufacturer.name }}</td>
-            <td>{{ manufacturer.get_country_display }}</td>
-            <td>{{ manufacturer.description }}</td>
-            <td>
-                <a href="{% url 'dashboard:edit_manufacturer' manufacturer.slug %}" class="btn btn-primary">
-                    <i class="fa fa-pencil" aria-hidden="true"></i>
-                </a>
-                
-                <button type="button" class="btn btn-danger"
-                    onclick="confirmDeleteManufacturer('{{ manufacturer.id }}')"><i class="fa fa-trash"
-                        aria-hidden="true"></i></button>
+<div class="table-responsive">
+    <table class="table" id="manufacturerTable">
+        <thead class="thead-dark">
+            <tr>
+                <th>Name</th>
+                <th>Country</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for manufacturer in manufacturers %}
+            <tr>
+                <td>{{ manufacturer.name }}</td>
+                <td>{{ manufacturer.get_country_display }}</td>
+                <td>{{ manufacturer.description }}</td>
+                <td>
+                    <a href="{% url 'dashboard:edit_manufacturer' manufacturer.slug %}" class="btn btn-primary">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </a>
+                    
+                    <button type="button" class="btn btn-danger"
+                        onclick="confirmDeleteManufacturer('{{ manufacturer.id }}')">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
 
-                <!-- Form for deletion, hidden initially -->
-                <form id="deleteForm-{{ manufacturer.id }}"
-                    action="{% url 'dashboard:delete_manufacturer' manufacturer.id %}" method="post"
-                    style="display: none;">
-                    {% csrf_token %}
-                </form>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+                    <!-- Form for deletion, hidden initially -->
+                    <form id="deleteForm-{{ manufacturer.id }}"
+                        action="{% url 'dashboard:delete_manufacturer' manufacturer.id %}" method="post"
+                        style="display: none;">
+                        {% csrf_token %}
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
 
 
 
