@@ -1,0 +1,126 @@
+body.dark-mode {
+    background-color: #1c2128 !important;
+    color: white !important;
+}
+
+.dark-mode td {
+    color: white !important;
+}
+
+.dark-mode p {
+    color: white !important;
+}
+
+body.dark-mode h1 {
+    color: #fff !important;
+}
+
+body.dark-mode h3 {
+    color: #fff !important;
+}
+
+.dark-mode table tbody td {
+    border: 1px solid #fff !important;
+}
+
+
+
+.dark-mode .table th {
+    background-color: #61738d !important;
+    border: 1px solid #fff !important;
+}
+
+.dark-mode .table thead {
+    border: 1px solid #fff !important;
+    background-color: #1c2128 !important;
+}
+
+.dark-mode .navbar {
+    background-color: #1c2128;
+    border-bottom: 1px solid grey !important;
+}
+
+.dark-mode #sidebar {
+    background-color: #22272e;
+}
+
+.dark-mode #sidebar ul.components a {
+    color: #fff !important;
+}
+
+.dark-mode #sidebar ul.components a:hover {
+    color: #000000 !important;
+}
+
+.dark-mode #sidebar .sidebar-header {
+    background-color: #1c2128 !important;
+}
+
+.dark-mode input {
+    background-color: #1c2128 !important;
+    color: #fff !important;
+}
+
+.dark-mode .modal-content {
+    background-color: #22272e !important;
+}
+
+.dark-mode .modal-content textarea {
+    background-color: #22272e !important;
+    color: #fff !important;
+}
+
+.dark-mode span {
+    color: #fff !important;
+}
+
+.dark-mode #sidebarCollapse {
+    background-color: #fff !important;
+}
+
+.dark-mode #sidebarCollapse i {
+    color: #000 !important;
+    background-color: #ffffff !important;
+}
+
+.dark-mode button#darkModeButton {
+    background: #fff !important;
+}
+
+.dark-mode #darkModeButton i {
+    color: #000 !important;
+    transition: transform 0.3s ease;
+    /* Add transition effect */
+}
+
+.dark-mode #darkModeButton:hover i {
+    transform: rotate(90deg);
+    /* Rotate on hover */
+}
+
+.dark-mode #darkModeButton i:not(:hover) {
+    transform: rotate(0deg);
+    /* Rotate back when not hovered */
+}
+
+.dark-mode .card {
+    border: 1px solid #fff !important;
+    background-color: #1c2128 !important;
+}
+
+.dark-mode form {
+    background-color: #1c2128 !important;
+}
+
+.dark-mode form textarea {
+    background-color: #1c2128 !important;
+    color: #fff !important;
+}
+
+.dark-mode form select{
+    background-color:#1c2128 !important ;
+    color:#fff !important;
+}
+.dark-mode form option{
+    color:#fff !important;
+}

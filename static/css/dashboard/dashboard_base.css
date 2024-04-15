@@ -4,21 +4,35 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
+
+
+
 body {
     font-family: "Inter", sans-serif;
-    background: #fafafa;
+    color: #000 !important;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.table .thead-dark th{
+body h1 {
+    color: #000 !important;
+}
+
+h1.nav-heading {
+    color: #fff !important;
+}
+
+.table .thead-dark th {
     background-color: #559bcf !important;
 }
-table{
+
+table {
     border-color: #244d6e !important;
 }
 
-h1{
-    color:#000;
+h1 {
+    color: #000;
 }
+
 p {
     font-family: "Open Sans", sans-serif;
     font-size: 1.1em;
@@ -35,6 +49,30 @@ a:focus {
     transition: all 0.3s;
 }
 
+.table thead {
+    border: 1px solid #000;
+}
+
+button#darkModeButton {
+    background-color: #1c2128 !important;
+}
+
+button#darkModeButton i {
+    color: white !important;
+    transition: transform 0.3s ease;
+    /* Add transition effect */
+}
+
+#darkModeButton:hover i {
+    transform: rotate(120deg);
+    /* Rotate on hover */
+}
+
+#darkModeButton i:not(:hover) {
+    transform: rotate(0deg);
+    /* Rotate back when not hovered */
+}
+
 .navbar {
     padding: 15px 10px;
     background-color: #559bcf;
@@ -44,8 +82,8 @@ a:focus {
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.navbar h1{
-    color:#fff;
+.navbar h1 {
+    color: #fff;
 }
 
 .navbar-btn {
@@ -71,9 +109,10 @@ a:focus {
     align-items: stretch;
 }
 
-h3{
-    color:#000 !important;
+h3 {
+    color: #000 !important;
 }
+
 #sidebar {
     min-width: 250px;
     max-width: 250px;
@@ -98,28 +137,29 @@ h3{
 }
 
 
-#sidebar img.logo{
+#sidebar img.logo {
     display: flex;
-    margin:0 auto;
+    margin: 0 auto;
 }
 
 
-#sidebar ul.components a{
-    color:#000 !important;
+#sidebar ul.components a {
+    color: #000 !important;
 }
 
-#sidebar ul.components a:hover{
-    color:#000000 !important;
+#sidebar ul.components a:hover {
+    color: #000000 !important;
 }
 
-.btn-info{
+.btn-info {
     background-color: #203a4e !important;
-    border:none !important;
+    border: none !important;
 }
-.btn-info i{
+
+.btn-info i {
     background-color: #203a4e !important;
     /* color: */
-    border:none !important;
+    border: none !important;
 
 }
 
@@ -129,7 +169,7 @@ h3{
 }
 
 #sidebar ul li a {
-    margin:1rem 0;
+    margin: 1rem 0;
     padding: 10px 10px 10px 20px;
     font-size: 1.1em;
     /* border-bottom: 1px solid rgba(128, 128, 128, 0.418); */
@@ -159,12 +199,15 @@ a[data-toggle="collapse"] {
     transform: translateY(-50%);
 } */
 
-form input, select, textarea{
+form input,
+select,
+textarea {
     font-weight: bold !important;
 }
-#backButton{
-    padding:10px 15px;
-    color:white;
+
+#backButton {
+    padding: 10px 15px;
+    color: white;
     border-radius: 5px;
 }
 
@@ -223,6 +266,6 @@ a.article:hover {
 }
 
 
-table tbody td{
-    border:1px solid rgb(73, 71, 71);
+table tbody td {
+    border: 1px solid rgb(73, 71, 71);
 }
