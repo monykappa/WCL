@@ -98,10 +98,18 @@ a:hover {
 .top-bar a {
   color: #666666;
 }
-
-.site-logo {
-  /* border: 1px solid blue; */
+button.btn-dark-mode{
+  outline:0;
+  border:none;
+  margin-left: 10px;
+  border-radius: 2px;
+  background-color: #000 !important;
+  color:#fff !important;
 }
+/*  */
+
+
+
 
 .site-navbar {
   margin-bottom: 0px;
@@ -326,6 +334,7 @@ a:hover {
   visibility: visible;
   opacity: 1;
 }
+
 
 .site-mobile-menu {
   width: 300px;
@@ -605,6 +614,7 @@ a:hover {
     padding-top: 30px !important;
     padding-bottom: 30px !important;
   }
+
 }
 
 /* Responsive breakpoint */

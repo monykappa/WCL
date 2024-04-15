@@ -117,10 +117,83 @@ body.dark-mode h3 {
     color: #fff !important;
 }
 
-.dark-mode form select{
-    background-color:#1c2128 !important ;
-    color:#fff !important;
+.dark-mode form select {
+    background-color: #1c2128 !important;
+    color: #fff !important;
 }
-.dark-mode form option{
-    color:#fff !important;
+
+.dark-mode form option {
+    color: #fff !important;
+}
+
+.dark-mode path {
+    fill: #1c2128 !important;
+}
+
+.dark-mode .lower-curve svg {
+    display: block;
+    background-color: #3d495a !important;
+}
+
+.dark-mode  .upper-curve svg {
+    display: block;
+    background-color: #3d495a !important;
+}
+.dark-mode section.welcome-ctn{
+ background-color: #3d495a  !important;
+}
+
+.dark-mode .goal-ctn h1 span{
+    color:#ff0000 !important;
+}
+
+/* base css */
+.dark-mode .sticky-wrapper .site-navbar {
+    background: #1c2128 !important;
+}
+
+.dark-mode .sticky-wrapper .site-navbar button#darkModeButton {
+    background-color: #fff !important;
+    color: #000 !important;
+
+}
+
+.dark-mode .site-navbar .site-navigation .site-menu>li>a {
+    color: #fff !important;
+}
+
+.dark-mode a.site-menu-toggle i {
+    color: #fff !important;
+}
+
+.dark-mode .top-bar {
+    background: #3d495a !important;
+}
+
+.dark-mode .site-mobile-menu {
+    background: #1c2128 !important;
+
+}
+
+.dark-mode .site-mobile-menu a {
+    color: #fff !important;
+}
+
+.dark-mode footer{
+    background-color: #3b4858 !important;
+}
+
+/* product page */
+
+.dark-mode p.productName{
+    color:#fff !important
+}
+.dark-mode #product-grid .col-6{
+    border:1px solid gray !important;
+}
+
+/* about us */
+
+.dark-mode .quote{
+    background-color: #3d495a !important;
 }
