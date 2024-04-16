@@ -8,5 +8,152 @@ Dashboard | Products
 
 <h1 class="d-inline-block ml-auto">{% block dashboard_title %}Product{% endblock dashboard_title%}</h1>
 {% block content %}
-    
+<h1>Products List</h1>
+<div class="row mb-3">
+    <div class="col-md-4">
+        <a href="#" id="addProductBtn" class="bg-success p-2 text-light rounded" data-toggle="modal"
+            data-target="#productPopup">
+            <i class="fa fa-add text-light mr-1"></i>Add
+        </a>
+    </div>
+    <div class="col-md-8 mt-2">
+        <div class="input-group">
+            <input type="text" class="form-control" id="searchProductsInput" placeholder="Search...">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button" id="searchInput">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+            <div class="input-group-append">
+                <span class="input-group-text bg-danger text-light ml-2" id="clearProductInput"
+                    style="cursor: pointer;"><i class="fa-solid fa-eraser"></i></span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table" id="productTable">
+        <thead class="thead-dark">
+            <tr>
+                <th>Name</th>
+                <th>Image</th>
+                <th>Description</th>
+                <th>Manufacturer</th>
+                <th>Price</th>
+                <th>Quantity Available</th>
+                <th>Expiry Date</th>
+                <th>Category</th>
+                <th>Drug Type</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td><img src="{{ product.image.url }}" alt="{{ product.name }}" style="max-width: 100px;"></td>
+                <td>{{ product.description|truncatewords:5 }}</td>
+                <td>{{ product.manufacturer.name }}</td>
+                <td>${{ product.price }}</td>
+                <td>{{ product.quantity_available }}</td>
+                <td>{{ product.expiry_date }}</td>
+                <td>{{ product.category.name }}</td>
+                <td>{{ product.drug_type.name }}</td>
+                <td>
+                    <a href="{% url 'dashboard:edit_product' product.slug %}" class="btn btn-primary">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </a>
+                    <button type="button" class="btn btn-danger" onclick="confirmDelete('{{ product.slug }}')">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                    
+                    <!-- Form for deletion, hidden initially -->
+                    <form id="deleteForm-{{ product.slug }}" action="{% url 'dashboard:delete_product' product.slug %}" method="post" style="display: none;">
+                        {% csrf_token %}
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+
+
+<!-- hidden form -->
+<div class="modal fade" id="productPopup" tabindex="-1" role="dialog" aria-labelledby="manufacturerPopupLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="manufacturerPopupLabel">Add Product</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" id="productForm" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="id_name" class="form-label">Product Name:</label>
+                                <input type="text" class="form-control" id="id_name" name="name" value="{% if form.name.value %}{{ form.name.value }}{% endif %}">
+                            </div>
+                            <div class="form-group">
+                                <label for="id_image" class="form-label">Image:</label>
+                                <input type="file" class="form-control-file" id="id_image" name="image" accept="image/*">
+                                <img id="imagePreview" src="#" alt="Image Preview" style="max-width: 100%; display: none;">
+                            </div>
+                            <div class="form-group">
+                                <label for="id_description" class="form-label">Description:</label>
+                                <textarea class="form-control" id="id_description" name="description">{% if form.description.value %}{{ form.description.value }}{% endif %}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_manufacturer" class="form-label">Manufacturer:</label>
+                                <select class="form-control" id="id_manufacturer" name="manufacturer">
+                                    {% for manufacturer in manufacturers %}
+                                    <option value="{{ manufacturer.id }}">{{ manufacturer.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="id_price" class="form-label">Price:</label>
+                                <input type="number" class="form-control" id="id_price" name="price" value="{% if form.price.value %}{{ form.price.value }}{% endif %}">
+                            </div>
+                            <div class="form-group">
+                                <label for="id_quantity_available" class="form-label">Quantity Available:</label>
+                                <input type="number" class="form-control" id="id_quantity_available" name="quantity_available" value="{% if form.quantity_available.value %}{{ form.quantity_available.value }}{% endif %}">
+                            </div>
+                            <div class="form-group">
+                                <label for="id_expiry_date" class="form-label">Expiry Date:</label>
+                                <input type="date" class="form-control" id="id_expiry_date" name="expiry_date" value="{% if form.expiry_date.value %}{{ form.expiry_date.value }}{% endif %}">
+                            </div>
+                            <div class="form-group">
+                                <label for="id_category" class="form-label">Category:</label>
+                                <select class="form-control" id="id_category" name="category">
+                                    {% for category in categories %}
+                                    <option value="{{ category.id }}">{{ category.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_drug_type" class="form-label">Drug Type:</label>
+                                <select class="form-control" id="id_drug_type" name="drug_type">
+                                    {% for drug_type in drug_types %}
+                                    <option value="{{ drug_type.id }}">{{ drug_type.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="saveProductBtn"><i
+                        class="fa-solid fa-floppy-disk"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock content %}

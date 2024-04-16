@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" 
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{% static 'css/darkmode/dark_mode.css'%}">
+
     <title>Sign-in</title>
 </head>
 <style>
@@ -16,6 +21,7 @@
         max-width: 900px;
         margin: 0 auto;
         text-align: center;
+      
     }
 
     form {
@@ -33,6 +39,16 @@
         .sign-in-ctn {
             width: 80%;
         }
+    }
+    .dark-mode-button-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 9999; /* Ensure it's above other content */
+    }
+    button#darkModeButton{
+        background-color: #000 !important;
+        color:#fff !important;
     }
 </style>
 
@@ -53,7 +69,13 @@
             </form>
         </div>
     </div>
-
+    
+    <div class="dark-mode-button-container">
+        <button id="darkModeButton" class="btn">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+    
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -98,6 +120,8 @@
         
 
 
+
+        <script src="{% static 'js/darkmode/dark_mode.js'%}"></script>
 </body>
 
 </html>

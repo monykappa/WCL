@@ -27,15 +27,13 @@
         <nav id="sidebar">
             <div class="sidebar-header">
                 <img src="{% static 'img/logo/image-removebg-preview.png' %}" width="120" class="logo"/>
-            </div>
-
-            <ul class="list-unstyled components">
                 {% if user.is_authenticated %}
                 <h3 class="ml-3">Hello, {{ user.username }}!</h3>
                 {% else %}
                 <h3 class="ml-3">Hello, Guest!</h3>
                 {% endif %}
-
+            </div>
+            <ul class="list-unstyled components">
                 <li class="active">
                     <a href="{% url 'dashboard:dashboard' %}"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
                     <!-- <ul class="collapse list-unstyled" id="homeSubmenu">

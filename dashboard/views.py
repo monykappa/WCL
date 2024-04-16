@@ -48,7 +48,61 @@ class DashboardView(View):
 @method_decorator(login_required, name='dispatch')
 class ProductsView(View):
     def get(self, request):
-        return render(request, 'dashboard/products.html')
+        # Fetch all products from the database
+        products = Drug.objects.all()
+        manufacturers = Manufacturer.objects.all()  # Retrieve all manufacturers
+        categories = Category.objects.all()  # Retrieve all categories
+        drug_types = DrugType.objects.all()  # Retrieve all drug types
+        return render(request, 'dashboard/products.html', {'products': products, 'manufacturers': manufacturers, 'categories': categories, 'drug_types': drug_types})
+
+    def post(self, request):
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard:products')
+        return render(request, 'dashboard/add_page/add_product.html', {'form': form})
+
+
+class EditProductView(View):
+    def get(self, request, slug):  
+        product = get_object_or_404(Drug, slug=slug)
+        form = ProductForm(instance=product)
+        return render(request, 'dashboard/edit_page/edit_product.html', {'form': form})
+
+    def post(self, request, slug): 
+        product = get_object_or_404(Drug, slug=slug)
+        form = ProductForm(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            product_instance = form.save(commit=False)
+
+            # Check if a new image is uploaded
+            new_image = form.cleaned_data.get('image')
+            if new_image:
+                # Update the existing image field with the new image
+                product_instance.image = new_image
+
+            # Save the form instance to the database
+            try:
+                product_instance.save()
+            except ValidationError as e:
+                # If there's a validation error, render the form with the error message
+                form.add_error(None, e)
+
+            return redirect('dashboard:products')
+        return render(request, 'dashboard/edit_page/edit_product.html', {'form': form})
+
+class DeleteProductView(View):
+    def post(self, request, slug):
+        # Retrieve the product
+        product = get_object_or_404(Drug, slug=slug)
+        
+        # Delete the product
+        product.delete()
+        
+        # Return a success message
+        return redirect('dashboard:products')
+
+
 
 
 # category

@@ -24,6 +24,9 @@ urlpatterns = [
     
     # Products
     path('dashboard/products/', views.ProductsView.as_view(), name='products'),
+    path('products/edit/<slug:slug>/', views.EditProductView.as_view(), name='edit_product'),
+    path('products/delete/<slug:slug>/', views.DeleteProductView.as_view(), name='delete_product'),
+
     
     
     # Category

@@ -55,9 +55,14 @@ body.dark-mode h3 {
 .dark-mode #sidebar .sidebar-header {
     background-color: #1c2128 !important;
 }
-
+/* .dark-mode form{
+    background-color: #22272e !important;
+} */
+.dark-mode .form-group{
+    background-color: #22272e !important;
+}
 .dark-mode input {
-    background-color: #1c2128 !important;
+    background-color: #22272e !important;
     color: #fff !important;
 }
 
@@ -109,7 +114,7 @@ body.dark-mode h3 {
 }
 
 .dark-mode form {
-    background-color: #1c2128 !important;
+    background-color: #22272e !important;
 }
 
 .dark-mode form textarea {
@@ -118,7 +123,7 @@ body.dark-mode h3 {
 }
 
 .dark-mode form select {
-    background-color: #1c2128 !important;
+    background-color: #22272e !important;
     color: #fff !important;
 }
 

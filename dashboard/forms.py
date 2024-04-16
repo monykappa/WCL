@@ -24,4 +24,11 @@ class DrugTypeForm(forms.ModelForm):
 class NewsForm(forms.ModelForm):
     class Meta:
         model = New
-        fields = ['title', 'image', 'description']  # Specify the fields you want in the form
+        fields = ['title', 'image', 'description'] 
+        
+        
+
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Drug
+        fields = ['name', 'image', 'description', 'manufacturer', 'price', 'quantity_available', 'expiry_date', 'category', 'drug_type']

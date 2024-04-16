@@ -1,0 +1,147 @@
+{% extends 'dashboard/edit_page/edit.html' %}
+{% load static %}
+<!-- edit_manufacturer.html -->
+
+<h1 class="d-inline-block ml-auto">{% block dashboard_title %}Edit Product{% endblock dashboard_title%}</h1>
+
+
+{% block content %}
+<form method="post" id="editProductForm" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{ form.name.value }}">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="manufacturer">Manufacturer:</label>
+                <select class="form-control" id="manufacturer" name="manufacturer">
+                    {% for manufacturer in form.manufacturer.field.choices %}
+                        {% if manufacturer.0 == form.manufacturer.value %}
+                            <option value="{{ manufacturer.0 }}" selected>{{ manufacturer.1 }}</option>
+                        {% else %}
+                            <option value="{{ manufacturer.0 }}">{{ manufacturer.1 }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="price">Price:</label>
+                <input type="text" class="form-control" id="price" name="price" value="{{ form.price.value }}">
+            </div>
+            <div class="form-group">
+                <label for="quantity_available">Quantity Available:</label>
+                <input type="text" class="form-control" id="quantity_available" name="quantity_available" value="{{ form.quantity_available.value }}">
+            </div>
+            <div class="form-group">
+                <label for="category">Category:</label>
+                <select class="form-control" id="category" name="category">
+                    {% for category in form.category.field.choices %}
+                        {% if category.0 == form.category.value %}
+                            <option value="{{ category.0 }}" selected>{{ category.1 }}</option>
+                        {% else %}
+                            <option value="{{ category.0 }}">{{ category.1 }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="drug_type">Drug Type:</label>
+                <select class="form-control" id="drug_type" name="drug_type">
+                    {% for drug_type in form.drug_type.field.choices %}
+                        {% if drug_type.0 == form.drug_type.value %}
+                            <option value="{{ drug_type.0 }}" selected>{{ drug_type.1 }}</option>
+                        {% else %}
+                            <option value="{{ drug_type.0 }}">{{ drug_type.1 }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group" id="currentImageContainer">
+                <label for="current_image">Current Image:</label>
+                {% if form.image.value %}
+                    <div>
+                        <img src="{{ form.image.value.url }}" alt="Current Image" style="max-width: 100%; height: auto;" class="image-fullscreen-trigger">
+                        <input type="hidden" name="remove_image" value="1">
+                    </div>
+                {% else %}
+                    <p class="text-dark">No image available</p>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="image">New Image:</label>
+                <input type="file" class="form-control-file" id="image" name="image" onchange="previewImage(event)">
+            </div>
+            <div class="form-group" id="newImagePreviewContainer">
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea class="form-control" id="description" name="description">{{ form.description.value }}</textarea>
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary" id="saveProductChangesButton"><i
+        class="fa-solid fa-floppy-disk"></i></button>
+</form>
+
+
+
+<script>
+    // Function to show SweetAlert confirmation for form submission
+    function confirmFormSubmission(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        Swal.fire({
+            title: 'Save Changes?',
+            text: 'Are you sure you want to save the changes?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, save changes!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Submit the form if confirmed
+                document.getElementById('editProductForm').submit();
+            }
+        });
+    }
+
+    // Attach the confirmation function to the Enter key press event
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            confirmFormSubmission(event);
+        }
+    });
+
+    // Attach the confirmation function to the button click event
+    document.getElementById('saveProductChangesButton').addEventListener('click', confirmFormSubmission);
+
+
+
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function () {
+            var imagePreview = document.createElement('img');
+            imagePreview.src = reader.result;
+            imagePreview.style.maxWidth = '100%';
+            imagePreview.style.height = 'auto';
+            var newImagePreviewContainer = document.getElementById('newImagePreviewContainer');
+            newImagePreviewContainer.innerHTML = ''; // Clear previous image preview
+            newImagePreviewContainer.appendChild(imagePreview);
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
+
+
+
+
+{% endblock content %}
