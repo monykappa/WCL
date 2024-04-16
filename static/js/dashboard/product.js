@@ -111,3 +111,52 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle click event on table rows
+    document.querySelectorAll('.product-row').forEach(function(row) {
+        row.addEventListener('click', function(event) {
+            // Check if the click target is a button or a link within the row
+            if (event.target.closest('button') || event.target.closest('a')) {
+                return; // Do nothing if the click was on a button or a link
+            }
+            event.preventDefault();
+            var productId = this.getAttribute('data-product');
+            fetch('/dashboard/get_product_details/' + productId + '/')
+                .then(response => response.json())
+                .then(data => {
+                    // Populate modal with product data
+                    var modalBody = document.getElementById('productModalBody');
+                    modalBody.innerHTML = `
+                        <div class="row">
+                            <div class="col-md-4">
+                                <p><strong>Name:</strong> ${data.name}</p>
+                                <p><strong>Image:</strong></p><img src="${data.image}" alt="Product Image" class="img-fluid">
+                            </div>
+                            <div class="col-md-4">
+                                <p><strong>Manufacturer:</strong> ${data.manufacturer}</p>
+                                <p><strong>Price:</strong> $${data.price}</p>
+                                <p><strong>Category:</strong> ${data.category}</p>
+                                <p><strong>Quantity Available:</strong> ${data.quantity_available}</p>
+                                <p><strong>Expiry Date:</strong> ${data.expiry_date}</p>
+                                <p><strong>Drug Type:</strong> ${data.drug_type}</p>
+                            </div>
+                            <div class="col-md-4">
+                                <p><strong>Description:</strong> ${data.description}</p>
+                            </div>
+                        </div>
+                    `;
+                    // Show modal
+                    $('#productModal').modal('show');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Handle error scenario (e.g., display error message to user)
+                    alert('Product details could not be loaded. Please try again later.');
+                });
+        });
+    });
+});
+
+
+

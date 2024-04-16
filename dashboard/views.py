@@ -13,6 +13,7 @@ from django.views.decorators.http import require_POST
 from django.views import View
 from django.utils.decorators import method_decorator
 import pycountry
+from django.conf import settings
 
 
 # Sign in
@@ -61,6 +62,36 @@ class ProductsView(View):
             form.save()
             return redirect('dashboard:products')
         return render(request, 'dashboard/add_page/add_product.html', {'form': form})
+    
+    
+    
+
+class ProductDetailsView(View):
+    def get(self, request, product_id):
+        try:
+            product = Drug.objects.get(pk=product_id)
+            # Generate image URL
+            if product.image:
+                image_url = settings.MEDIA_URL + str(product.image)
+            else:
+                image_url = None
+            # Prepare product data
+            product_data = {
+                'name': product.name,
+                'slug': product.slug,  # Include the slug attribute
+                'image': image_url,
+                'description': product.description,
+                'manufacturer': product.manufacturer.name,
+                'price': product.price,
+                'quantity_available': product.quantity_available,
+                'expiry_date': product.expiry_date,
+                'category': product.category.name,
+                'drug_type': product.drug_type.name,
+            }
+            # Return JSON response with product data
+            return JsonResponse(product_data)
+        except Drug.DoesNotExist:
+            return JsonResponse({'error': 'Product not found'}, status=404)
 
 
 class EditProductView(View):
@@ -90,7 +121,8 @@ class EditProductView(View):
 
             return redirect('dashboard:products')
         return render(request, 'dashboard/edit_page/edit_product.html', {'form': form})
-
+    
+    
 class DeleteProductView(View):
     def post(self, request, slug):
         # Retrieve the product

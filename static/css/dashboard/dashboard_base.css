@@ -38,7 +38,7 @@ p {
     font-size: 1.1em;
     font-weight: 300;
     line-height: 1.7em;
-    color: #fff;
+    color: #000 !important;
 }
 
 a,
@@ -269,3 +269,36 @@ a.article:hover {
 table tbody td {
     border: 1px solid rgb(73, 71, 71);
 }
+
+
+/* CSS to resize the image and adjust modal layout */
+#productModal .modal-body .row {
+    margin-bottom: 15px;
+}
+
+#productModal .modal-body .col-md-6 {
+    padding: 0 10px;
+}
+
+#productModal .modal-body p {
+    text-align: justify;
+    
+}
+
+#productModal .modal-body img {
+    max-width: 100%;
+    height: auto;
+}
+
+#productModal .modal-body #productDetails p {
+    margin-bottom: 10px;
+}
+tr.product-row{
+    cursor: pointer;
+    transition: 0.3s;
+}
+tr.product-row:hover{
+    background-color: #d1dae7;
+}
+
+
