@@ -301,4 +301,9 @@ tr.product-row:hover{
     background-color: #d1dae7;
 }
 
+.row strong{
+    font-weight: bold !important;
+    color:#000;
+}
+
 

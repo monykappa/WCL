@@ -1,0 +1,60 @@
+body p{
+    font-size:18px !important;
+}
+/* body img{
+    margin: 0 auto;
+} */
+
+.background-img {
+    height: 500px !important;
+}
+
+section.quote{
+    background-color: #d7e8f5;
+    text-align: center;
+    padding:2rem 0;
+}
+
+section.quote h1{
+    font-family: var(--secondary-font);
+}
+
+section.about-us p {
+    color:#000;
+    font-size: 18px;
+}
+
+/* section.person img{
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
+} */
+
+.hidden-top{
+    transform: translateY(-10%) !important;
+    transition: 1s !important;
+}
+.hidden-bottom{
+    transform: translateY(10%) !important;
+    transition: 1s !important;
+}
+
+.show {
+    opacity: 1 !important;
+    filter: blur(0) !important;
+    transform: translateX(0) !important;
+}
+
+section.goal-ctn h1{
+    font-weight: normal !important;
+}
+section.goal-ctn span{
+    color:#000 !important;
+    font-size: 50px !important;
+    font-weight: bold !important;
+}
+
+/* section.person img{
+    max-width:500px;
+    height: auto;
+} */

@@ -70,6 +70,17 @@ body.dark-mode h3 {
     background-color: #4e4f51;
 }
 
+.dark-mode .row p {
+    color:#ffffff95 !important;
+}
+
+.dark-mode .row strong{
+    color:#fff;
+}
+
+.dark-mode .card-body{
+    background-color: #22272e !important;
+}
 
 .dark-mode .modal-content {
     background-color: #22272e !important;

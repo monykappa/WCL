@@ -1,0 +1,386 @@
+.slider {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.slide {
+  display: none;
+}
+.slide.active {
+  display: block;
+  opacity: 0;
+  animation: fadeIn 2.5s ease forwards; 
+}
+.slide img {
+  filter: brightness(50%); 
+  animation: zoomIn 10s linear infinite; 
+}
+
+@keyframes zoomIn {
+  0% {
+    transform: scale(1); 
+  }
+  100% {
+    transform: scale(1.1); 
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0; 
+  }
+  to {
+    opacity: 1; 
+  }
+}
+.slide-title h1{
+  font-size: 3.3rem;
+
+  font-family: var(--primary-family);
+  color:white;
+  text-shadow: 5px 5px 5px rgb(0, 0, 0);
+  opacity: 0; 
+  animation: none; 
+}
+@keyframes flyIn {
+  from {
+      transform: translateY(-100px); 
+      opacity: 0; 
+  }
+  to {
+      transform: translateY(0); 
+      opacity: 1; 
+  }
+}
+
+.slide.active .slide-title {
+  display: block;
+}
+
+.slides .slide {
+  flex: 0 0 100%;
+}
+
+.slide-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 60%;
+  padding: 0 20px;
+  box-sizing: border-box;
+  z-index: 1; 
+  color: white; 
+}
+.slide h1 {
+  margin: 0; 
+}
+.slides {
+  display: flex;
+  transition: transform 0.5s ease;
+  width: 100%;
+}
+
+.slides img {
+  width: 100%;
+  object-fit: cover;
+  flex: 0 0 auto;
+}
+
+button {
+  outline:0;
+  position: absolute;
+  top: 50%;
+  margin: 0 5vh;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.291);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  font-size: 26px;
+  transition: 0.3s all;
+}
+
+
+
+.lower-curve svg{
+  display: block;
+  background-color:#83b5d8 !important;
+} 
+.upper-curve svg{
+  display: block;
+  background-color:#83b5d8 !important;
+} 
+button:hover {
+  background-color: red;
+}
+
+section.custom-shape{
+  margin-top: 5rem;
+}
+section.welcome-ctn{
+  font-family: var(--secondary-font);
+  background-color: #83b5d8 ;
+  color:white !important;
+}
+section.welcome-ctn h1{
+  font-weight: bold;
+  font-family: var(--primary-font);
+
+}
+section.welcome-ctn p{
+  line-height: 2.5rem;
+  font-family: var(--primary-font);
+  text-align: justify;
+  text-justify: inter-word;
+  color:rgb(255, 255, 255);
+  font-size: 18px;
+}
+.goal-ctn {
+  margin-top: 3rem;
+  margin-bottom: 5rem;
+  text-align: center;
+}
+
+.goal-ctn h1{
+  font-family: var(--secondary-font);
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size:50px;
+}
+
+.goal-ctn h1 span{
+  font-size: 30px;
+  color:#b8444f;
+}
+
+h1.goal-heading{
+  display: inline-block; width: max-content;
+  border-bottom:4px solid red;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+
+
+.goal-ctn p{
+  text-align: justify;
+  text-justify: inter-word;
+  color:#000;
+  font-size: 18px;
+}
+
+.circle {
+  content:'';
+  position: relative;
+  width: 300px;
+  height: 300px;
+  background-image: linear-gradient(to top left, #367bb6, #9cc8e3);
+  border-radius: 50%; 
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.circle h3 {
+  font-family: var(--secondary-font);
+  margin: 0;
+  color:#fff;
+}
+
+
+.shape {
+  content:'';
+  position: relative;
+  width: 300px;
+  height: 300px;
+  background-image: linear-gradient(to top left, #367bb6, #9cc8e3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+
+
+
+
+/* Override animation */
+.hidden-left {
+  opacity: 0;
+  filter: blur(2px) !important;
+  transform: translateX(-10%) !important;
+  transition: all 1.5s;
+}
+.hidden-right {
+  opacity: 0;
+  filter: blur(2px) !important;
+  transform: translateX(10%) !important;
+  transition: all 1.5s ;
+}
+
+.hidden-top {
+  opacity: 0;
+  filter: blur(2px) !important;
+  transform: translateY(-20%) !important;
+  transition: all 1.5s;
+}
+.hidden-bottom {
+  opacity: 0;
+  filter: blur(2px) !important;
+  transform: translateY(30%) !important;
+  transition: all 1.5s ;
+}
+
+
+/* End override animation */
+
+.show {
+  opacity: 1;
+  filter: blur(0) !important;
+  transform: translateX(0) !important;
+}
+
+
+section.product-ctn-home{
+  margin-top: 5rem !important;
+}
+
+/* @media (max-width: 250px){
+
+
+} */
+
+@media (min-width: 250px) and (max-width: 304px) {
+  button {
+    position: absolute;
+    top: 35%;
+    margin: 0 2vh;
+    transform: translateY(-50%);
+  }
+  .slide-title{
+    top:35%;
+    /* border: 1px solid red; */
+    width:60%;
+  }
+  .slide-title h1{
+    font-size: 12px;
+  }
+  section.welcome-ctn h1{
+    font-size: 22px;
+  }
+  .slider{
+    height: 200px;
+  }
+
+}
+@media (min-width: 305px) and (max-width: 524px) {
+  button {
+    position: absolute;
+    top: 35%;
+    margin: 0 2vh;
+    transform: translateY(-50%);
+  }
+  .slide-title{
+    top:35%;
+    /* border: 1px solid red; */
+    width:60%;
+  }
+  .slider {
+    height:300px;
+  }
+  .slide-title h1{
+    font-family: "Poppins", sans-serif !important;
+    font-size: 22px;
+  }
+  section.welcome-ctn h1{
+    font-size: 32px;
+  }
+  section.welcome-ctn p{
+    text-align: justify;
+    text-justify: inter-word;
+  }
+  .goal-ctn h1{
+    font-size:40px;
+  }
+  
+  .goal-ctn h1 span{
+    font-size: 20px;
+  }
+  
+}
+
+
+@media (min-width: 525px) and (max-width: 761px) {
+  button {
+    position: absolute;
+    top: 45%;
+    margin: 0 5vh;
+    transform: translateY(-50%);
+  }
+  .slider {
+    height:350px;
+  }
+  .slide-title{
+    top:45%;
+    /* border: 1px solid red; */
+    width:60%;
+
+  }
+  .slide-title h1{
+    font-size: 28px;
+  }
+}
+
+@media (min-width: 762px) and (max-width: 992px) {
+  button {
+    position: absolute;
+    top: 40%;
+    margin: 0 5vh;
+    transform: translateY(-50%);
+  }
+  .slide-title{
+    top:40%;
+    /* border: 1px solid red; */
+    width:75%;
+  }
+  .slide h1{
+    font-size: 24px;
+  }
+  .slider {
+    height:400px;
+  }
+
+}
+/* Styles for extra large devices */
+@media (min-width: 993px) and (max-width:1200px) {
+  .slide-title{
+    top:50%;
+    /* border: 1px solid red; */
+    width:80%;
+
+  }
+}
+@media (min-width: 1201px) and (max-width:1300px  ) {
+  .slide-title{
+    top:50%;
+    /* border: 1px solid red; */
+    width:80%;
+
+  }
+}
+
+.prev {
+  left: 0;
+}
+
+.next {
+  right: 0;
+}
