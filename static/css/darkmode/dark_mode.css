@@ -55,33 +55,37 @@ body.dark-mode h3 {
 .dark-mode #sidebar .sidebar-header {
     background-color: #1c2128 !important;
 }
+
 /* .dark-mode form{
     background-color: #22272e !important;
 } */
-.dark-mode .form-group{
+.dark-mode .form-group {
     background-color: #22272e !important;
 }
+
 .dark-mode input {
     background-color: #22272e !important;
     color: #fff !important;
 }
 
-.dark-mode tr.product-row:hover{
+.dark-mode tr.product-row:hover {
     background-color: #4e4f51;
 }
 
 .dark-mode .row p {
-    color:#ffffff95 !important;
+    color: #ffffff95 !important;
 }
 
-.dark-mode .row strong{
-    color:#fff;
+.dark-mode .row strong {
+    color: #fff;
 }
-.dark-mode select.form-control{
+
+.dark-mode select.form-control {
     background-color: #22272e !important;
-    color:#fff !important;
+    color: #fff !important;
 }
-.dark-mode .card-body{
+
+.dark-mode .card-body {
     background-color: #22272e !important;
 }
 
@@ -159,16 +163,17 @@ body.dark-mode h3 {
     background-color: #3d495a !important;
 }
 
-.dark-mode  .upper-curve svg {
+.dark-mode .upper-curve svg {
     display: block;
     background-color: #3d495a !important;
 }
-.dark-mode section.welcome-ctn{
- background-color: #3d495a  !important;
+
+.dark-mode section.welcome-ctn {
+    background-color: #3d495a !important;
 }
 
-.dark-mode .goal-ctn h1 span{
-    color:#ff0000 !important;
+.dark-mode .goal-ctn h1 span {
+    color: #ff0000 !important;
 }
 
 /* base css */
@@ -203,21 +208,22 @@ body.dark-mode h3 {
     color: #fff !important;
 }
 
-.dark-mode footer{
+.dark-mode footer {
     background-color: #3b4858 !important;
 }
 
 /* product page */
 
-.dark-mode p.productName{
-    color:#fff !important
+.dark-mode p.productName {
+    color: #fff !important
 }
-.dark-mode #product-grid .col-6{
-    border:1px solid gray !important;
+
+.dark-mode #product-grid .col-6 {
+    border: 1px solid gray !important;
 }
 
 /* about us */
 
-.dark-mode .quote{
+.dark-mode .quote {
     background-color: #3d495a !important;
 }

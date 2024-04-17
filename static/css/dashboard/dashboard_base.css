@@ -53,10 +53,44 @@ a:focus {
     border: 1px solid #000;
 }
 
-.table-responsive {
+.table-container {
+    position: relative;
+}
+
+.table-container .table-responsive {
     max-height: 500px; /* Set the maximum height of the container */
     overflow-y: auto; /* Enable vertical scrolling */
 }
+/* Fixed table header */
+.table-container thead {
+    position: sticky;
+    top: 0;
+    background-color: #343a40; /* Adjust the background color as needed */
+    z-index: 1000; /* Ensure the header is above other elements */
+}
+
+/* Thin scrollbar track */
+.table-container .table-responsive::-webkit-scrollbar {
+    width: 6px; /* Width of the scrollbar */
+}
+
+/* Thin scrollbar thumb */
+.table-container .table-responsive::-webkit-scrollbar-thumb {
+    background-color: #888; /* Color of the scrollbar thumb */
+    border-radius: 3px; /* Radius of the scrollbar thumb */
+}
+
+/* Thin scrollbar track for Firefox */
+.table-container .table-responsive {
+    scrollbar-width: thin; /* Set the width of the scrollbar */
+}
+
+/* Thin scrollbar thumb for Firefox */
+.table-container .table-responsive {
+    scrollbar-color: #888; /* Color of the scrollbar thumb */
+}
+
+
 
 
 button#darkModeButton {

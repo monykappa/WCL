@@ -137,7 +137,7 @@ Dashboard | Products
 <!-- Add product Modal form -->
 <div class="modal fade" id="productPopup" tabindex="-1" role="dialog" aria-labelledby="productPopupLabel"
     aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="productPopupLabel">Add Product</h5>
@@ -170,6 +170,7 @@ Dashboard | Products
                             <div class="form-group">
                                 <label for="id_manufacturer" class="form-label">Manufacturer:</label>
                                 <select class="form-control" id="id_manufacturer" name="manufacturer">
+                                    <option value="">Select</option>
                                     {% for manufacturer in manufacturers %}
                                     <option value="{{ manufacturer.id }}">{{ manufacturer.name }}</option>
                                     {% endfor %}
@@ -196,6 +197,7 @@ Dashboard | Products
                             <div class="form-group">
                                 <label for="id_category" class="form-label">Category:</label>
                                 <select class="form-control" id="id_category" name="category">
+                                    <option value="">Select</option>
                                     {% for category in categories %}
                                     <option value="{{ category.id }}">{{ category.name }}</option>
                                     {% endfor %}
@@ -204,6 +206,7 @@ Dashboard | Products
                             <div class="form-group">
                                 <label for="id_drug_type" class="form-label">Drug Type:</label>
                                 <select class="form-control" id="id_drug_type" name="drug_type">
+                                    <option value="">Select</option>
                                     {% for drug_type in drug_types %}
                                     <option value="{{ drug_type.id }}">{{ drug_type.name }}</option>
                                     {% endfor %}
