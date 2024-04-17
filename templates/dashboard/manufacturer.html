@@ -11,12 +11,14 @@ Dashboard | Manufacturer
 {% block content %}
 <h1>Manufacturer List</h1>
 <div class="row mb-3">
+    {% if request.user.is_superuser %}
     <div class="col-md-4">
         <a href="#" id="addManufacturerBtn" class="bg-success p-2 text-light rounded" data-toggle="modal"
             data-target="#manufacturerPopup">
             <i class="fa fa-add text-light mr-1"></i>Add
         </a>
     </div>
+    {% endif %}
     <div class="col-md-8 mt-2">
         <div class="input-group">
             <input type="text" class="form-control" id="searchManufacturerInput" placeholder="Search...">
@@ -39,7 +41,9 @@ Dashboard | Manufacturer
                 <th>Name</th>
                 <th>Country</th>
                 <th>Description</th>
+                {% if request.user.is_superuser %}
                 <th>Actions</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -48,6 +52,7 @@ Dashboard | Manufacturer
                 <td>{{ manufacturer.name }}</td>
                 <td>{{ manufacturer.get_country_display }}</td>
                 <td>{{ manufacturer.description }}</td>
+                {% if request.user.is_superuser %}
                 <td>
                     <a href="{% url 'dashboard:edit_manufacturer' manufacturer.slug %}" class="btn btn-primary">
                         <i class="fa fa-pencil" aria-hidden="true"></i>
@@ -65,6 +70,7 @@ Dashboard | Manufacturer
                         {% csrf_token %}
                     </form>
                 </td>
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>

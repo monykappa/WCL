@@ -13,10 +13,12 @@ Dashboard | Products
 <div class="row mb-3">
     <!-- Add product button -->
     <div class="col-md-4">
+        {% if request.user.is_superuser %}
         <a href="#" id="addProductBtn" class="bg-success p-2 text-light rounded" data-toggle="modal"
             data-target="#productPopup">
             <i class="fa fa-add text-light mr-1"></i>Add
         </a>
+        {% endif %}
     </div>
     <!-- Export button -->
     <div class="col-md-4">
@@ -74,7 +76,9 @@ Dashboard | Products
                     <th>Expiry Date</th>
                     <th>Category</th>
                     <th>Drug Type</th>
+                    {% if request.user.is_superuser %}
                     <th>Actions</th>
+                    {% endif %}
                 </tr>
             </thead>
             <tbody>
@@ -89,6 +93,7 @@ Dashboard | Products
                     <td>{{ product.expiry_date }}</td>
                     <td>{{ product.category.name }}</td>
                     <td>{{ product.drug_type.name }}</td>
+                    {% if request.user.is_superuser %}
                     <td>
                         <a href="{% url 'dashboard:edit_product' product.slug %}" class="btn btn-primary">
                             <i class="fa fa-pencil" aria-hidden="true"></i>
@@ -96,12 +101,12 @@ Dashboard | Products
                         <button type="button" class="btn btn-danger" onclick="confirmDelete('{{ product.slug }}')">
                             <i class="fa fa-trash" aria-hidden="true"></i>
                         </button>
-                        
                         <!-- Form for deletion, hidden initially -->
                         <form id="deleteForm-{{ product.slug }}" action="{% url 'dashboard:delete_product' product.slug %}" method="post" style="display: none;">
                             {% csrf_token %}
                         </form>
                     </td>
+                    {% endif %}
                 </tr>
                 {% endfor %}
             </tbody>
@@ -109,7 +114,6 @@ Dashboard | Products
         </table>
     </div>
 </div>
-
 
 
 <!-- Product Detail Modal -->

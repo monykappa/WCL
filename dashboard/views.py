@@ -20,7 +20,69 @@ import requests
 from openpyxl.drawing.image import Image
 from io import BytesIO
 import os
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.http import HttpResponseForbidden
 
+class SuperuserRequiredMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_superuser
+
+    def handle_no_permission(self):
+        return render(self.request, 'dashboard/error_pages/403.html', status=403)
+
+class EditUserView(SuperuserRequiredMixin, View):
+    def get(self, request, user_id):
+        user = get_object_or_404(User, id=user_id)
+        return render(request, 'dashboard/edit_page/edit_user.html', {'user': user})
+    
+    def post(self, request, user_id):
+        user = get_object_or_404(User, id=user_id)
+        # Handle form submission and save changes
+        user.username = request.POST.get('username')
+        user.first_name = request.POST.get('first_name')
+        user.last_name = request.POST.get('last_name')
+        user.email = request.POST.get('email')
+        user.is_superuser = request.POST.get('is_superuser') == 'on'
+        user.is_active = request.POST.get('is_active') == 'on'
+        user.is_staff = request.POST.get('is_staff') == 'on'
+        user.save()
+        return redirect('dashboard:user')  # Redirect to the user list page after saving changes
+    
+class UserView(View):
+    template_name = 'dashboard/user.html'
+
+    def get(self, request):
+        users = User.objects.all()
+        return render(request, self.template_name, {'users': users})
+
+    def post(self, request):
+        username = request.POST.get('username')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        confirm_password = request.POST.get('confirm_password')
+        is_superuser = request.POST.get('superuser') == 'true'  # Convert 'true' string to boolean
+        is_active = request.POST.get('active') == 'true'
+        is_staff = request.POST.get('staff') == 'true'
+
+        if not all([username, first_name, last_name, email, password, confirm_password]):
+            return JsonResponse({'status': 'error', 'message': 'Missing required fields'})
+        
+        if password != confirm_password:
+            return JsonResponse({'status': 'error', 'message': 'Passwords do not match'})
+
+        # Check if the username already exists
+        if User.objects.filter(username=username).exists():
+            return JsonResponse({'status': 'error', 'message': 'Username already exists'})
+
+        # Create a new user instance
+        user = User.objects.create_user(username=username, email=email, password=password, first_name=first_name, last_name=last_name)
+        user.is_superuser = is_superuser
+        user.is_active = is_active
+        user.is_staff = is_staff
+        user.save()
+        return JsonResponse({'status': 'success', 'user_id': user.id})
 
 
 def export_to_excel(request):
@@ -134,13 +196,15 @@ class ProductDetailsView(View):
             return JsonResponse({'error': 'Product not found'}, status=404)
 
 
-class EditProductView(View):
-    def get(self, request, slug):  
+
+
+class EditProductView(SuperuserRequiredMixin, View):
+    def get(self, request, slug):
         product = get_object_or_404(Drug, slug=slug)
         form = ProductForm(instance=product)
         return render(request, 'dashboard/edit_page/edit_product.html', {'form': form})
 
-    def post(self, request, slug): 
+    def post(self, request, slug):
         product = get_object_or_404(Drug, slug=slug)
         form = ProductForm(request.POST, request.FILES, instance=product)
         if form.is_valid():
@@ -163,7 +227,7 @@ class EditProductView(View):
         return render(request, 'dashboard/edit_page/edit_product.html', {'form': form})
     
     
-class DeleteProductView(View):
+class DeleteProductView(SuperuserRequiredMixin, View):
     def post(self, request, slug):
         # Retrieve the product
         product = get_object_or_404(Drug, slug=slug)
@@ -193,7 +257,7 @@ class CategoryView(View):
         return render(request, 'dashboard/add_page/add_category.html', {'form': form})
 
 @method_decorator(login_required, name='dispatch')
-class EditCategoryView(View):
+class EditCategoryView(SuperuserRequiredMixin, View):
     def get(self, request, category_slug):
         category = get_object_or_404(Category, slug=category_slug)
         form = CategoryForm(instance=category)
@@ -208,7 +272,7 @@ class EditCategoryView(View):
         return render(request, 'dashboard/edit_page/edit_category.html', {'form': form})
 
 @method_decorator(login_required, name='dispatch')
-class DeleteCategoryView(View):
+class DeleteCategoryView(SuperuserRequiredMixin, View):
     def post(self, request, category_id):
         category = get_object_or_404(Category, id=category_id)
         category.delete()
@@ -269,7 +333,7 @@ class ManufacturerView(View):
 
 
 @method_decorator(login_required, name='dispatch')
-class EditManufacturerView(View):
+class EditManufacturerView(SuperuserRequiredMixin, View):
     def get(self, request, manufacturer_slug):
         manufacturer = get_object_or_404(Manufacturer, slug=manufacturer_slug)
         form = ManufacturerForm(instance=manufacturer)
@@ -286,25 +350,11 @@ class EditManufacturerView(View):
 
 
 @method_decorator(login_required, name='dispatch')
-class DeleteManufacturerView(View):
+class DeleteManufacturerView(SuperuserRequiredMixin, View):
     def post(self, request, manufacturer_id):
         manufacturer = get_object_or_404(Manufacturer, id=manufacturer_id)
         manufacturer.delete()
         return redirect('dashboard:manufacturer')
-
-# @method_decorator(login_required, name='dispatch')
-# class AddManufacturerView(View):
-#     def get(self, request):
-#         form = ManufacturerForm()
-#         return render(request, 'dashboard/add_page/add_manufacturer.html', {'form': form})
-
-#     def post(self, request):
-#         form = ManufacturerForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('dashboard:manufacturer')
-#         return render(request, 'dashboard/add_page/add_manufacturer.html', {'form': form})
-
 
 # Product type
 @method_decorator(login_required, name='dispatch')
@@ -324,7 +374,7 @@ class ProductTypeView(View):
 
 
 @method_decorator(login_required, name='dispatch')
-class EditProductTypeView(View):
+class EditProductTypeView(SuperuserRequiredMixin, View):
     def get(self, request, slug):
         drug_type = get_object_or_404(DrugType, slug=slug)
         form = DrugTypeForm(instance=drug_type)
@@ -353,7 +403,7 @@ class NewsView(View):
         return render(request, 'dashboard/news.html', {'news_items': news_items})
 
 @method_decorator(login_required, name='dispatch')
-class AddNewsView(View):
+class AddNewsView(SuperuserRequiredMixin, View):
     def get(self, request):
         form = NewsForm()
         return render(request, 'dashboard/add_page/add_news.html', {'form': form})
@@ -369,7 +419,7 @@ class AddNewsView(View):
         return render(request, 'dashboard/add_page/add_news.html', {'form': form})
 
 @method_decorator(login_required, name='dispatch')
-class EditNewsView(View):
+class EditNewsView(SuperuserRequiredMixin, View):
     def post(self, request, new_slug):
         new = get_object_or_404(New, slug=new_slug)
         form = NewsForm(request.POST, request.FILES, instance=new)
@@ -413,7 +463,7 @@ class UpdateHistoryView(View):
         return render(request, 'dashboard/history/update_new_history.html', {'new': new_instance, 'update_history_entries': update_history_entries})
 
 @method_decorator(login_required, name='dispatch')
-class DeleteNewsView(View):
+class DeleteNewsView(SuperuserRequiredMixin, View):
     def post(self, request, new_id):
         new = get_object_or_404(New, id=new_id)
         new.delete()

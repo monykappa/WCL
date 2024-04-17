@@ -12,11 +12,13 @@ Dashboard | Product Type
 {% block content %}
 <h1>Drug Type List</h1>
 <div class="row mb-3">
+    {% if request.user.is_superuser %}
     <div class="col-md-4">
         <a href="#" class="bg-success p-2 text-light rounded" data-toggle="modal" data-target="#productTypePopup">
             <i class="fa fa-add text-light mr-1"></i>Add
         </a>
     </div>
+    {% endif %}
     <div class="col-md-8 mt-2">
         <div class="input-group">
             <input type="text" class="form-control" id="searchInput" placeholder="Search...">
@@ -33,14 +35,15 @@ Dashboard | Product Type
     </div>
 </div>
 
-
 <div class="table-responsive">
     <table class="table" id="drugTypeTable">
         <thead class="thead-dark">
             <tr>
                 <th>Drug Type Name</th>
                 <th>Description</th>
+                {% if request.user.is_superuser %}
                 <th>Actions</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -48,6 +51,7 @@ Dashboard | Product Type
             <tr>
                 <td>{{ drug_type.name }}</td>
                 <td>{{ drug_type.description }}</td>
+                {% if request.user.is_superuser %}
                 <td>
                     <div class="btn-group" role="group">
                         <a href="{% url 'dashboard:edit_product_type' drug_type.slug %}" class="btn btn-primary mr-2">
@@ -64,11 +68,13 @@ Dashboard | Product Type
                         {% csrf_token %}
                     </form>
                 </td>
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>
     </table>
 </div>
+
 
 
 

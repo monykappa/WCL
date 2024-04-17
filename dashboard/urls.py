@@ -10,12 +10,18 @@ from django.conf import settings
 
 app_name = 'dashboard'
 urlpatterns = [
+    
+    
     #sign in 
     path('sign_in/', views.SignInView.as_view(), name='sign_in'),
     
     #log out 
     path('logout/', views.LogoutView.as_view(), name='logout'),
     
+    # User
+    path('dashboard/user/', views.UserView.as_view(), name='user'),
+    path('edit_user/<int:user_id>/', views.EditUserView.as_view(), name='edit_user'),
+    # path('dashboard/create_user/', views.CreateUserView.as_view(), name='create_user'),
     
     # Dashboard
     # path('dashboard_base/', views.dashboard_base, name='dashboard_base'),

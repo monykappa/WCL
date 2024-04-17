@@ -1,0 +1,251 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% load static %}
+
+
+{% block content %}
+<h1>User List</h1>
+<div class="row mb-3">
+    <div class="col-md-4">
+        <a href="#" id="addUserBtn" class="bg-success p-2 text-light rounded" data-toggle="modal"
+            data-target="#userPopup">
+            <i class="fa fa-add text-light mr-1"></i>Add
+        </a>
+
+    </div>
+    <div class="col-md-8 mt-2">
+        <div class="input-group">
+            <input type="text" class="form-control" id="searchInput" placeholder="Search...">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button" id="searchButton">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+            <div class="input-group-append">
+                <span class="input-group-text bg-danger text-light ml-2" id="clearSearchInput"
+                    style="cursor: pointer;"><i class="fa-solid fa-eraser"></i></span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table" id="userTable">
+        <thead class="thead-dark">
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Superuser</th>
+                <th>Active</th>
+                <th>Staff</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{% if user.is_superuser %}<i class="fa-solid fa-circle-check" style="color:green;"></i>{% else %}<i class="fa-solid fa-circle-xmark" style="color:red;"></i>{% endif %}</td>
+                <td>{% if user.is_active %}<i class="fa-solid fa-circle-check" style="color:green;"></i>{% else %}<i class="fa-solid fa-circle-xmark" style="color:red;"></i>{% endif %}</td>
+                <td>{% if user.is_staff %}<i class="fa-solid fa-circle-check" style="color:green;"></i>{% else %}<i class="fa-solid fa-circle-xmark" style="color:red;"></i>{% endif %}</td>
+                <td>
+                    <a href="{% url 'dashboard:edit_user' user.id %}" class="btn btn-primary">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </a>
+
+                    <button type="button" class="btn btn-danger" onclick="confirmDelete('{{ user.id }}')">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+
+                    <!-- Form for deletion, hidden initially -->
+                    <form id="deleteForm-{{ user.id }}" action="" method="post" style="display: none;">
+                        {% csrf_token %}
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<!-- Hidden form -->
+<div class="modal fade" id="userPopup" tabindex="-1" role="dialog" aria-labelledby="userPopupLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="userPopupLabel">Add User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <form method="post" id="userForm">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="user_username">Username:</label>
+                                <input type="text" class="form-control" id="user_username" name="username" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="user_first_name">First Name:</label>
+                                <input type="text" class="form-control" id="user_first_name" name="first_name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="user_last_name">Last Name:</label>
+                                <input type="text" class="form-control" id="user_last_name" name="last_name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="user_email">Email:</label>
+                                <input type="email" class="form-control" id="user_email" name="email" required>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="user_password">Password:</label>
+                            <input type="password" class="form-control" id="user_password" name="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="user_confirm_password">Confirm Password:</label>
+                            <input type="password" class="form-control" id="user_confirm_password"
+                                name="confirm_password" required>
+                        </div>
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="user_superuser" name="superuser">
+                            <label class="form-check-label" for="user_superuser">Superuser</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="user_active" name="active" checked>
+                            <label class="form-check-label" for="user_active">Active</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="user_staff" name="staff">
+                            <label class="form-check-label" for="user_staff">Staff</label>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="saveUserBtn"><i
+                                class="fa-solid fa-floppy-disk"></i> Save</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+   document.addEventListener("DOMContentLoaded", function () {
+    // Function to validate the form
+    function validateForm() {
+        var username = document.getElementById('user_username').value.trim();
+        var firstName = document.getElementById('user_first_name').value.trim();
+        var lastName = document.getElementById('user_last_name').value.trim();
+        var email = document.getElementById('user_email').value.trim();
+        var password = document.getElementById('user_password').value.trim();
+        var confirmPassword = document.getElementById('user_confirm_password').value.trim();
+
+        if (username === '' || firstName === '' || lastName === '' || email === '' || password === '' || confirmPassword === '') {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Please enter all fields.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+            return false;
+        }
+
+        if (password !== confirmPassword) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Passwords do not match.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+            return false;
+        }
+
+        return true;
+    }
+
+    // Function to handle form submission without confirmation
+    // Function to handle form submission without confirmation
+function confirmFormSubmission(event) {
+    event.preventDefault();
+    if (validateForm()) {
+        // Submit the form
+        var form = document.getElementById('userForm');
+        var formData = new FormData(form);
+
+        // Add the values of checkboxes to the form data
+        formData.append('superuser', document.getElementById('user_superuser').checked);
+        formData.append('active', document.getElementById('user_active').checked);
+        formData.append('staff', document.getElementById('user_staff').checked);
+
+        // Add password fields to formData
+        var password = document.getElementById('user_password').value.trim();
+        var confirmPassword = document.getElementById('user_confirm_password').value.trim();
+        formData.append('password', password);
+        formData.append('confirm_password', confirmPassword);
+
+        fetch(form.action, {
+            method: form.method,
+            body: formData
+        })
+            .then(response => {
+                if (response.ok) {
+                    // Show success message
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'User added successfully!',
+                        icon: 'success',
+                        timer: 1000, // 2 seconds
+                        timerProgressBar: true,
+                        showConfirmButton: false
+                    });
+
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1500);
+                } else {
+                    // Show error message if form submission failed
+                    response.json().then(data => {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data.message, // Display the error message from the server
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+}
+
+
+    // Attach the form submission function to the "Save" button click event
+    document.getElementById('saveUserBtn').addEventListener('click', confirmFormSubmission);
+
+    // Attach the form submission function to the Enter key press event
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' && $('#userPopup').hasClass('show')) {
+            confirmFormSubmission(event);
+        }
+    });
+});
+
+
+</script>
+
+
+{% endblock content %}

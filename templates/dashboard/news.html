@@ -26,11 +26,13 @@ Dashboard | News
 </style>
 <h1>News List</h1>
 <div class="row mb-3">
+    {% if user.is_superuser %}
     <div class="col-md-4">
         <a href="{% url 'dashboard:add_news' %}" class="bg-success p-2 text-light rounded">
             <i class="fa fa-add text-light mr-1"></i>Add
         </a>
     </div>
+    {% endif %}
     <div class="col-md-8 mt-2">
         <div class="input-group">
             <input type="text" class="form-control" id="searchInput" placeholder="Search...">
@@ -58,7 +60,9 @@ Dashboard | News
                 <th>Created At</th>
                 <th>Last Updated At</th>
                 <th>Status</th> 
+                {% if user.is_superuser %}
                 <th>Action</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -78,7 +82,7 @@ Dashboard | News
                 <td class="{% if news_item.is_published %}published{% else %}not-published{% endif %}">
                     {% if news_item.is_published %}Published{% else %}Not Published{% endif %}
                 </td>
-                
+                {% if user.is_superuser %}
                 <td style="white-space: nowrap; width: 1%;">
                     <a href="{% url 'dashboard:edit_news' news_item.slug %}" class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                     <a href="{% url 'dashboard:update_history' news_item.slug %}" class="btn btn-warning"><i class="fa-solid fa-clock-rotate-left"></i></a>
@@ -88,11 +92,14 @@ Dashboard | News
                         {% csrf_token %}
                     </form>
                 </td>
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>
     </table>
 </div>
+
+
 
 <div id="fullscreen" class="fullscreen hidden-bottom" style="display: none;">
     <span class="close-btn" onclick="closeFullScreen()">

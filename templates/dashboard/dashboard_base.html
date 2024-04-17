@@ -36,21 +36,8 @@
             </div>
 
             <ul class="list-unstyled components">
-               
-
                 <li class="active">
                     <a href="{% url 'dashboard:dashboard' %}"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
-                    <!-- <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li>
-                            <a href="#">Home 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Home 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Home 3</a>
-                        </li>
-                    </ul> -->
                 </li>
                 <li>
                     <a href="{% url 'dashboard:products' %}"><i class="fa fa-sitemap" aria-hidden="true"></i> Product</a>
@@ -67,7 +54,13 @@
                 <li>
                     <a href="{% url 'dashboard:news' %}"><i class="fa-solid fa-newspaper"></i> News</a>
                 </li>
+                {% if request.user.is_superuser %}
+                <li>
+                    <a href="{% url 'dashboard:user' %}"><i class="fa-solid fa-user"></i> Users</a>
+                </li>
+                {% endif %}
             </ul>
+            
             <a href="{% url 'dashboard:logout' %}" class="btn-danger btn ml-3">Log out</a>
             <button id="darkModeButton" class="btn">
                 <i class="fas fa-moon"></i></button>
