@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-function sortTable(order) {
+function sortTableByPrice(order) {
     var table = document.getElementById('productTable').querySelector('tbody');
     var rows = Array.from(table.querySelectorAll('tr.product-row'));
 
@@ -168,9 +168,30 @@ function sortTable(order) {
         var priceB = parseFloat(rowB.querySelector('td:nth-child(5)').innerText.replace('$', ''));
 
         if (order === 'desc') {
-            return priceB - priceA; // Sort in descending order
+            return priceB - priceA; // Sort in descending order by price
         } else {
-            return priceA - priceB; // Sort in ascending order
+            return priceA - priceB; // Sort in ascending order by price
+        }
+    });
+
+    // Re-append sorted rows to the table
+    rows.forEach(function(row) {
+        table.appendChild(row);
+    });
+}
+
+function sortTableAlphabetically(order) {
+    var table = document.getElementById('productTable').querySelector('tbody');
+    var rows = Array.from(table.querySelectorAll('tr.product-row'));
+
+    rows.sort(function(rowA, rowB) {
+        var valueA = rowA.querySelector('td:nth-child(3)').innerText.trim(); // Assuming title is in the third column
+        var valueB = rowB.querySelector('td:nth-child(3)').innerText.trim(); // Adjust this index based on your table structure
+
+        if (order === 'desc') {
+            return valueB.localeCompare(valueA); // Sort in descending order alphabetically
+        } else {
+            return valueA.localeCompare(valueB); // Sort in ascending order alphabetically
         }
     });
 
@@ -181,12 +202,21 @@ function sortTable(order) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Sort the table initially
-    sortTable('asc');
+    // Sort the table initially by price in ascending order
+    sortTableByPrice('asc');
 
-    // Add event listener to the select dropdown
+    // Add event listener to the select dropdown for price sorting
     document.getElementById('sortPrice').addEventListener('change', function() {
         var sortOrder = this.value;
-        sortTable(sortOrder);
+        sortTableByPrice(sortOrder);
+    });
+
+    // Add event listener to the select dropdown for alphabetical sorting
+    document.getElementById('sortAlpha').addEventListener('change', function() {
+        var sortOrder = this.value;
+        sortTableAlphabetically(sortOrder);
     });
 });
+
+
+

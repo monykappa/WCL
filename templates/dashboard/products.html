@@ -10,12 +10,14 @@ Dashboard | Products
 {% block content %}
 <h1>Products List</h1>
 <div class="row mb-3">
+    <!-- Add product button -->
     <div class="col-md-4">
         <a href="#" id="addProductBtn" class="bg-success p-2 text-light rounded" data-toggle="modal"
             data-target="#productPopup">
             <i class="fa fa-add text-light mr-1"></i>Add
         </a>
     </div>
+    <!-- Search input -->
     <div class="col-md-4 mt-2">
         <div class="input-group">
             <input type="text" class="form-control" id="searchProductsInput" placeholder="Search...">
@@ -30,14 +32,23 @@ Dashboard | Products
             </div>
         </div>
     </div>
-    <div class="col-md-4 mt-2">
+    <!-- Sorting dropdown for price -->
+    <div class="col-md-2 mt-2">
         <select class="form-control" id="sortPrice">
-            <option value="asc">Select Price</option>
-            <option value="asc">Sort by Price (Lowest to Highest)</option>
-            <option value="desc">Sort by Price (Highest to Lowest)</option>
+            <option value="#">Select</option>
+            <option value="asc">Low - High</option>
+            <option value="desc">High - Low</option>
+        </select>
+    </div>
+    <!-- Sorting dropdown for alphabetical order -->
+    <div class="col-md-2 mt-2">
+        <select class="form-control" id="sortAlpha">
+            <option value="asc">A - Z</option>
+            <option value="desc">Z - A</option>
         </select>
     </div>
 </div>
+
 
 <div class="table-responsive">
     <table class="table" id="productTable">

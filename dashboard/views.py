@@ -54,6 +54,12 @@ class ProductsView(View):
         manufacturers = Manufacturer.objects.all()  # Retrieve all manufacturers
         categories = Category.objects.all()  # Retrieve all categories
         drug_types = DrugType.objects.all()  # Retrieve all drug types
+        
+        category_filter = request.GET.get('category')
+        if category_filter:
+            # Filter products by the selected category
+            products = products.filter(category__name=category_filter)
+            
         return render(request, 'dashboard/products.html', {'products': products, 'manufacturers': manufacturers, 'categories': categories, 'drug_types': drug_types})
 
     def post(self, request):
