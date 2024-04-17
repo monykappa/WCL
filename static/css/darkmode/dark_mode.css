@@ -77,7 +77,10 @@ body.dark-mode h3 {
 .dark-mode .row strong{
     color:#fff;
 }
-
+.dark-mode select.form-control{
+    background-color: #22272e !important;
+    color:#fff !important;
+}
 .dark-mode .card-body{
     background-color: #22272e !important;
 }

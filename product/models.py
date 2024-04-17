@@ -58,7 +58,7 @@ class Manufacturer(TimeStampedModel):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)  # Generate slug from the name field
+            self.slug = slugify(self.name)  # Generate slug from the name fizeld
         super().save(*args, **kwargs)
 
     def __str__(self):

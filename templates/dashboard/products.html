@@ -16,7 +16,7 @@ Dashboard | Products
             <i class="fa fa-add text-light mr-1"></i>Add
         </a>
     </div>
-    <div class="col-md-8 mt-2">
+    <div class="col-md-4 mt-2">
         <div class="input-group">
             <input type="text" class="form-control" id="searchProductsInput" placeholder="Search...">
             <div class="input-group-append">
@@ -30,7 +30,15 @@ Dashboard | Products
             </div>
         </div>
     </div>
+    <div class="col-md-4 mt-2">
+        <select class="form-control" id="sortPrice">
+            <option value="asc">Select Price</option>
+            <option value="asc">Sort by Price (Lowest to Highest)</option>
+            <option value="desc">Sort by Price (Highest to Lowest)</option>
+        </select>
+    </div>
 </div>
+
 <div class="table-responsive">
     <table class="table" id="productTable">
         <thead class="thead-dark">
@@ -78,6 +86,7 @@ Dashboard | Products
         
     </table>
 </div>
+
 
 <!-- Product Detail Modal -->
 <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="productModalLabel"

@@ -159,4 +159,34 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+function sortTable(order) {
+    var table = document.getElementById('productTable').querySelector('tbody');
+    var rows = Array.from(table.querySelectorAll('tr.product-row'));
 
+    rows.sort(function(rowA, rowB) {
+        var priceA = parseFloat(rowA.querySelector('td:nth-child(5)').innerText.replace('$', ''));
+        var priceB = parseFloat(rowB.querySelector('td:nth-child(5)').innerText.replace('$', ''));
+
+        if (order === 'desc') {
+            return priceB - priceA; // Sort in descending order
+        } else {
+            return priceA - priceB; // Sort in ascending order
+        }
+    });
+
+    // Re-append sorted rows to the table
+    rows.forEach(function(row) {
+        table.appendChild(row);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Sort the table initially
+    sortTable('asc');
+
+    // Add event listener to the select dropdown
+    document.getElementById('sortPrice').addEventListener('change', function() {
+        var sortOrder = this.value;
+        sortTable(sortOrder);
+    });
+});
