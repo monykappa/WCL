@@ -164,7 +164,7 @@ class EditCategoryView(View):
         form = CategoryForm(request.POST, instance=category)
         if form.is_valid():
             form.save()
-            return redirect('dashboard:category_list')
+            return redirect('dashboard:category')
         return render(request, 'dashboard/edit_page/edit_category.html', {'form': form})
 
 @method_decorator(login_required, name='dispatch')

@@ -33,55 +33,50 @@ class TimeStampedModel(models.Model):
     class Meta:
         abstract = True
 
+# Define the slug generator function
 def generate_slug(value):
     return slugify(value)
 
-class DrugType(TimeStampedModel):
-    name = models.CharField(max_length=100, null=True, blank=True)
-    description = models.CharField(max_length=500, null=True, blank=True)
+# Define a mixin class for generating slugs
+class SlugMixin(models.Model):
     slug = models.SlugField(unique=True, max_length=100, null=True, blank=True)
 
     def save(self, *args, **kwargs):
-        if not self.slug:
+        if self.name:  # Check if name is not empty
             self.slug = generate_slug(self.name)  # Generate slug from the name field
         super().save(*args, **kwargs)
 
+    class Meta:
+        abstract = True  # Set abstract to True so that this class is not directly used as a model
+
+# Example usage of the SlugMixin in your models
+class DrugType(TimeStampedModel, SlugMixin):
+    name = models.CharField(max_length=100, null=True, blank=True)
+    description = models.CharField(max_length=500, null=True, blank=True)
+
     def __str__(self):
         return self.name
 
 
-class Manufacturer(TimeStampedModel):
+class Manufacturer(TimeStampedModel, SlugMixin):
     name = models.CharField(max_length=100, null=True, blank=True)
     country = CountryField()
     description = models.CharField(max_length=500, null=True, blank=True)
-    slug = models.SlugField(unique=True, max_length=100, null=True, blank=True)
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.name)  # Generate slug from the name fizeld
-        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
 
 
-class Category(TimeStampedModel):
+class Category(TimeStampedModel, SlugMixin):
     name = models.CharField(max_length=100, null=True, blank=True)
     description = models.CharField(max_length=500, null=True, blank=True)
-    slug = models.SlugField(unique=True, max_length=100, null=True, blank=True)
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = generate_slug(self.name) 
-        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
 
 
-class Drug(TimeStampedModel):
+class Drug(TimeStampedModel, SlugMixin):
     name = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True, max_length=100, null=True, blank=True)
     image = models.ImageField(upload_to=images_directory_path, validators=[validate_file_extension], blank=True, null=True)
     description = models.CharField(max_length=500, null=True, blank=True)
     manufacturer = models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
@@ -90,12 +85,6 @@ class Drug(TimeStampedModel):
     expiry_date = models.DateField(null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     drug_type = models.ForeignKey(DrugType, on_delete=models.CASCADE)
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = generate_slug(self.name)  # Generate unique slug from the name field
-        super().save(*args, **kwargs)
-
 
     def __str__(self):
         return self.name

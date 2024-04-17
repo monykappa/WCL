@@ -25,8 +25,23 @@ def images_directory_path(instance, filename):
 
 
 
+def generate_slug(value):
+    return slugify(value)
 
-class New(models.Model):
+class SlugMixin(models.Model):
+    slug = models.SlugField(unique=True, max_length=100, null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        if hasattr(self, 'title') and self.title:  # Check if the model has a title field and it's not empty
+            self.slug = generate_slug(self.title)  # Generate slug from the title field
+        super().save(*args, **kwargs)
+
+    class Meta:
+        abstract = True  # Set abstract to True so that this class is not directly used as a model
+
+
+# Model with the mixin for slug generation
+class New(SlugMixin):
     title = models.CharField(max_length=100)
     image = models.ImageField(upload_to=images_directory_path, validators=[validate_file_extension], blank=True, null=True)
     description = models.TextField(null=True, blank=True)
@@ -34,23 +49,18 @@ class New(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     update_count = models.IntegerField(default=0)
     is_published = models.BooleanField(default=False) 
-    slug = models.SlugField(unique=True, max_length=100, null=True, blank=True)
 
+    def save(self, *args, **kwargs):
+        if self.pk:  # Check if the instance is being updated (has a primary key)
+            self.update_count += 1  # Increment the update_count
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
 
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            base_slug = slugify(self.title)
-            self.slug = base_slug
-            counter = 1
-            while New.objects.filter(slug=self.slug).exists():
-                self.slug = f"{base_slug}-{counter}"
-                counter += 1
-        super().save(*args, **kwargs)
 
-class UpdateHistory(models.Model):
+# Model with the mixin for slug generation
+class UpdateHistory(SlugMixin):
     news = models.ForeignKey('New', on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     update_time = models.DateTimeField(auto_now_add=True)
@@ -60,12 +70,6 @@ class UpdateHistory(models.Model):
     title_after = models.CharField(max_length=100,null=True, blank=True)
     image_after = models.ImageField(upload_to=images_directory_path, validators=[validate_file_extension], null=True, blank=True)
     description_after = models.TextField()
-    slug = models.SlugField(unique=True, max_length=100, null=True, blank=True)  # Add a slug field
 
     def __str__(self):
         return f"{self.news.title} - {self.update_time}"
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.news.title)  
-        super().save(*args, **kwargs)
