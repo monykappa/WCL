@@ -33,7 +33,7 @@ urlpatterns = [
 
 
 
-
+    path('dashboard/export/', views.export_to_excel, name='export_to_excel'),
     
     
     # Category

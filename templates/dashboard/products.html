@@ -8,6 +8,7 @@ Dashboard | Products
 
 <h1 class="d-inline-block ml-auto">{% block dashboard_title %}Product{% endblock dashboard_title%}</h1>
 {% block content %}
+
 <h1>Products List</h1>
 <div class="row mb-3">
     <!-- Add product button -->
@@ -17,8 +18,31 @@ Dashboard | Products
             <i class="fa fa-add text-light mr-1"></i>Add
         </a>
     </div>
+    <!-- Export button -->
+    <div class="col-md-4">
+        <a href="{% url 'dashboard:export_to_excel' %}" class="btn btn-success">
+            <i class="fa fa-download"></i> Export to Excel
+        </a>
+    </div>
+    <!-- Sorting dropdown for price -->
+    <div class="col-md-2">
+        <select class="form-control" id="sortPrice">
+            <option value="#">Select</option>
+            <option value="asc">Low - High</option>
+            <option value="desc">High - Low</option>
+        </select>
+    </div>
+    <!-- Sorting dropdown for alphabetical order -->
+    <div class="col-md-2">
+        <select class="form-control" id="sortAlpha">
+            <option value="asc">A - Z</option>
+            <option value="desc">Z - A</option>
+        </select>
+    </div>
+</div>
+<div class="row mb-3">
     <!-- Search input -->
-    <div class="col-md-4 mt-2">
+    <div class="col-md-12">
         <div class="input-group">
             <input type="text" class="form-control" id="searchProductsInput" placeholder="Search...">
             <div class="input-group-append">
@@ -27,76 +51,65 @@ Dashboard | Products
                 </button>
             </div>
             <div class="input-group-append">
-                <span class="input-group-text bg-danger text-light ml-2" id="clearProductInput"
-                    style="cursor: pointer;"><i class="fa-solid fa-eraser"></i></span>
+                <button class="btn btn-danger" id="clearProductInput" type="button">
+                    <i class="fa fa-eraser"></i>
+                </button>
             </div>
         </div>
     </div>
-    <!-- Sorting dropdown for price -->
-    <div class="col-md-2 mt-2">
-        <select class="form-control" id="sortPrice">
-            <option value="#">Select</option>
-            <option value="asc">Low - High</option>
-            <option value="desc">High - Low</option>
-        </select>
-    </div>
-    <!-- Sorting dropdown for alphabetical order -->
-    <div class="col-md-2 mt-2">
-        <select class="form-control" id="sortAlpha">
-            <option value="asc">A - Z</option>
-            <option value="desc">Z - A</option>
-        </select>
-    </div>
 </div>
 
 
-<div class="table-responsive">
-    <table class="table" id="productTable">
-        <thead class="thead-dark">
-            <tr>
-                <th>Name</th>
-                <th>Image</th>
-                <th>Description</th>
-                <th>Manufacturer</th>
-                <th>Price</th>
-                <th>Quantity Available</th>
-                <th>Expiry Date</th>
-                <th>Category</th>
-                <th>Drug Type</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for product in products %}
-            <tr class="product-row" data-product="{{ product.id }}">
-                <td>{{ product.name }}</td>
-                <td><img src="{{ product.image.url }}" alt="{{ product.name }}" style="max-width: 100px;"></td>
-                <td>{{ product.description|truncatewords:5 }}</td>
-                <td>{{ product.manufacturer.name }}</td>
-                <td>${{ product.price }}</td>
-                <td>{{ product.quantity_available }}</td>
-                <td>{{ product.expiry_date }}</td>
-                <td>{{ product.category.name }}</td>
-                <td>{{ product.drug_type.name }}</td>
-                <td>
-                    <a href="{% url 'dashboard:edit_product' product.slug %}" class="btn btn-primary">
-                        <i class="fa fa-pencil" aria-hidden="true"></i>
-                    </a>
-                    <button type="button" class="btn btn-danger" onclick="confirmDelete('{{ product.slug }}')">
-                        <i class="fa fa-trash" aria-hidden="true"></i>
-                    </button>
-                    
-                    <!-- Form for deletion, hidden initially -->
-                    <form id="deleteForm-{{ product.slug }}" action="{% url 'dashboard:delete_product' product.slug %}" method="post" style="display: none;">
-                        {% csrf_token %}
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-        
-    </table>
+<div class="table-container">
+    <div class="table-responsive">
+        <table class="table" id="productTable">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Image</th>
+                    <th>Description</th>
+                    <th>Manufacturer</th>
+                    <th>Price</th>
+                    <th>Quantity Available</th>
+                    <th>Expiry Date</th>
+                    <th>Category</th>
+                    <th>Drug Type</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr class="product-row" data-product="{{ product.id }}">
+                    <td>{{ product.name }}</td>
+                    <td><img src="{{ product.image.url }}" alt="{{ product.name }}" style="max-width: 100px;"></td>
+                    <td>{{ product.description|truncatewords:5 }}</td>
+                    <td>{{ product.manufacturer.name }}</td>
+                    <td>${{ product.price }}</td>
+                    <td>{{ product.quantity_available }}</td>
+                    <td>{{ product.expiry_date }}</td>
+                    <td>{{ product.category.name }}</td>
+                    <td>{{ product.drug_type.name }}</td>
+                    <td>
+                        <a href="{% url 'dashboard:edit_product' product.slug %}" class="btn btn-primary">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a>
+                        <button type="button" class="btn btn-danger" onclick="confirmDelete('{{ product.slug }}')">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
+                        
+                        <!-- Form for deletion, hidden initially -->
+                        <form id="deleteForm-{{ product.slug }}" action="{% url 'dashboard:delete_product' product.slug %}" method="post" style="display: none;">
+                            {% csrf_token %}
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            
+        </table>
+    </div>
 </div>
+
 
 
 <!-- Product Detail Modal -->

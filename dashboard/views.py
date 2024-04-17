@@ -14,7 +14,42 @@ from django.views import View
 from django.utils.decorators import method_decorator
 import pycountry
 from django.conf import settings
+import csv
+import openpyxl
+import requests
+from openpyxl.drawing.image import Image
+from io import BytesIO
+import os
 
+
+
+def export_to_excel(request):
+    # Create a new Excel workbook
+    wb = openpyxl.Workbook()
+    ws = wb.active
+
+    # Add headers
+    ws.append(['Name', 'Description', 'Manufacturer', 'Price', 'Quantity Available', 'Expiry Date', 'Category', 'Drug Type'])
+
+    # Add data rows
+    products = Drug.objects.all()
+    for product in products:
+        ws.append([product.name, product.description, product.manufacturer.name, product.price, product.quantity_available, product.expiry_date, product.category.name, product.drug_type.name])
+
+    # Define the directory to save the Excel file
+    exports_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'media', 'exports')
+    os.makedirs(exports_dir, exist_ok=True)  # Create the directory if it doesn't exist
+
+    # Save the workbook to a file
+    excel_file_path = os.path.join(exports_dir, 'products.xlsx')
+    wb.save(excel_file_path)
+
+    # Open the file and serve it as an HttpResponse
+    with open(excel_file_path, 'rb') as file:
+        response = HttpResponse(file.read(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        response['Content-Disposition'] = 'attachment; filename=products.xlsx'
+
+    return response
 
 # Sign in
 class SignInView(View):
@@ -69,8 +104,7 @@ class ProductsView(View):
             return redirect('dashboard:products')
         return render(request, 'dashboard/add_page/add_product.html', {'form': form})
     
-    
-    
+
 
 class ProductDetailsView(View):
     def get(self, request, product_id):

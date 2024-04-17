@@ -10,7 +10,7 @@
 body {
     font-family: "Inter", sans-serif;
     color: #000 !important;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.1s ease, color 0.1s ease;
 }
 
 body h1 {
@@ -52,6 +52,12 @@ a:focus {
 .table thead {
     border: 1px solid #000;
 }
+
+.table-responsive {
+    max-height: 500px; /* Set the maximum height of the container */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
 
 button#darkModeButton {
     background-color: #1c2128 !important;
