@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Permission Denial</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" 
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- css -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="{% static 'css/dashboard/dashboard_base.css'%}">
+<link rel="stylesheet" href="{% static 'css/dashboard/fullscreen_image/fullscreen_img.css'%}">
+<link rel="stylesheet" href="{% static 'css/darkmode/dark_mode.css'%}">
+</head>
+<style>
+    .logo {
+        display: block;
+        margin: auto; /* Center the image horizontally */
+    }
+    
+</style>
+<body>
+   
+    <nav>
+        <div class="container">
+            <div class="row justify-content-center align-items-center"> <!-- Center both horizontally and vertically -->
+                <div class="back-button-ctn">
+                    <a href="#" id="backButton" class="ml-4 btn-primary" ><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
+                </div>
+                <img src="{% static 'img/logo/image-removebg-preview.png' %}" width="120" class="logo img-fluid"/>
+            </div>
+        </div>
+    </nav>
+    
+    {% block content %}
+        
+    {% endblock content %}
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script src="{% static 'js/dashboard/category.js'%}"></script>
+    <script src="{% static 'js/dashboard/manufacturer.js'%}"></script>
+    <script src="{% static 'js/dashboard/product_type.js'%}"></script>
+    <script src="{% static 'js/features/back_button.js'%}"></script>
+    <script src="{% static 'js/dashboard/product.js'%}"></script>
+    <script src="{% static 'js/dashboard/news.js'%}"></script>
+    <script src="{% static 'js/dashboard/edit/confirm_delete.js'%}"></script>
+    <script src="{% static 'js/dashboard/fullscreen_image/fullscreen_img.js'%}"></script>
+    <script src="{% static 'js/darkmode/dark_mode.js'%}"></script>
+</body>
+</html>

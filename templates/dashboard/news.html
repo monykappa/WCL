@@ -17,20 +17,23 @@ Dashboard | News
         color: #fff;
         background-color: green;
     }
-    
+
     .not-published {
         color: #fff;
         background-color: red;
     }
-    
+
+    img {
+        cursor: pointer;
+    }
 </style>
 <h1>News List</h1>
 <div class="row mb-3">
     {% if user.is_superuser %}
     <div class="col-md-4">
-        <a href="{% url 'dashboard:add_news' %}" class="bg-success p-2 text-light rounded">
-            <i class="fa fa-add text-light mr-1"></i>Add
-        </a>
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addNewsModal">
+            <i class="fa fa-plus text mr-1"></i>Add
+        </button>
     </div>
     {% endif %}
     <div class="col-md-8 mt-2">
@@ -59,7 +62,7 @@ Dashboard | News
                 <th>Image</th>
                 <th>Created At</th>
                 <th>Last Updated At</th>
-                <th>Status</th> 
+                <th>Status</th>
                 {% if user.is_superuser %}
                 <th>Action</th>
                 {% endif %}
@@ -72,7 +75,8 @@ Dashboard | News
                 <td>{{ news_item.description }}</td>
                 <td>
                     {% if news_item.image %}
-                    <img src="{{ news_item.image.url }}" alt="{{ news_item.title }}" width="100" class="img-fluid rounded image-fullscreen-trigger">
+                    <img src="{{ news_item.image.url }}" alt="{{ news_item.title }}" width="100"
+                        class="img-fluid rounded image-fullscreen-trigger">
                     {% else %}
                     No Image
                     {% endif %}
@@ -84,11 +88,15 @@ Dashboard | News
                 </td>
                 {% if user.is_superuser %}
                 <td style="white-space: nowrap; width: 1%;">
-                    <a href="{% url 'dashboard:edit_news' news_item.slug %}" class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                    <a href="{% url 'dashboard:update_history' news_item.slug %}" class="btn btn-warning"><i class="fa-solid fa-clock-rotate-left"></i></a>
-                    <button type="button" class="btn btn-danger" onclick="confirmDelete('{{ news_item.id }}')"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                    <a href="{% url 'dashboard:edit_news' news_item.slug %}" class="btn btn-primary"><i
+                            class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a href="{% url 'dashboard:update_history' news_item.slug %}" class="btn btn-warning"><i
+                            class="fa-solid fa-clock-rotate-left"></i></a>
+                    <button type="button" class="btn btn-danger" onclick="confirmDelete('{{ news_item.id }}')"><i
+                            class="fa fa-trash" aria-hidden="true"></i></button>
                     <!-- Form for deletion, hidden initially -->
-                    <form id="deleteForm-{{ news_item.id }}" action="{% url 'dashboard:delete_news' news_item.id %}" method="post" style="display: none;">
+                    <form id="deleteForm-{{ news_item.id }}" action="{% url 'dashboard:delete_news' news_item.id %}"
+                        method="post" style="display: none;">
                         {% csrf_token %}
                     </form>
                 </td>
@@ -98,6 +106,63 @@ Dashboard | News
         </tbody>
     </table>
 </div>
+
+
+
+<div class="modal fade" id="addNewsModal" tabindex="-1" role="dialog" aria-labelledby="addNewsModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addNewsModalLabel">Add News</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Add news form -->
+                <form method="post" id="myForm" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="title" class="form-label">Title:</label>
+                                <input type="text" class="form-control" id="title" name="title">
+                            </div>
+                            <div class="form-group">
+                                <label for="description" class="form-label">Description:</label>
+                                <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="image" class="form-label">Image:</label>
+                                <input type="file" class="form-control-file" id="image" name="image"
+                                    onchange="previewImage(event)">
+                            </div>
+                            <div class="form-group">
+                                <img id="imagePreview" src="#" alt="Preview Image"
+                                    style="max-width: 100%; height: auto; display: none;">
+                            </div>
+                            <div class="form-group form-check">
+                                <input type="checkbox" class="form-check-input" id="publishCheckbox"
+                                    name="publishCheckbox">
+                                <label class="form-check-label" for="publishCheckbox">Publish this news</label>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="validateForm()">Add News</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 
@@ -111,5 +176,10 @@ Dashboard | News
         <button onclick="zoomOut()">Zoom Out <i class="fa fa-minus" aria-hidden="true"></i></button>
     </div>
 </div>
+
+<script>
+
+
+</script>
 
 {% endblock content %}

@@ -83,6 +83,14 @@ class UserView(View):
         user.is_staff = is_staff
         user.save()
         return JsonResponse({'status': 'success', 'user_id': user.id})
+    
+    
+class DeleteUserView(View):
+    def post(self, request, *args, **kwargs):
+        user_id = kwargs['user_id']
+        user = User.objects.get(id=user_id)
+        user.delete()
+        return redirect('dashboard:user') 
 
 
 def export_to_excel(request):
@@ -399,8 +407,23 @@ class DeleteProductTypeView(View):
 @method_decorator(login_required, name='dispatch')
 class NewsView(View):
     def get(self, request):
+        # Handle GET request to display news list and add news form
         news_items = New.objects.all().order_by('-updated_at')
-        return render(request, 'dashboard/news.html', {'news_items': news_items})
+        form = NewsForm()
+        return render(request, 'dashboard/news.html', {'news_items': news_items, 'form': form})
+
+    def post(self, request):
+        # Handle POST request to add new news
+        form = NewsForm(request.POST, request.FILES)
+        if form.is_valid():
+            news_instance = form.save(commit=False)
+            if 'publishCheckbox' in request.POST:
+                news_instance.is_published = True
+            news_instance.save()
+            return redirect('dashboard:news')  # Redirect to news list after adding news
+        # If form is invalid, render the news list with the form again
+        news_items = New.objects.all().order_by('-updated_at')
+        return render(request, 'dashboard/news.html', {'news_items': news_items, 'form': form})
 
 @method_decorator(login_required, name='dispatch')
 class AddNewsView(SuperuserRequiredMixin, View):

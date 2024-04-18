@@ -102,6 +102,11 @@ body.dark-mode h3 {
     color: #fff !important;
 }
 
+
+.dark-mode p.text-view-img{
+    color:grey !important;
+}
+
 .dark-mode #sidebarCollapse {
     background-color: #fff !important;
 }

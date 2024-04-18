@@ -6,6 +6,12 @@ body.modal-open {
 }
 
 
+p.text-view-img{
+    color:grey !important;
+}
+
+
+
 .modal {
     display: none;
     position: fixed;

@@ -13,6 +13,22 @@ body {
     transition: background-color 0.1s ease, color 0.1s ease;
 }
 
+/* Website custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px; 
+    height: 8px; 
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(6, 180, 255, 0.397);
+    border-radius: 4px; 
+}
+
+::-webkit-scrollbar-track {
+    background-color: rgb(255, 255, 255); 
+}
+
+
 body h1 {
     color: #000 !important;
 }

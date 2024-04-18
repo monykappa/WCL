@@ -28,3 +28,39 @@ document.addEventListener("DOMContentLoaded", function() {
         filterTable(); 
     });
 });
+
+function previewImage(event) {
+    var reader = new FileReader();
+    reader.onload = function() {
+        var imagePreview = document.getElementById('imagePreview');
+        imagePreview.src = reader.result;
+        imagePreview.style.display = 'block';
+    }
+    reader.readAsDataURL(event.target.files[0]);
+}
+
+function validateForm() {
+    try {
+        var titleInput = document.getElementById('title');
+        if (titleInput && titleInput.value.trim() === '') {
+            Swal.fire("Error", "Please enter the title", "error");
+        } else {
+            // Show SweetAlert immediately upon form submission
+            Swal.fire({
+                title: "Success",
+                text: "News added",
+                icon: "success",
+                timer: 1000, // Set timer to 1000 milliseconds (1 second)
+                showConfirmButton: false // Hide the "Okay" button
+            });
+
+            // Submit the form after a slight delay to allow SweetAlert to appear
+            setTimeout(function() {
+                document.getElementById('myForm').submit();
+            }, 1000); // Adjust the delay time as needed (in milliseconds)
+        }
+    } catch (error) {
+        console.error("Error in validateForm:", error);
+    }
+}
+
