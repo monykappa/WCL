@@ -365,7 +365,6 @@ class DeleteManufacturerView(SuperuserRequiredMixin, View):
         return redirect('dashboard:manufacturer')
 
 # Product type
-@method_decorator(login_required, name='dispatch')
 class ProductTypeView(View):
     def get(self, request):
         form = DrugTypeForm()
@@ -376,9 +375,11 @@ class ProductTypeView(View):
         form = DrugTypeForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('dashboard:product_type')
-        drug_types = DrugType.objects.all()
-        return render(request, 'dashboard/product_type.html', {'form': form, 'drug_types': drug_types})
+            return JsonResponse({'success': True})  # Return JSON response for success
+        else:
+            errors = form.errors.as_json()
+            return JsonResponse({'success': False, 'errors': errors})  # Return JSON response for errors
+
 
 
 @method_decorator(login_required, name='dispatch')

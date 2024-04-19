@@ -90,24 +90,22 @@ Dashboard | Product Type
                 </button>
             </div>
             <div class="modal-body">
-                <!-- Product Type Form -->
                 <form method="post" id="productTypeForm">
                     {% csrf_token %}
                     <div class="form-group">
-                        <label for="id_name" class="form-label">Product Type Name:</label>
-                        <input type="text" class="form-control" id="id_name" name="name"
-                            value="{% if form.name.value %}{{ form.name.value }}{% endif %}">
+                        <label for="product_type_name">Product Type Name:</label>
+                        <input type="text" class="form-control" id="product_type_name" name="name" required>
                     </div>
                     <div class="form-group">
-                        <label for="id_description" class="form-label">Description:</label>
-                        <textarea class="form-control" id="id_description"
-                            name="description">{% if form.description.value %}{{ form.description.value }}{% endif %}</textarea>
+                        <label for="product_type_description">Description:</label>
+                        <textarea class="form-control" id="product_type_description" name="description"></textarea>
                     </div>
-                    <button type="button" class="btn btn-primary" onclick="validateForm()"><i
+                    <button type="button" class="btn btn-primary" id="saveProductTypeBtn"><i
                         class="fa-solid fa-floppy-disk"></i></button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
 {% endblock content %}
