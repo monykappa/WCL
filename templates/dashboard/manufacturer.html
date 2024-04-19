@@ -10,16 +10,21 @@ Dashboard | Manufacturer
 
 {% block content %}
 <h1>Manufacturer List</h1>
+<!-- Add Manufacturer Button -->
 <div class="row mb-3">
     {% if request.user.is_superuser %}
     <div class="col-md-4">
-        <a href="#" id="addManufacturerBtn" class="bg-success p-2 text-light rounded" data-toggle="modal"
+        <a href="#" id="addManufacturerBtn" class="btn btn-success p-2 text-light rounded" data-toggle="modal"
             data-target="#manufacturerPopup">
             <i class="fa fa-add text-light mr-1"></i>Add
         </a>
     </div>
     {% endif %}
-    <div class="col-md-8 mt-2">
+</div>
+
+<!-- Search Input -->
+<div class="row mb-3">
+    <div class="col-md-12">
         <div class="input-group">
             <input type="text" class="form-control" id="searchManufacturerInput" placeholder="Search...">
             <div class="input-group-append">
@@ -28,12 +33,14 @@ Dashboard | Manufacturer
                 </button>
             </div>
             <div class="input-group-append">
-                <span class="input-group-text bg-danger text-light ml-2" id="clearManufacturerInput"
-                    style="cursor: pointer;"><i class="fa-solid fa-eraser"></i></span>
+                <button class="btn btn-danger" id="clearManufacturerInput" type="button">
+                    <i class="fa fa-eraser"></i>
+                </button>
             </div>
         </div>
     </div>
 </div>
+
 <div class="table-responsive">
     <table class="table" id="manufacturerTable">
         <thead class="thead-dark">

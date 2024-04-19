@@ -4,8 +4,6 @@
 Dashboard | News
 {% endblock title %}
 
-{% block css %}
-{% endblock css %}
 
 <h1 class="d-inline-block ml-auto text-light">
     {% block dashboard_title %}News{% endblock dashboard_title%}
@@ -27,7 +25,10 @@ Dashboard | News
         cursor: pointer;
     }
 </style>
+
+
 <h1>News List</h1>
+<!-- Add News Button -->
 <div class="row mb-3">
     {% if user.is_superuser %}
     <div class="col-md-4">
@@ -36,7 +37,11 @@ Dashboard | News
         </button>
     </div>
     {% endif %}
-    <div class="col-md-8 mt-2">
+</div>
+
+<!-- Search Input -->
+<div class="row mb-3">
+    <div class="col-md-12">
         <div class="input-group">
             <input type="text" class="form-control" id="searchInput" placeholder="Search...">
             <div class="input-group-append">
@@ -45,66 +50,68 @@ Dashboard | News
                 </button>
             </div>
             <div class="input-group-append">
-                <span class="input-group-text bg-danger text-light ml-2" id="clearSearchInput" style="cursor: pointer;">
-                    <i class="fa-solid fa-eraser"></i>
-                </span>
+                <button class="btn btn-danger" id="clearSearchInput" type="button">
+                    <i class="fa fa-eraser"></i>
+                </button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="table-responsive">
-    <table class="table">
-        <thead class="thead-dark">
-            <tr>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Image</th>
-                <th>Created At</th>
-                <th>Last Updated At</th>
-                <th>Status</th>
-                {% if user.is_superuser %}
-                <th>Action</th>
-                {% endif %}
-            </tr>
-        </thead>
-        <tbody>
-            {% for news_item in news_items %}
-            <tr>
-                <td>{{ news_item.title }}</td>
-                <td>{{ news_item.description }}</td>
-                <td>
-                    {% if news_item.image %}
-                    <img src="{{ news_item.image.url }}" alt="{{ news_item.title }}" width="100"
-                        class="img-fluid rounded image-fullscreen-trigger">
-                    {% else %}
-                    No Image
+<div class="table-container">
+    <div class="table-responsive">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                    <th>Created At</th>
+                    <th>Last Updated At</th>
+                    <th>Status</th>
+                    {% if user.is_superuser %}
+                    <th>Action</th>
                     {% endif %}
-                </td>
-                <td>{{ news_item.created_at }}</td>
-                <td>{{ news_item.updated_at }}</td>
-                <td class="{% if news_item.is_published %}published{% else %}not-published{% endif %}">
-                    {% if news_item.is_published %}Published{% else %}Not Published{% endif %}
-                </td>
-                {% if user.is_superuser %}
-                <td style="white-space: nowrap; width: 1%;">
-                    <a href="{% url 'dashboard:edit_news' news_item.slug %}" class="btn btn-primary"><i
-                            class="fa fa-pencil" aria-hidden="true"></i></a>
-                    <a href="{% url 'dashboard:update_history' news_item.slug %}" class="btn btn-warning"><i
-                            class="fa-solid fa-clock-rotate-left"></i></a>
-                    <button type="button" class="btn btn-danger" onclick="confirmDelete('{{ news_item.id }}')"><i
-                            class="fa fa-trash" aria-hidden="true"></i></button>
-                    <!-- Form for deletion, hidden initially -->
-                    <form id="deleteForm-{{ news_item.id }}" action="{% url 'dashboard:delete_news' news_item.id %}"
-                        method="post" style="display: none;">
-                        {% csrf_token %}
-                    </form>
-                </td>
-                {% endif %}
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                </tr>
+            </thead>
+            <tbody>
+                {% for news_item in news_items %}
+                <tr>
+                    <td>{{ news_item.title }}</td>
+                    <td>{{ news_item.description }}</td>
+                    <td>
+                        {% if news_item.image %}
+                        <img src="{{ news_item.image.url }}" alt="{{ news_item.title }}" width="100"
+                            class="img-fluid rounded image-fullscreen-trigger">
+                        {% else %}
+                        No Image
+                        {% endif %}
+                    </td>
+                    <td>{{ news_item.created_at }}</td>
+                    <td>{{ news_item.updated_at }}</td>
+                    <td class="{% if news_item.is_published %}published{% else %}not-published{% endif %}">
+                        {% if news_item.is_published %}Published{% else %}Not Published{% endif %}
+                    </td>
+                    {% if user.is_superuser %}
+                    <td style="white-space: nowrap; width: 1%;">
+                        <a href="{% url 'dashboard:edit_news' news_item.slug %}" class="btn btn-primary"><i
+                                class="fa fa-pencil" aria-hidden="true"></i></a>
+                        <a href="{% url 'dashboard:update_history' news_item.slug %}" class="btn btn-warning"><i
+                                class="fa-solid fa-clock-rotate-left"></i></a>
+                        <button type="button" class="btn btn-danger" onclick="confirmDelete('{{ news_item.id }}')"><i
+                                class="fa fa-trash" aria-hidden="true"></i></button>
+                        <!-- Form for deletion, hidden initially -->
+                        <form id="deleteForm-{{ news_item.id }}" action="{% url 'dashboard:delete_news' news_item.id %}"
+                            method="post" style="display: none;">
+                            {% csrf_token %}
+                        </form>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 
 
