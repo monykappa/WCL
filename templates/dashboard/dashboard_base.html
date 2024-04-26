@@ -16,6 +16,7 @@
         <!-- css -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'css/dashboard/dashboard_base.css'%}">
+    <link rel="stylesheet" href="{% static 'css/dashboard/overview.css' %}">
     <link rel="stylesheet" href="{% static 'css/dashboard/fullscreen_image/fullscreen_img.css'%}">
     <link rel="stylesheet" href="{% static 'css/darkmode/dark_mode.css'%}">
     <link rel="stylesheet" href="{% static 'css/dashboard/popup/popup.css' %}">
@@ -38,26 +39,26 @@
 
             <ul class="list-unstyled components">
                 <li class="active">
-                    <a href="{% url 'dashboard:dashboard' %}"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+                    <a href="{% url 'dashboard:dashboard' %}"><i class="fa-solid fa-chart-simple mr-2"></i> Overview</a>
                 </li>
                 <li>
-                    <a href="{% url 'dashboard:products' %}"><i class="fa fa-sitemap" aria-hidden="true"></i> Product</a>
+                    <a href="{% url 'dashboard:products' %}"><i class="fa fa-sitemap mr-2" aria-hidden="true"></i> Product</a>
                 </li>
                 <li>
-                    <a href="{% url 'dashboard:manufacturer' %}" aria-expanded="false"><i class="fa fa-industry" aria-hidden="true"></i> Manufacturer</a>
+                    <a href="{% url 'dashboard:manufacturer' %}" aria-expanded="false"><i class="fa fa-industry mr-2" aria-hidden="true"></i> Manufacturer</a>
                 </li>
                 <li>
-                    <a href="{% url 'dashboard:category' %}" ><i class="fa-solid fa-list"></i> Category</a>
+                    <a href="{% url 'dashboard:category' %}" ><i class="fa-solid fa-list mr-2"></i> Category</a>
                 </li>
                 <li>
-                    <a href="{% url 'dashboard:product_type' %}"><i class="fa-solid fa-pills"></i> Product type</a>
+                    <a href="{% url 'dashboard:product_type' %}"><i class="fa-solid fa-pills mr-2"></i> Product type</a>
                 </li>
                 <li>
-                    <a href="{% url 'dashboard:news' %}"><i class="fa-solid fa-newspaper"></i> News</a>
+                    <a href="{% url 'dashboard:news' %}"><i class="fa-solid fa-newspaper mr-2"></i> News</a>
                 </li>
                 {% if request.user.is_superuser %}
                 <li>
-                    <a href="{% url 'dashboard:user' %}"><i class="fa-solid fa-user"></i> Users</a>
+                    <a href="{% url 'dashboard:user' %}"><i class="fa-solid fa-user mr-2"></i> Users</a>
                 </li>
                 {% endif %}
             </ul>
@@ -97,9 +98,11 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
     <script src="{% static 'js/dashboard/category.js'%}"></script>
+    <script src="{% static 'js/dashboard/overview.js'%}"></script>
     <script src="{% static 'js/dashboard/manufacturer.js'%}"></script>
     <script src="{% static 'js/dashboard/product_type.js'%}"></script>
     <script src="{% static 'js/dashboard/product.js'%}"></script>

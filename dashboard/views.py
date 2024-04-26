@@ -148,7 +148,19 @@ class LogoutView(View):
 @method_decorator(login_required, name='dispatch')
 class DashboardView(View):
     def get(self, request):
-        return render(request, 'dashboard/dashboard.html')
+        latest_products = Drug.objects.order_by('-created_at')[:5]
+        latest_categories = Category.objects.order_by('-created_at')[:5]
+        latest_manufacturers = Manufacturer.objects.order_by('-created_at')[:5]
+        latest_product_types = DrugType.objects.order_by('-created_at')[:5]
+
+        context = {
+            'latest_products': latest_products,
+            'latest_categories': latest_categories,
+            'latest_manufacturers': latest_manufacturers,
+            'latest_product_types': latest_product_types,
+        }
+
+        return render(request, 'dashboard/overview.html', context)
 
 # Products
 @method_decorator(login_required, name='dispatch')
