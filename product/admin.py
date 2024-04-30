@@ -6,7 +6,7 @@ class TimeStampedModelAdmin(admin.ModelAdmin):
     readonly_fields = ('created_at', 'updated_at')
 
 class DrugAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description', 'display_image', 'manufacturer', 'price', 'quantity_available', 'expiry_date', 'category', 'drug_type')
+    list_display = ('name', 'created_at', 'description', 'display_image', 'manufacturer', 'price', 'quantity_available', 'expiry_date', 'category', 'drug_type')
 
     def display_image(self, obj):
         if obj.image:
@@ -15,6 +15,7 @@ class DrugAdmin(admin.ModelAdmin):
             return 'No Image'
 
     display_image.allow_tags = True
+
 
 admin.site.register(Drug, DrugAdmin)
 admin.site.register(DrugType, TimeStampedModelAdmin)

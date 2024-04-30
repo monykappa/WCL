@@ -1,4 +1,5 @@
 from multiprocessing import AuthenticationError
+from django.views.generic import TemplateView
 from django.contrib.auth import logout
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
@@ -12,17 +13,19 @@ from .models import *
 from django.views.decorators.http import require_POST
 from django.views import View
 from django.utils.decorators import method_decorator
-import pycountry
+import pycountry  # type: ignore
 from django.conf import settings
 import csv
-import openpyxl
+import openpyxl  # type: ignore
 import requests
-from openpyxl.drawing.image import Image
+from openpyxl.drawing.image import Image # type: ignore
 from io import BytesIO
 import os
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.http import HttpResponseForbidden
 
+
+# Denied access if user is not a superuser
 class SuperuserRequiredMixin(UserPassesTestMixin):
     def test_func(self):
         return self.request.user.is_superuser
@@ -30,25 +33,9 @@ class SuperuserRequiredMixin(UserPassesTestMixin):
     def handle_no_permission(self):
         return render(self.request, 'dashboard/error_pages/403.html', status=403)
 
-class EditUserView(SuperuserRequiredMixin, View):
-    def get(self, request, user_id):
-        user = get_object_or_404(User, id=user_id)
-        return render(request, 'dashboard/edit_page/edit_user.html', {'user': user})
-    
-    def post(self, request, user_id):
-        user = get_object_or_404(User, id=user_id)
-        # Handle form submission and save changes
-        user.username = request.POST.get('username')
-        user.first_name = request.POST.get('first_name')
-        user.last_name = request.POST.get('last_name')
-        user.email = request.POST.get('email')
-        user.is_superuser = request.POST.get('is_superuser') == 'on'
-        user.is_active = request.POST.get('is_active') == 'on'
-        user.is_staff = request.POST.get('is_staff') == 'on'
-        user.save()
-        return redirect('dashboard:user')  # Redirect to the user list page after saving changes
-    
+# User
 class UserView(View):
+
     template_name = 'dashboard/user.html'
 
     def get(self, request):
@@ -83,7 +70,23 @@ class UserView(View):
         user.is_staff = is_staff
         user.save()
         return JsonResponse({'status': 'success', 'user_id': user.id})
+class EditUserView(SuperuserRequiredMixin, View):
+    def get(self, request, user_id):
+        user = get_object_or_404(User, id=user_id)
+        return render(request, 'dashboard/edit_page/edit_user.html', {'user': user})
     
+    def post(self, request, user_id):
+        user = get_object_or_404(User, id=user_id)
+        # Handle form submission and save changes
+        user.username = request.POST.get('username')
+        user.first_name = request.POST.get('first_name')
+        user.last_name = request.POST.get('last_name')
+        user.email = request.POST.get('email')
+        user.is_superuser = request.POST.get('is_superuser') == 'on'
+        user.is_active = request.POST.get('is_active') == 'on'
+        user.is_staff = request.POST.get('is_staff') == 'on'
+        user.save()
+        return redirect('dashboard:user')  # Redirect to the user list page after saving changes
     
 class DeleteUserView(View):
     def post(self, request, *args, **kwargs):
@@ -93,36 +96,41 @@ class DeleteUserView(View):
         return redirect('dashboard:user') 
 
 
-def export_to_excel(request):
-    # Create a new Excel workbook
-    wb = openpyxl.Workbook()
-    ws = wb.active
+# Export products to excel
+class ExportToExcelView(TemplateView):
+    template_name = "export_to_excel.html"
 
-    # Add headers
-    ws.append(['Name', 'Description', 'Manufacturer', 'Price', 'Quantity Available', 'Expiry Date', 'Category', 'Drug Type'])
+    def get(self, request, *args, **kwargs):
+        # Create a new Excel workbook
+        wb = openpyxl.Workbook()
+        ws = wb.active
 
-    # Add data rows
-    products = Drug.objects.all()
-    for product in products:
-        ws.append([product.name, product.description, product.manufacturer.name, product.price, product.quantity_available, product.expiry_date, product.category.name, product.drug_type.name])
+        # Add headers
+        ws.append(['Name', 'Description', 'Manufacturer', 'Price', 'Quantity Available', 'Expiry Date', 'Category', 'Drug Type'])
 
-    # Define the directory to save the Excel file
-    exports_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'media', 'exports')
-    os.makedirs(exports_dir, exist_ok=True)  # Create the directory if it doesn't exist
+        # Add data rows
+        products = Drug.objects.all()
+        for product in products:
+            ws.append([product.name, product.description, product.manufacturer.name, product.price, product.quantity_available, product.expiry_date, product.category.name, product.drug_type.name])
 
-    # Save the workbook to a file
-    excel_file_path = os.path.join(exports_dir, 'products.xlsx')
-    wb.save(excel_file_path)
+        # Define the directory to save the Excel file
+        exports_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'media', 'exports')
+        os.makedirs(exports_dir, exist_ok=True)  # Create the directory if it doesn't exist
 
-    # Open the file and serve it as an HttpResponse
-    with open(excel_file_path, 'rb') as file:
-        response = HttpResponse(file.read(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-        response['Content-Disposition'] = 'attachment; filename=products.xlsx'
+        # Save the workbook to a file
+        excel_file_path = os.path.join(exports_dir, 'products.xlsx')
+        wb.save(excel_file_path)
 
-    return response
+        # Open the file and serve it as an HttpResponse
+        with open(excel_file_path, 'rb') as file:
+            response = HttpResponse(file.read(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+            response['Content-Disposition'] = 'attachment; filename=products.xlsx'
+
+        return response
 
 # Sign in
 class SignInView(View):
+
     def get(self, request):
         return render(request, "dashboard/sign_in.html")
 
@@ -142,22 +150,20 @@ class LogoutView(View):
         return redirect('dashboard:sign_in')
 
 
-# def dashboard_base(request):
-#     return render(request, 'dashboard/dashboard_base.html')
-
+# Dashboard
 @method_decorator(login_required, name='dispatch')
 class DashboardView(View):
     def get(self, request):
-        latest_products = Drug.objects.order_by('-created_at')[:5]
-        latest_categories = Category.objects.order_by('-created_at')[:5]
-        latest_manufacturers = Manufacturer.objects.order_by('-created_at')[:5]
-        latest_product_types = DrugType.objects.order_by('-created_at')[:5]
+        products = Drug.objects.all()
+        categories = Category.objects.all()
+        manufacturers = Manufacturer.objects.all()
+        product_types = DrugType.objects.all()
 
         context = {
-            'latest_products': latest_products,
-            'latest_categories': latest_categories,
-            'latest_manufacturers': latest_manufacturers,
-            'latest_product_types': latest_product_types,
+            'products': products,
+            'categories': categories,
+            'manufacturers': manufacturers,
+            'product_types': product_types,
         }
 
         return render(request, 'dashboard/overview.html', context)
@@ -187,7 +193,6 @@ class ProductsView(View):
         return render(request, 'dashboard/add_page/add_product.html', {'form': form})
     
 
-
 class ProductDetailsView(View):
     def get(self, request, product_id):
         try:
@@ -214,9 +219,6 @@ class ProductDetailsView(View):
             return JsonResponse(product_data)
         except Drug.DoesNotExist:
             return JsonResponse({'error': 'Product not found'}, status=404)
-
-
-
 
 class EditProductView(SuperuserRequiredMixin, View):
     def get(self, request, slug):
@@ -246,7 +248,6 @@ class EditProductView(SuperuserRequiredMixin, View):
             return redirect('dashboard:products')
         return render(request, 'dashboard/edit_page/edit_product.html', {'form': form})
     
-    
 class DeleteProductView(SuperuserRequiredMixin, View):
     def post(self, request, slug):
         # Retrieve the product
@@ -257,8 +258,6 @@ class DeleteProductView(SuperuserRequiredMixin, View):
         
         # Return a success message
         return redirect('dashboard:products')
-
-
 
 
 # category
@@ -297,19 +296,6 @@ class DeleteCategoryView(SuperuserRequiredMixin, View):
         category = get_object_or_404(Category, id=category_id)
         category.delete()
         return redirect('dashboard:category')
-
-# @method_decorator(login_required, name='dispatch')
-# class AddCategoryView(View):
-#     def get(self, request):
-#         form = CategoryForm()
-#         return render(request, 'dashboard/add_page/add_category.html', {'form': form})
-
-#     def post(self, request):
-#         form = CategoryForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('dashboard:category')
-#         return render(request, 'dashboard/add_page/add_category.html', {'form': form})
 
 
 
@@ -350,8 +336,6 @@ class ManufacturerView(View):
             else:
                 return render(request, 'dashboard/manufacturer.html', {'form': form})
 
-
-
 @method_decorator(login_required, name='dispatch')
 class EditManufacturerView(SuperuserRequiredMixin, View):
     def get(self, request, manufacturer_slug):
@@ -366,8 +350,6 @@ class EditManufacturerView(SuperuserRequiredMixin, View):
             form.save()
             return redirect('dashboard:manufacturer')  # Assuming this redirects to the manufacturer list page
         return render(request, 'dashboard/edit_page/edit_manufacturer.html', {'form': form})
-
-
 
 @method_decorator(login_required, name='dispatch')
 class DeleteManufacturerView(SuperuserRequiredMixin, View):
@@ -391,7 +373,6 @@ class ProductTypeView(View):
         else:
             errors = form.errors.as_json()
             return JsonResponse({'success': False, 'errors': errors})  # Return JSON response for errors
-
 
 
 @method_decorator(login_required, name='dispatch')

@@ -11,7 +11,6 @@ from django.conf import settings
 app_name = 'dashboard'
 urlpatterns = [
     
-    
     #sign in 
     path('sign_in/', views.SignInView.as_view(), name='sign_in'),
     
@@ -22,10 +21,8 @@ urlpatterns = [
     path('dashboard/user/', views.UserView.as_view(), name='user'),
     path('edit_user/<int:user_id>/', views.EditUserView.as_view(), name='edit_user'),
     path('dashboard/delete_user/<int:user_id>/', views.DeleteUserView.as_view(), name='delete_user'),
-    # path('dashboard/create_user/', views.CreateUserView.as_view(), name='create_user'),
     
     # Dashboard
-    # path('dashboard_base/', views.dashboard_base, name='dashboard_base'),
     path('dashboard/', views.DashboardView.as_view(), name='dashboard'),
     
     
@@ -36,29 +33,23 @@ urlpatterns = [
     path('products/delete/<slug:slug>/', views.DeleteProductView.as_view(), name='delete_product'),
     
 
-
-
-
-
-    path('dashboard/export/', views.export_to_excel, name='export_to_excel'),
+    # Export to excel
+    path('dashboard/export/', views.ExportToExcelView.as_view(), name='export_to_excel'),
     
     
     # Category
     path('dashboard/category/', views.CategoryView.as_view(), name='category'),
     path('dashboard/category/edit/<slug:category_slug>/', views.EditCategoryView.as_view(), name='edit_category'),
     path('dashboard/category/<int:category_id>/delete/', views.DeleteCategoryView.as_view(), name='delete_category'),
-    # path('dashboard/add_category/', views.AddCategoryView.as_view(), name='add_category'),
     
     
     # Manufacturer
     path('dashboard/manufacturer/', views.ManufacturerView.as_view(), name='manufacturer'),
     path('dashboard/manufacturers/edit/<slug:manufacturer_slug>/', views.EditManufacturerView.as_view(), name='edit_manufacturer'),
     path('manufacturers/<int:manufacturer_id>/delete/', views.DeleteManufacturerView.as_view(), name='delete_manufacturer'),
-    # path('dashboard/add_manufacturer/', views.AddManufacturerView.as_view(), name='add_manufacturer'),
     
     # product Type
     path('dashboard/product_type/', views.ProductTypeView.as_view(), name='product_type'),
-    # path('dashboard/add_product_type/', views.AddProductTypeView.as_view(), name='add_product_type'),
     path('dashboard/edit_product_type/edit/<slug:slug>/', views.EditProductTypeView.as_view(), name='edit_product_type'),
     path('delete_product_type/<int:drug_type_id>/', views.DeleteProductTypeView.as_view(), name='delete_product_type'),
     

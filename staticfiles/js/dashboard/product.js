@@ -1,3 +1,4 @@
+// Preview Image in full screen
 document.addEventListener('DOMContentLoaded', function () {
     const imageInput = document.getElementById('id_image');
     const imagePreview = document.getElementById('imagePreview');
@@ -112,6 +113,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+
+// Modal for product details
 document.addEventListener('DOMContentLoaded', function() {
     // Handle click event on table rows
     document.querySelectorAll('.product-row').forEach(function(row) {
