@@ -130,7 +130,6 @@ class ExportToExcelView(TemplateView):
 
 # Sign in
 class SignInView(View):
-
     def get(self, request):
         return render(request, "dashboard/sign_in.html")
 
@@ -224,7 +223,9 @@ class EditProductView(SuperuserRequiredMixin, View):
     def get(self, request, slug):
         product = get_object_or_404(Drug, slug=slug)
         form = ProductForm(instance=product)
-        return render(request, 'dashboard/edit_page/edit_product.html', {'form': form})
+        # Pass the expiry date value to the form
+        expiry_date_value = product.expiry_date.strftime('%Y-%m-%d') if product.expiry_date else None
+        return render(request, 'dashboard/edit_page/edit_product.html', {'form': form, 'expiry_date_value': expiry_date_value})
 
     def post(self, request, slug):
         product = get_object_or_404(Drug, slug=slug)
@@ -247,6 +248,7 @@ class EditProductView(SuperuserRequiredMixin, View):
 
             return redirect('dashboard:products')
         return render(request, 'dashboard/edit_page/edit_product.html', {'form': form})
+
     
 class DeleteProductView(SuperuserRequiredMixin, View):
     def post(self, request, slug):

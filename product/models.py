@@ -14,8 +14,6 @@ import pytz
 from django.utils.text import slugify
 
 
-
-
 def validate_file_extension(value): 
     ext = os.path.splitext(value.name)[1]  
     valid_extensions = ['.png', '.jpg', '.jpeg', '.webp']
@@ -35,7 +33,13 @@ class TimeStampedModel(models.Model):
 
 # Define the slug generator function
 def generate_slug(value):
-    return slugify(value)
+    base_slug = slugify(value)
+    slug = base_slug
+    counter = 1
+    while Drug.objects.filter(slug=slug).exists():
+        slug = f"{base_slug}-{counter}"
+        counter += 1
+    return slug
 
 # Define a mixin class for generating slugs
 class SlugMixin(models.Model):
@@ -73,6 +77,8 @@ class Category(TimeStampedModel, SlugMixin):
 
     def __str__(self):
         return self.name
+
+
 
 
 class Drug(TimeStampedModel, SlugMixin):

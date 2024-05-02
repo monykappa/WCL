@@ -32,7 +32,7 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Drug
         fields = ['name', 'image', 'description', 'manufacturer', 'price', 'quantity_available', 'expiry_date', 'category', 'drug_type']
-        
+
 
 
 class UserForm(forms.ModelForm):
