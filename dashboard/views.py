@@ -298,7 +298,7 @@ class DeleteCategoryView(SuperuserRequiredMixin, View):
         category = get_object_or_404(Category, id=category_id)
         category.delete()
         return redirect('dashboard:category')
-
+    
 
 
 # Manufacturer
