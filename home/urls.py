@@ -13,6 +13,8 @@ urlpatterns = [
     path('', views.HomeView.as_view(), name='home'),
     path('about_us/', views.AboutUsView.as_view(), name='about_us'),
     path('contact_us/', views.ContactUsView.as_view(), name='contact_us'),
+    path('ceo_message/', views.CeoMessageView.as_view(), name='ceo_message'),
+    
 ]
 
 

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Ceo Message
+{% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/products/products.css' %}">
+<link rel="stylesheet" href="{% static 'css/home/about_us.css' %}">
+<link rel="stylesheet" href="{% static 'css/home/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/animation/animation.css'%}">
+{% endblock css %}
+
+{% block content %}
+<section>
+    <div class="background-img">
+        <div class="row justify-content-center">
+            <div class="col-md-12 text-center">
+                <h1 class="display-4 hidden-top">Ceo Message</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div style="position: relative;">
+                <img src="{% static 'img/ceo/ceo_img.png' %}" style="position: absolute; top: 9vh; left: 15vh; max-width: 60%; max-height: 100%;">
+                <img src="{% static 'img/blob/blob.png' %}" style="max-width: 550px; max-height: auto;">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h1 class="text-center">CEO Message</h1>
+            <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias, amet
+                aspernatur atque autem blanditiis commodi consequatur corporis cumque debitis delectus doloremque
+                doloribus ducimus ea eius eligendi eos error est eum ex explicabo facere fugiat fugit harum id illum
+                impedit in incidunt ipsa ipsam ipsum iure laborum laudantium magnam magni maiores maxime minima minus
+                molestias natus nemo neque nihil nisi nobis non nulla numquam obcaecati officiis omnis optio pariatur
+                perferendis perspiciatis placeat porro praesentium provident quae quam quasi qui quia quidem quisquam
+                quo ratione recusandae reiciendis rem repellat repudiandae rerum saepe sapiente sequi similique sit
+                soluta sunt suscipit tempora tenetur totam ullam unde vel veniam veritatis voluptas voluptate voluptatem
+                voluptatum.</p>
+        </div>
+    </div>
+</div>
+
+
+<script src="{% static 'js/home/about_us.js'%}"></script>
+<script src="{% static 'js/animation/hidden_scroll.js'%}"></script>
+{% endblock content %}

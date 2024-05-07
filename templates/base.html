@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/products/products.css' %}">
-    <link rel="stylesheet" href="{% static 'css/animation/animation.css' %}">
     <link rel="stylesheet" href="{% static 'css/darkmode/dark_mode.css'%}">
     {% block css %}{% endblock %}
     <title>{% block title %}Base{% endblock %}</title>
@@ -30,12 +29,11 @@
             <div class="site-mobile-menu-close mt-3">
                 <i class="fa-solid fa-xmark icon-close2 js-menu-toggle" style="font-size: 24px;"></i>
             </div>
-
         </div>
         <div class="site-mobile-menu-body">
             <nav class="site-navigation text-right ml-auto" role="navigation">
                 <ul class="site-menu main-menu js-clone-nav ml-auto">
-
+                    <!-- Your menu items here -->
                 </ul>
             </nav>
         </div>
@@ -77,47 +75,44 @@
 
     <!-- Header -->
     <header class="site-navbar js-sticky-header site-navbar-target" role="banner">
-        <div class="container">
-            <div class="row align-items-center position-relative mr-5">
-                <div class="site-logo">
-                    <a href="{% url 'home:home' %}">
-                        <img src="{% static 'img/logo/image-removebg-preview.png' %}" alt="logo" width="100px"
-                            class="logo">
-                    </a>
-                </div>
-                <div class="col-12">
-                    <nav class="site-navigation text-right ml-auto " role="navigation">
-                        <ul class="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
-                            <li><a href="{% url 'home:home'%}" id="home-link" class="nav-link">Home</a></li>
-                            <li><a href="#" id="home-link" class="nav-link">Ceo Message</a></li>
-                            <li><a href="#" id="home-link" class="nav-link">Vision</a></li>
+        <div class="row align-items-center position-relative mr-5">
+            <div class="site-logo">
+                <a href="{% url 'home:home' %}">
+                    <img src="{% static 'img/logo/image-removebg-preview.png' %}" alt="logo" width="100px" class="logo">
+                </a>
+            </div>
+            <div class="col-12">
+                <nav class="site-navigation text-right ml-auto " role="navigation">
+                    <ul class="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
+                        <li><a href="{% url 'home:home'%}" id="home-link" class="nav-link">Home</a></li>
+                        <li><a href="{% url 'home:ceo_message'%}" id="ceo-link" class="nav-link">Ceo Message</a></li>
+                        <li><a href="#" id="vision-link" class="nav-link">Vision</a></li>
 
-                            <li class="has-children">
-                                <a href="{% url 'product:products'%}" id="product-link" class="navs-link">Our
-                                    Products</a>
-                                <ul class="dropdown arrow-top">
-                                    <li><a href="#" id="anti-infective-link" class="nav-link">Anti Infection</a>
-                                    </li>
-                                    <li><a href="#pricing-section" id="vitamin-link" class="nav-link">Vitamin</a>
-                                    </li>
-                                    <li><a href="#faq-section" id="anti-virus-link" class="nav-link">Anti-Virus</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a href="#" id="home-link" class="nav-link">Awards</a></li>
-                            <li><a href="#" id="home-link" class="nav-link">Top Management</a></li>
-                            <li><a href="{% url 'home:about_us'%}" id="about-us-link" class="nav-link">About Us</a>
-                            </li>
-                            <li><a href="{% url 'home:contact_us' %}" id="contact-link" class="nav-link">Contact</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="toggle-button d-inline-block d-lg-none">
-                    <a href="#" class="site-menu-toggle js-menu-toggle text-black">
-                        <i class="fa-solid fa-bars" style="font-size:24px; color:#000;"></i>
-                    </a>
-                </div>
+                        <li class="has-children">
+                            <a href="{% url 'product:products'%}" id="product-link" class="navs-link">Our
+                                Products</a>
+                            <ul class="dropdown arrow-top">
+                                <li><a href="#" id="anti-infective-link" class="nav-link">Anti Infection</a>
+                                </li>
+                                <li><a href="#pricing-section" id="vitamin-link" class="nav-link">Vitamin</a>
+                                </li>
+                                <li><a href="#faq-section" id="anti-virus-link" class="nav-link">Anti-Virus</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a href="#" id="home-link" class="nav-link">Awards</a></li>
+                        <li><a href="#" id="home-link" class="nav-link">Top Management</a></li>
+                        <li><a href="{% url 'home:about_us'%}" id="about-us-link" class="nav-link">About Us</a>
+                        </li>
+                        <li><a href="{% url 'home:contact_us' %}" id="contact-link" class="nav-link">Contact</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="toggle-button d-inline-block d-lg-none">
+                <a href="#" class="site-menu-toggle js-menu-toggle text-black">
+                    <i class="fa-solid fa-bars" style="font-size:24px; color:#000;"></i>
+                </a>
             </div>
         </div>
     </header>
@@ -131,14 +126,12 @@
 
 
     <footer class="footer mt-auto py-3 ">
-
         <div class="container footer-ctn">
             <div class="row">
                 <div class="col-md-3 mb-3">
                     <h3>Follow Us</h3>
 
                     <ul class="list-unstyled d-flex justify-content-between social-media-list">
-
                         <li><a href="#"><i class="fab fa-facebook"></i></a></li>
                         <li><a href="#"><i class="fab fa-youtube"></i></a></li>
                         <li><a href="#"><i class="fab fa-instagram"></i></a></li>

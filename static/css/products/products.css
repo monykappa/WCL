@@ -96,19 +96,6 @@ p.text-view-img{
     mix-blend-mode: multiply;
 }
 
-.background-img {
-    position: relative;
-    /* Make sure the container is positioned relatively */
-    width: 100%;
-    height: 300px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-image: url('https://donvalleypharma.com/wp-content/uploads/home-slider-image-new-scaled-Oct-1-2020-at-02-34-01.jpg');
-    background-size: fill;
-    background-repeat: no-repeat;
-    background-position: center;
-}
 
 .background-img::after {
     content: '';

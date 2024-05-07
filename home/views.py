@@ -23,3 +23,7 @@ class AboutUsView(View):
 class ContactUsView(View):
     def get(self, request):
         return render(request, 'home/contact_us.html')
+
+class CeoMessageView(View):
+    def get(self, request):
+        return render(request, 'home/ceo_message.html')
