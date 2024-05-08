@@ -13,6 +13,43 @@ Ceo Message
 {% endblock css %}
 
 {% block content %}
+<style>
+    span.highlight-txt{
+        background-color: var(--primary-color);
+        color:#fff;
+        
+    }
+    .ceo-ctn {
+        margin-top: 20vh;
+        margin-bottom: 20vh;
+    }
+
+    .wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .box {
+        background: url("{% static 'img/ceo/ceo_img.png' %}") no-repeat;
+        background-color: #478bbc;
+        background-size: cover;
+        background-position: center top;
+        height: 600px;
+        width: 550px;
+        border-radius: 30% 70% 23% 77% / 70% 30% 70% 30%;
+    }
+    p{
+        line-height: 40px !important;
+    }
+    h1{
+        text-transform: uppercase;
+        font-weight: bold;
+        color:var(-primary-color);
+    }
+</style>
+
+
 <section>
     <div class="background-img">
         <div class="row justify-content-center">
@@ -24,25 +61,44 @@ Ceo Message
 </section>
 
 
-<div class="container">
+<div class="ceo-ctn">
     <div class="row">
-        <div class="col-md-6">
-            <div style="position: relative;">
-                <img src="{% static 'img/ceo/ceo_img.png' %}" style="position: absolute; top: 9vh; left: 15vh; max-width: 60%; max-height: 100%;">
-                <img src="{% static 'img/blob/blob.png' %}" style="max-width: 550px; max-height: auto;">
+        <div class="col-md-6 hidden-left">
+            <div class="wrapper">
+                <div class="box">
+                </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <h1 class="text-center">CEO Message</h1>
-            <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias, amet
-                aspernatur atque autem blanditiis commodi consequatur corporis cumque debitis delectus doloremque
-                doloribus ducimus ea eius eligendi eos error est eum ex explicabo facere fugiat fugit harum id illum
-                impedit in incidunt ipsa ipsam ipsum iure laborum laudantium magnam magni maiores maxime minima minus
-                molestias natus nemo neque nihil nisi nobis non nulla numquam obcaecati officiis omnis optio pariatur
-                perferendis perspiciatis placeat porro praesentium provident quae quam quasi qui quia quidem quisquam
-                quo ratione recusandae reiciendis rem repellat repudiandae rerum saepe sapiente sequi similique sit
-                soluta sunt suscipit tempora tenetur totam ullam unde vel veniam veritatis voluptas voluptate voluptatem
-                voluptatum.</p>
+        <div class="col-md-6 pr-5">
+            <h1 class="text-left hidden-top">Message from the CEO:</h1>
+            <p class="hidden-top mt-2">It is my most immense pleasure to welcome you to World Cure Life Sciences Company. The idea behind it all
+                is to reach out to the millions of people in the country who are deprived of the most basic needs in
+                life such as medicines and to provide them with products that could both save and change lives. This
+                goal is achieved through hard work and determination inside a team equipped with some of the most
+                talented people in the industry and a strong collaboration with our providers and clients.</p>
+            <p class="hidden-top">
+                My vision for World Cure Life Sciences Company is to build an environment and workspace for those who
+                share the same dream as mine, which is to work with the most healing of hands and to invest from the
+                most caring of hearts.
+            </p>
+            <p class="hidden-top">
+                When I look back at this company, despite the greatest sense of pride that I feel for all that we have
+                achieved, I still feel a constant sense of obligation to look forwards at how far we still have to go to
+                end human suffering in every way we can.
+            </p>
+            <p class="hidden-top">
+                I would like to personally thank all of our faithful and esteemed clients, as well as everyone involved
+                who has played the most important role in our ongoing journey. <span class="highlight-txt">Together, we can build a better world.</span>
+            </p>
+            <p class="hidden-top">
+                World Cure Life Sciences
+            </p>
+            <p class="hidden-top">
+                CEO,
+            </p>
+            <p class="hidden-top">
+                Khy Phearun
+            </p>
         </div>
     </div>
 </div>

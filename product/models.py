@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User 
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
-from ckeditor.fields import RichTextField
+# from ckeditor.fields import RichTextField
 import uuid
 from decimal import Decimal
 from django.utils import timezone
