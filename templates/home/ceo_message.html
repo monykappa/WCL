@@ -6,30 +6,17 @@ Ceo Message
 {% endblock title %}
 
 {% block css %}
+<link rel="stylesheet" href="{% static 'css/home/ceo_message.css'%}">
+
 <link rel="stylesheet" href="{% static 'css/products/products.css' %}">
 <link rel="stylesheet" href="{% static 'css/home/about_us.css' %}">
-<link rel="stylesheet" href="{% static 'css/home/home.css' %}">
 <link rel="stylesheet" href="{% static 'css/animation/animation.css'%}">
+
+
 {% endblock css %}
 
 {% block content %}
 <style>
-    span.highlight-txt{
-        background-color: var(--primary-color);
-        color:#fff;
-        
-    }
-    .ceo-ctn {
-        margin-top: 20vh;
-        margin-bottom: 20vh;
-    }
-
-    .wrapper {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
     .box {
         background: url("{% static 'img/ceo/ceo_img.png' %}") no-repeat;
         background-color: #478bbc;
@@ -38,14 +25,6 @@ Ceo Message
         height: 600px;
         width: 550px;
         border-radius: 30% 70% 23% 77% / 70% 30% 70% 30%;
-    }
-    p{
-        line-height: 40px !important;
-    }
-    h1{
-        text-transform: uppercase;
-        font-weight: bold;
-        color:var(-primary-color);
     }
 </style>
 
@@ -60,18 +39,27 @@ Ceo Message
     </div>
 </section>
 
+<div class="upper-curve">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#478bbc" fill-opacity="1" class="hidden-bottom"
+            d="M0,256L240,96L480,160L720,96L960,160L1200,128L1440,288L1440,0L1200,0L960,0L720,0L480,0L240,0L0,0Z">
+        </path>
+    </svg>
+</div>
 
 <div class="ceo-ctn">
     <div class="row">
-        <div class="col-md-6 hidden-left">
+
+        <div class="col-md-6 hidden-left custom-ceo-ctn">
             <div class="wrapper">
                 <div class="box">
                 </div>
             </div>
         </div>
         <div class="col-md-6 pr-5">
-            <h1 class="text-left hidden-top">Message from the CEO:</h1>
-            <p class="hidden-top mt-2">It is my most immense pleasure to welcome you to World Cure Life Sciences Company. The idea behind it all
+            <h1 class="text-left hidden-top"> <span class="highlight-txt">Message from the CEO:</span></h1>
+            <p class="hidden-top mt-2">It is my most immense pleasure to welcome you to World Cure Life Sciences
+                Company. The idea behind it all
                 is to reach out to the millions of people in the country who are deprived of the most basic needs in
                 life such as medicines and to provide them with products that could both save and change lives. This
                 goal is achieved through hard work and determination inside a team equipped with some of the most
@@ -88,19 +76,26 @@ Ceo Message
             </p>
             <p class="hidden-top">
                 I would like to personally thank all of our faithful and esteemed clients, as well as everyone involved
-                who has played the most important role in our ongoing journey. <span class="highlight-txt">Together, we can build a better world.</span>
+                who has played the most important role in our ongoing journey.Together, we can build a better world.
             </p>
             <p class="hidden-top">
                 World Cure Life Sciences
             </p>
             <p class="hidden-top">
                 CEO,
-            </p>
-            <p class="hidden-top">
+                <br>
                 Khy Phearun
             </p>
         </div>
     </div>
+</div>
+<div class="lower-curve">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" style="transform: scaleY(-1);">
+        <path fill="#478bbc" fill-opacity="1" class="hidden-top"
+            d="M0,256L240,96L480,160L720,96L960,160L1200,128L1440,288L1440,0L1200,0L960,0L720,0L480,0L240,0L0,0Z">
+        </path>
+    </svg>
+
 </div>
 
 

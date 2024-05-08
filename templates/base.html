@@ -100,8 +100,9 @@
                                 </li>
                             </ul>
                         </li>
-                        <li><a href="#" id="home-link" class="nav-link">Awards</a></li>
-                        <li><a href="#" id="home-link" class="nav-link">Top Management</a></li>
+                        <li><a href="#" id="awards-link" class="nav-link">Awards</a></li>
+                        <li><a href="#" id="gallery-link" class="nav-link">Gallery</a></li>
+                        <li><a href="#" id="top-management-link" class="nav-link">Top Management</a></li>
                         <li><a href="{% url 'home:about_us'%}" id="about-us-link" class="nav-link">About Us</a>
                         </li>
                         <li><a href="{% url 'home:contact_us' %}" id="contact-link" class="nav-link">Contact</a>
@@ -117,6 +118,7 @@
         </div>
     </header>
 
+    
     <!-- Main content -->
     <div class="main-content">
         {% block content %}
