@@ -36,7 +36,7 @@ def generate_slug(value):
     base_slug = slugify(value)
     slug = base_slug
     counter = 1
-    while Drug.objects.filter(slug=slug).exists():
+    while Product.objects.filter(slug=slug).exists():
         slug = f"{base_slug}-{counter}"
         counter += 1
     return slug
@@ -54,7 +54,7 @@ class SlugMixin(models.Model):
         abstract = True  # Set abstract to True so that this class is not directly used as a model
 
 # Example usage of the SlugMixin in your models
-class DrugType(TimeStampedModel, SlugMixin):
+class ProductType(TimeStampedModel, SlugMixin):
     name = models.CharField(max_length=100, null=True, blank=True)
     description = models.CharField(max_length=500, null=True, blank=True)
 
@@ -79,9 +79,7 @@ class Category(TimeStampedModel, SlugMixin):
         return self.name
 
 
-
-
-class Drug(TimeStampedModel, SlugMixin):
+class Product(TimeStampedModel, SlugMixin):
     name = models.CharField(max_length=100)
     image = models.ImageField(upload_to=images_directory_path, validators=[validate_file_extension], blank=True, null=True)
     description = models.CharField(max_length=500, null=True, blank=True)
@@ -90,7 +88,7 @@ class Drug(TimeStampedModel, SlugMixin):
     quantity_available = models.PositiveIntegerField(default=0)
     expiry_date = models.DateField(null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    drug_type = models.ForeignKey(DrugType, on_delete=models.CASCADE)
+    product_type = models.ForeignKey(ProductType, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

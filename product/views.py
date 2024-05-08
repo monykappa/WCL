@@ -7,8 +7,8 @@ from .models import *
 
 # Create your views here.
 def products(request):
-    drugs = Drug.objects.all()  # Retrieve all drugs from the database
-    return render(request, 'products/products.html', {'drugs': drugs})
+    products = Product.objects.all()  # Retrieve all drugs from the database
+    return render(request, 'products/products.html', {'products': products})
 
 
 def product_detail(request):

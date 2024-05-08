@@ -109,7 +109,7 @@ class ExportToExcelView(TemplateView):
         ws.append(['Name', 'Description', 'Manufacturer', 'Price', 'Quantity Available', 'Expiry Date', 'Category', 'Drug Type'])
 
         # Add data rows
-        products = Drug.objects.all()
+        products = Product.objects.all()
         for product in products:
             ws.append([product.name, product.description, product.manufacturer.name, product.price, product.quantity_available, product.expiry_date, product.category.name, product.drug_type.name])
 
@@ -153,10 +153,10 @@ class LogoutView(View):
 @method_decorator(login_required, name='dispatch')
 class DashboardView(View):
     def get(self, request):
-        products = Drug.objects.all()
+        products = Product.objects.all()
         categories = Category.objects.all()
         manufacturers = Manufacturer.objects.all()
-        product_types = DrugType.objects.all()
+        product_types = ProductType.objects.all()
 
         context = {
             'products': products,
@@ -172,17 +172,17 @@ class DashboardView(View):
 class ProductsView(View):
     def get(self, request):
         # Fetch all products from the database
-        products = Drug.objects.all()
+        products = Product.objects.all()
         manufacturers = Manufacturer.objects.all()  # Retrieve all manufacturers
         categories = Category.objects.all()  # Retrieve all categories
-        drug_types = DrugType.objects.all()  # Retrieve all drug types
+        product_types = ProductType.objects.all()  # Retrieve all drug types
         
         category_filter = request.GET.get('category')
         if category_filter:
             # Filter products by the selected category
             products = products.filter(category__name=category_filter)
             
-        return render(request, 'dashboard/products.html', {'products': products, 'manufacturers': manufacturers, 'categories': categories, 'drug_types': drug_types})
+        return render(request, 'dashboard/products.html', {'products': products, 'manufacturers': manufacturers, 'categories': categories, 'product_type': product_types})
 
     def post(self, request):
         form = ProductForm(request.POST, request.FILES)
@@ -195,7 +195,7 @@ class ProductsView(View):
 class ProductDetailsView(View):
     def get(self, request, product_id):
         try:
-            product = Drug.objects.get(pk=product_id)
+            product = Product.objects.get(pk=product_id)
             # Generate image URL
             if product.image:
                 image_url = settings.MEDIA_URL + str(product.image)
@@ -216,19 +216,19 @@ class ProductDetailsView(View):
             }
             # Return JSON response with product data
             return JsonResponse(product_data)
-        except Drug.DoesNotExist:
+        except Product.DoesNotExist:
             return JsonResponse({'error': 'Product not found'}, status=404)
 
 class EditProductView(SuperuserRequiredMixin, View):
     def get(self, request, slug):
-        product = get_object_or_404(Drug, slug=slug)
+        product = get_object_or_404(Product, slug=slug)
         form = ProductForm(instance=product)
         # Pass the expiry date value to the form
         expiry_date_value = product.expiry_date.strftime('%Y-%m-%d') if product.expiry_date else None
         return render(request, 'dashboard/edit_page/edit_product.html', {'form': form, 'expiry_date_value': expiry_date_value})
 
     def post(self, request, slug):
-        product = get_object_or_404(Drug, slug=slug)
+        product = get_object_or_404(Product, slug=slug)
         form = ProductForm(request.POST, request.FILES, instance=product)
         if form.is_valid():
             product_instance = form.save(commit=False)
@@ -253,7 +253,7 @@ class EditProductView(SuperuserRequiredMixin, View):
 class DeleteProductView(SuperuserRequiredMixin, View):
     def post(self, request, slug):
         # Retrieve the product
-        product = get_object_or_404(Drug, slug=slug)
+        product = get_object_or_404(Product, slug=slug)
         
         # Delete the product
         product.delete()
@@ -363,12 +363,12 @@ class DeleteManufacturerView(SuperuserRequiredMixin, View):
 # Product type
 class ProductTypeView(View):
     def get(self, request):
-        form = DrugTypeForm()
-        drug_types = DrugType.objects.all()
-        return render(request, 'dashboard/product_type.html', {'form': form, 'drug_types': drug_types})
+        form = ProductTypesForm()
+        product_types = ProductType.objects.all()
+        return render(request, 'dashboard/product_type.html', {'form': form, 'product_type': product_types})
 
     def post(self, request):
-        form = DrugTypeForm(request.POST)
+        form = ProductTypesForm(request.POST)
         if form.is_valid():
             form.save()
             return JsonResponse({'success': True})  # Return JSON response for success
@@ -380,13 +380,13 @@ class ProductTypeView(View):
 @method_decorator(login_required, name='dispatch')
 class EditProductTypeView(SuperuserRequiredMixin, View):
     def get(self, request, slug):
-        drug_type = get_object_or_404(DrugType, slug=slug)
-        form = DrugTypeForm(instance=drug_type)
+        drug_type = get_object_or_404(ProductType, slug=slug)
+        form = ProductTypesForm(instance=drug_type)
         return render(request, 'dashboard/edit_page/edit_product_type.html', {'form': form})
 
     def post(self, request, slug):
-        drug_type = get_object_or_404(DrugType, slug=slug)
-        form = DrugTypeForm(request.POST, instance=drug_type)
+        product_type = get_object_or_404(ProductType, slug=slug)
+        form = ProductTypesForm(request.POST, instance=product_type)
         if form.is_valid():
             form.save()
             return redirect('dashboard:product_type')
@@ -395,8 +395,8 @@ class EditProductTypeView(SuperuserRequiredMixin, View):
 @method_decorator(login_required, name='dispatch')
 class DeleteProductTypeView(View):
     def post(self, request, drug_type_id):
-        drug_type = get_object_or_404(DrugType, id=drug_type_id)
-        drug_type.delete()
+        product_type = get_object_or_404(ProductType, id=product_type)
+        product_type.delete()
         return redirect('dashboard:product_type')
 
 # News

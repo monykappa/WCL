@@ -15,9 +15,9 @@ class CategoryForm(forms.ModelForm):
         fields = ['name', 'description']
         
 
-class DrugTypeForm(forms.ModelForm):
+class ProductTypesForm(forms.ModelForm):
     class Meta:
-        model = DrugType
+        model = ProductType
         fields = ['name', 'description']
 
 
@@ -30,8 +30,8 @@ class NewsForm(forms.ModelForm):
 
 class ProductForm(forms.ModelForm):
     class Meta:
-        model = Drug
-        fields = ['name', 'image', 'description', 'manufacturer', 'price', 'quantity_available', 'expiry_date', 'category', 'drug_type']
+        model = Product
+        fields = ['name', 'image', 'description', 'manufacturer', 'price', 'quantity_available', 'expiry_date', 'category', 'product_type']
 
 
 
