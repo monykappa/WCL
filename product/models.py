@@ -79,9 +79,27 @@ class Category(TimeStampedModel, SlugMixin):
         return self.name
 
 
+class Generic(TimeStampedModel, SlugMixin):
+    name = models.CharField(max_length=250)
+    description = models.CharField(max_length=500, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+class Composition(TimeStampedModel, SlugMixin):
+    name = models.CharField(max_length=250)
+    description = models.CharField(max_length=500, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Product(TimeStampedModel, SlugMixin):
     name = models.CharField(max_length=100)
     image = models.ImageField(upload_to=images_directory_path, validators=[validate_file_extension], blank=True, null=True)
+    generic = models.ForeignKey(Generic, on_delete=models.CASCADE, blank=True, null=True)
+    composition = models.ForeignKey(Composition, on_delete=models.CASCADE, blank=True, null=True)
+    pack_size = models.CharField(max_length=50, blank=True) 
     description = models.CharField(max_length=500, null=True, blank=True)
     manufacturer = models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=10, decimal_places=2)
