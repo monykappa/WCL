@@ -31,7 +31,7 @@ class NewsForm(forms.ModelForm):
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['name', 'image', 'description', 'manufacturer', 'quantity_available', 'expiry_date', 'category', 'product_type']
+        fields = ['name', 'image', 'description', 'manufacturer', 'expiry_date', 'category', 'product_type']
 
 
 

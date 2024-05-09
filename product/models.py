@@ -44,7 +44,7 @@ def generate_slug(value):
 
 # Define a mixin class for generating slugs
 class SlugMixin(models.Model):
-    slug = models.SlugField(unique=True, max_length=100, null=True, blank=True)
+    slug = models.SlugField(unique=True, max_length=250, null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if self.name:  # Check if name is not empty
@@ -56,7 +56,7 @@ class SlugMixin(models.Model):
 
 # Example usage of the SlugMixin in your models
 class ProductType(TimeStampedModel, SlugMixin):
-    name = models.CharField(max_length=100, null=True, blank=True)
+    name = models.CharField(max_length=250, null=True, blank=True)
     description = models.CharField(max_length=500, null=True, blank=True)
 
     def __str__(self):
@@ -64,7 +64,7 @@ class ProductType(TimeStampedModel, SlugMixin):
 
 
 class Manufacturer(TimeStampedModel, SlugMixin):
-    name = models.CharField(max_length=100, null=True, blank=True)
+    name = models.CharField(max_length=250, null=True, blank=True)
     country = CountryField()
     description = models.CharField(max_length=500, null=True, blank=True)
 
@@ -73,7 +73,7 @@ class Manufacturer(TimeStampedModel, SlugMixin):
 
 
 class Category(TimeStampedModel, SlugMixin):
-    name = models.CharField(max_length=100, null=True, blank=True)
+    name = models.CharField(max_length=250, null=True, blank=True)
     description = models.CharField(max_length=500, null=True, blank=True)
 
     def __str__(self):
@@ -103,21 +103,51 @@ class PackSizeUnit(TimeStampedModel, SlugMixin):
         return self.name
     
 
+class Composition(TimeStampedModel, SlugMixin):
+    value = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    composition_unit = models.ForeignKey(CompositionUnit, on_delete=models.CASCADE,null=True)
+    
+    def __str__(self):
+        if self.composition_unit:
+            return f"{self.value} {self.composition_unit}"
+        else:
+            return str(self.value)
+
+    @property
+    def name(self):
+        # You can customize the name here
+        return f"Composition: {self.value}"
+
+
+class PackSize(TimeStampedModel, SlugMixin):
+    value = models.DecimalField(max_digits=10, decimal_places=2)
+    pack_size_unit = models.ForeignKey(PackSizeUnit, on_delete=models.CASCADE,null=True)
+    
+    def __str__(self):
+        if self.pack_size_unit:
+            return f"{self.value} {self.pack_size_unit}"
+        else:
+            return str(self.value)
+
+    @property
+    def name(self):
+        # You can customize the name here
+        return f"Pack Size: {self.value}"
 
 class Product(TimeStampedModel, SlugMixin):
     name = models.CharField(max_length=100)
     image = models.ImageField(upload_to=images_directory_path, validators=[validate_file_extension], blank=True, null=True)
-    generic = models.ForeignKey(Generic, on_delete=models.CASCADE, blank=True, null=True)
-    composition = models.CharField(max_length=250, null=True, blank=True)
-    composition_unit =  models.ForeignKey(CompositionUnit, on_delete=models.CASCADE, blank=True, null=True)
-    pack_size = models.CharField(max_length=50, blank=True) 
-    pack_size_unit = models.ForeignKey(PackSizeUnit, on_delete=models.CASCADE, blank=True, null=True)
-    description = models.CharField(max_length=500, null=True, blank=True)
-    manufacturer = models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
-    quantity_available = models.PositiveIntegerField(default=0)
+    description = models.TextField(null=True, blank=True)
     expiry_date = models.DateField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True,null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
+    manufacturer = models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
+    generic = models.ForeignKey(Generic, on_delete=models.CASCADE,null=True, blank=True)
+    compositions = models.ManyToManyField(Composition, blank=True) 
+    pack_sizes = models.ManyToManyField(PackSize, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     product_type = models.ForeignKey(ProductType, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
+
