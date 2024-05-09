@@ -12,6 +12,7 @@ from datetime import datetime, date
 from django_countries.fields import CountryField
 import pytz 
 from django.utils.text import slugify
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 def validate_file_extension(value): 
@@ -86,23 +87,33 @@ class Generic(TimeStampedModel, SlugMixin):
     def __str__(self):
         return self.name
 
-class Composition(TimeStampedModel, SlugMixin):
+    
+class CompositionUnit(TimeStampedModel, SlugMixin):
     name = models.CharField(max_length=250)
     description = models.CharField(max_length=500, null=True, blank=True)
 
     def __str__(self):
         return self.name
 
+class PackSizeUnit(TimeStampedModel, SlugMixin):
+    name = models.CharField(max_length=250)
+    description = models.CharField(max_length=500, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+    
+
 
 class Product(TimeStampedModel, SlugMixin):
     name = models.CharField(max_length=100)
     image = models.ImageField(upload_to=images_directory_path, validators=[validate_file_extension], blank=True, null=True)
     generic = models.ForeignKey(Generic, on_delete=models.CASCADE, blank=True, null=True)
-    composition = models.ForeignKey(Composition, on_delete=models.CASCADE, blank=True, null=True)
+    composition = models.CharField(max_length=250, null=True, blank=True)
+    composition_unit =  models.ForeignKey(CompositionUnit, on_delete=models.CASCADE, blank=True, null=True)
     pack_size = models.CharField(max_length=50, blank=True) 
+    pack_size_unit = models.ForeignKey(PackSizeUnit, on_delete=models.CASCADE, blank=True, null=True)
     description = models.CharField(max_length=500, null=True, blank=True)
     manufacturer = models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity_available = models.PositiveIntegerField(default=0)
     expiry_date = models.DateField(null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
