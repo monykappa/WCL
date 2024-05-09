@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "home",
     "news",
     "dashboard",
+    "gallery",
 ]
 
 CKEDITOR_CONFIGS = {

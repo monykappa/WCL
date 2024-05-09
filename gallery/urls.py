@@ -1,18 +1,16 @@
 from django.contrib import admin
 from django.urls import include, path
-from django.conf import settings 
+from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import re_path as url
+from django.shortcuts import render 
+from . import views
+from django.conf import settings 
 
+
+app_name = 'gallery'
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path('', include('home.urls')),
-    path('', include('product.urls')),
-    path('', include('dashboard.urls')),
-    path('', include('news.urls')),
-    path('', include('gallery.urls')),
-    
-    
+    path('gallery/', views.GalleryView.as_view(), name='gallery'),
 ]
 
 

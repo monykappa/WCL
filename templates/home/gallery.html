@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Gallery
+{% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/home/gallery.css'%}">
+
+<link rel="stylesheet" href="{% static 'css/products/products.css' %}">
+<link rel="stylesheet" href="{% static 'css/home/about_us.css' %}">
+<link rel="stylesheet" href="{% static 'css/animation/animation.css'%}">
+{% endblock css %}
+
+{% block content %}
+<section>
+    <div class="background-img">
+        <div class="row justify-content-center">
+            <div class="col-md-12 text-center">
+                <h1 class="display-4 hidden-top">Gallery</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center mt-5">
+                {% for gallery in galleries %}
+                    <a href="" class="btn text-dark border hidden-top">{{ gallery.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+<hr>
+
+<!-- DESIGN A GALLERY SEECTION FOR IMAGE USING BOOSTRAP -->
+<section class="gallery-ctn mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                {% for gallery in galleries %}
+                <h1 class="hidden-top">{{ gallery.name }}</h1>
+                <div class="row frame hidden-top" id="gallery-row">
+                    {% for image in gallery.images.all %}
+                    <div class="col-md-6 col-lg-3">
+                        <img src="{{ image.image.url }}" alt="{{ image.caption }}" class="img-fluid gallery-img hidden-top">
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<script src="{% static 'js/home/about_us.js'%}"></script>
+<script src="{% static 'js/animation/hidden_scroll.js'%}"></script>
+{% endblock content %}

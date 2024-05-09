@@ -26,3 +26,6 @@ observeElements(observerTop, '.hidden-top');
 
 const observerBottom = createObserver('.hidden-bottom');
 observeElements(observerBottom, '.hidden-bottom');
+
+
+
