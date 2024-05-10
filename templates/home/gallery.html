@@ -28,8 +28,9 @@ Gallery
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center mt-5">
+                <h1 class="hidden-top gallery-name">Our Activities</h1>
                 {% for gallery in galleries %}
-                    <a href="#{{ gallery.name }}" class="btn text-dark border hidden-top">{{ gallery.name }}</a>
+                <a href="#{{ gallery.name }}" class="btn text-dark border hidden-top mt-3 mb-2">{{ gallery.name }}</a>
                 {% endfor %}
             </div>
         </div>
@@ -46,7 +47,8 @@ Gallery
                 <div class="row Frame hidden-top mt-5 " id="gallery-row Frames">
                     {% for image in gallery.images.all %}
                     <div class="col-md-6 col-lg-3">
-                        <img src="{{ image.image.url }}" alt="{{ image.caption }}" class="img-fluid gallery-img hidden-top">
+                        <img src="{{ image.image.url }}" alt="{{ image.caption }}"
+                            class="img-fluid gallery-img hidden-top">
                     </div>
                     {% endfor %}
                 </div>
@@ -57,8 +59,21 @@ Gallery
 </section>
 
 
+<div id="fullscreen" class="fullscreen" style="display: none;">
+    <span class="close-btn" onclick="closeFullScreen()">
+        <i class="fa fa-times" style="color:red;" aria-hidden="true"></i>
+    </span>
+    <img id="fullscreen-img" src="" alt="Full Screen Image">
+    <div class="zoom-controls">
+        <button onclick="zoomIn()">Zoom In <i class="fa fa-plus" aria-hidden="true"></i>
+        </button>
+        <button onclick="zoomOut()">Zoom Out <i class="fa fa-minus" aria-hidden="true"></i>
+        </button>
+    </div>
+</div>
 
-
-<script src="{% static 'js/home/about_us.js'%}"></script>
 <script src="{% static 'js/animation/hidden_scroll.js'%}"></script>
+
+
+
 {% endblock content %}

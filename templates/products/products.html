@@ -34,16 +34,30 @@
     <div class="row justify-content-start" id="product-grid">
         {% for product in products %}
         <div class="col-6 col-md-4 col-lg-3 scroll-fade-in product-item hidden-left" onclick="showModal(this)" href="#">
-            <img src="{{ product.image.url }}" alt="{{ product.name }}"
-                class="img-fluid mx-auto d-block fade-in-left">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid mx-auto d-block fade-in-left">
             <p class="productName">{{ product.name }}</p>
+
             <ul class="product-description hidden">
-                <li class="mt-2">{{ product.description }}</li>
+                {% for composition in product.compositions.all %}
+                <p><i>{{ product.category }}</i></p>
+                <p>{{ product.product_type}} {{ composition.value_without_decimal }}{{ composition.composition_unit }}
+                <li class="mt-2">Generic: {{ product.generic }}</li>
+                {% for pack_size in product.pack_sizes.all %}
+                <li class="mt-2">Pack Size: {{ pack_size.value_without_decimal }}{{ pack_size.pack_size_unit }}</li>
+                {% endfor %}
+               
+               
+                </p>
+                <li class="mt-2">Composition: {{ composition.value_without_decimal }}{{ composition.composition_unit}}/{{ product.product_type}}</li>
+                {% endfor %}
             </ul>
         </div>
         {% endfor %}
     </div>
 </section>
+
+
+
 
 
 
@@ -67,7 +81,7 @@
 <div id="productModal" class="modal">
     <div class="modal-content">
         <span class="close" style="color:red;" onclick="closeModal()">&times;</span>
-        <div class="modal-image" onclick="showFullScreen(this)" >
+        <div class="modal-image" onclick="showFullScreen(this)">
             <img id="modal-image" src="" alt="Product Image" class="img-fluid mx-auto d-block">
             <p class="text-center mt-2 text-view-img">Click to view image</p>
         </div>

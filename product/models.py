@@ -106,33 +106,45 @@ class PackSizeUnit(TimeStampedModel, SlugMixin):
 class Composition(TimeStampedModel, SlugMixin):
     value = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     composition_unit = models.ForeignKey(CompositionUnit, on_delete=models.CASCADE,null=True)
-    
+
     def __str__(self):
         if self.composition_unit:
-            return f"{self.value} {self.composition_unit}"
+            return f"{self.value.quantize(Decimal('0'))} {self.composition_unit}"
         else:
-            return str(self.value)
+            return str(self.value.quantize(Decimal('0')))
+
+    def value_without_decimal(self):
+        return str(self.value.quantize(Decimal('0')))
 
     @property
     def name(self):
         # You can customize the name here
         return f"Composition: {self.value}"
 
+    class Meta:
+        unique_together = ('value', 'composition_unit',)
 
 class PackSize(TimeStampedModel, SlugMixin):
     value = models.DecimalField(max_digits=10, decimal_places=2)
     pack_size_unit = models.ForeignKey(PackSizeUnit, on_delete=models.CASCADE,null=True)
-    
+
+    def value_without_decimal(self):
+        return str(self.value.quantize(Decimal('0')))
+
     def __str__(self):
         if self.pack_size_unit:
-            return f"{self.value} {self.pack_size_unit}"
+            return f"{self.value.quantize(Decimal('0'))} {self.pack_size_unit}"
         else:
-            return str(self.value)
+            return str(self.value.quantize(Decimal('0')))
 
     @property
     def name(self):
         # You can customize the name here
         return f"Pack Size: {self.value}"
+
+    class Meta:
+        unique_together = ('value', 'pack_size_unit',)
+
 
 class Product(TimeStampedModel, SlugMixin):
     name = models.CharField(max_length=100)
@@ -143,7 +155,7 @@ class Product(TimeStampedModel, SlugMixin):
     updated_at = models.DateTimeField(auto_now=True, null=True)
     manufacturer = models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
     generic = models.ForeignKey(Generic, on_delete=models.CASCADE,null=True, blank=True)
-    compositions = models.ManyToManyField(Composition, blank=True) 
+    compositions = models.ManyToManyField(Composition, blank=True)
     pack_sizes = models.ManyToManyField(PackSize, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     product_type = models.ForeignKey(ProductType, on_delete=models.CASCADE)
@@ -151,3 +163,14 @@ class Product(TimeStampedModel, SlugMixin):
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        # Clear old relations
+        self.compositions.clear()
+        self.pack_sizes.clear()
+        # Call the "real" save() method
+        super(Product, self).save(*args, **kwargs)
+        # Add new relations
+        for composition in self.compositions.all():
+            self.compositions.add(composition)
+        for pack_size in self.pack_sizes.all():
+            self.pack_sizes.add(pack_size)
