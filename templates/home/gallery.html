@@ -29,7 +29,7 @@ Gallery
         <div class="row">
             <div class="col-md-12 text-center mt-5">
                 {% for gallery in galleries %}
-                    <a href="" class="btn text-dark border hidden-top">{{ gallery.name }}</a>
+                    <a href="#{{ gallery.name }}" class="btn text-dark border hidden-top">{{ gallery.name }}</a>
                 {% endfor %}
             </div>
         </div>
@@ -37,14 +37,13 @@ Gallery
 </section>
 <hr>
 
-<!-- DESIGN A GALLERY SEECTION FOR IMAGE USING BOOSTRAP -->
 <section class="gallery-ctn mt-5">
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
                 {% for gallery in galleries %}
-                <h1 class="hidden-top">{{ gallery.name }}</h1>
-                <div class="row frame hidden-top" id="gallery-row">
+                <h1 class="hidden-top mt-5 gallery-name"><a name="{{ gallery.name }}"></a>{{ gallery.name }}</a></h1>
+                <div class="row Frame hidden-top mt-5 " id="gallery-row Frames">
                     {% for image in gallery.images.all %}
                     <div class="col-md-6 col-lg-3">
                         <img src="{{ image.image.url }}" alt="{{ image.caption }}" class="img-fluid gallery-img hidden-top">
@@ -56,6 +55,7 @@ Gallery
         </div>
     </div>
 </section>
+
 
 
 

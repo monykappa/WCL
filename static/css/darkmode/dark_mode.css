@@ -23,6 +23,14 @@ body.dark-mode h3 {
     border: 1px solid #fff !important;
 }
 
+.dark-mode .btn{
+    color:#fff !important;
+}
+.dark-mode .btn:hover{
+    background-color: #fff;
+    color:var(--primary-color) !important;
+}
+
 
 
 .dark-mode .table th {
@@ -231,4 +239,18 @@ body.dark-mode h3 {
 
 .dark-mode .quote {
     background-color: #3d495a !important;
+}
+
+/* Gallery */
+.dark-mode .Frame {
+    border-color: #bfbfbf #dcdcdc #e5e5e5 #dcdcdc;
+    background: #f5f5f5;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#E5E4DF), to(#CDCDC6));
+    background-image: -webkit-linear-gradient(#e5dfdf, #000000);
+    background-image: -moz-linear-gradient(#E5E4DF, #CDCDC6);
+    background-image: -o-linear-gradient(#E5E4DF, #CDCDC6);
+    background-image: linear-gradient(#E5E4DF, #CDCDC6);
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, .6), 0 5px 2px rgba(0, 0, 0, .1), 0 10px 20px rgba(0, 0, 0, .8);
+    position: relative;
+    overflow: hidden;
 }
