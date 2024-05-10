@@ -30,6 +30,7 @@
 </section>
 
 <hr>
+
 <section class="product-content container">
     <div class="row justify-content-start" id="product-grid">
         {% for product in products %}
@@ -38,23 +39,32 @@
             <p class="productName">{{ product.name }}</p>
 
             <ul class="product-description hidden">
-                {% for composition in product.compositions.all %}
                 <p><i>{{ product.category }}</i></p>
-                <p>{{ product.product_type}} {{ composition.value_without_decimal }}{{ composition.composition_unit }}
+                <p>{{ product.product_type }}
                 <li class="mt-2">Generic: {{ product.generic }}</li>
                 {% for pack_size in product.pack_sizes.all %}
                 <li class="mt-2">Pack Size: {{ pack_size.value_without_decimal }}{{ pack_size.pack_size_unit }}</li>
                 {% endfor %}
-               
-               
-                </p>
-                <li class="mt-2">Composition: {{ composition.value_without_decimal }}{{ composition.composition_unit}}/{{ product.product_type}}</li>
-                {% endfor %}
+
+                <li class="mt-2">Composition:
+                    {% for composition in product.compositions.all %}
+                        {% if forloop.first %}
+                            {{ composition.value_without_decimal }}{{ composition.composition_unit }}
+                        {% else %}
+                            + {{ composition.value_without_decimal }}{{ composition.composition_unit }}
+                        {% endif %}
+                        {% if forloop.last %}
+                            /{{ product.product_type }}
+                        {% endif %}
+                    {% endfor %}
+                </li>
             </ul>
         </div>
         {% endfor %}
     </div>
 </section>
+
+
 
 
 

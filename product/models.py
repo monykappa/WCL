@@ -163,14 +163,3 @@ class Product(TimeStampedModel, SlugMixin):
     def __str__(self):
         return self.name
 
-    def save(self, *args, **kwargs):
-        # Clear old relations
-        self.compositions.clear()
-        self.pack_sizes.clear()
-        # Call the "real" save() method
-        super(Product, self).save(*args, **kwargs)
-        # Add new relations
-        for composition in self.compositions.all():
-            self.compositions.add(composition)
-        for pack_size in self.pack_sizes.all():
-            self.pack_sizes.add(pack_size)

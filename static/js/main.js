@@ -19,7 +19,7 @@ $(function () {
 			$('.site-mobile-menu .has-children').each(function () {
 				var $this = $(this);
 
-				$this.prepend('<img width="30" height="30" class="arrow-collapse collapsed" src="https://img.icons8.com/ios-filled/30/expand-arrow--v1.png"  alt="expand-arrow--v1"/> ');
+				// $this.prepend('<img width="30" height="30" class="arrow-collapse collapsed" src="https://img.icons8.com/ios-filled/30/expand-arrow--v1.png"  alt="expand-arrow--v1"/> ');
 
 				$this.find('.arrow-collapse').attr({
 					'data-toggle': 'collapse',
