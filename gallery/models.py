@@ -1,4 +1,5 @@
 from django.db import models
+from product.models import *
 from django.core.exceptions import ValidationError
 import os
 import uuid
@@ -16,13 +17,12 @@ def images_directory_path(instance, filename):
     return os.path.join(directory_path, filename)
 
 
-class Gallery(models.Model):
+class Gallery(TimeStampedModel, SlugMixin):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
 
-class Image(models.Model):
+class Image(TimeStampedModel, SlugMixin):
     gallery = models.ForeignKey(Gallery, on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(upload_to='gallery_images/', validators=[validate_file_extension], blank=True, null=True)
     caption = models.CharField(max_length=255, blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
-    

@@ -1,0 +1,86 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% load static %}
+
+{% block title %}
+Dashboard | Gallery
+{% endblock title %}
+
+
+<h1 class="d-inline-block ml-auto">{% block dashboard_title %}Gallery{% endblock dashboard_title%}</h1>
+
+{% block content %}
+<h1>Gallery List</h1>
+<!-- Add Manufacturer Button -->
+<div class="row mb-3">
+    {% if request.user.is_superuser %}
+    <div class="col-md-4">
+        <a href="#" id="addManufacturerBtn" class="btn btn-success p-2 text-light rounded" data-toggle="modal"
+            data-target="#manufacturerPopup">
+            <i class="fa fa-add text-light mr-1"></i>Add
+        </a>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Search Input -->
+<div class="row mb-3">
+    <div class="col-md-12">
+        <div class="input-group">
+            <input type="text" class="form-control" id="searchManufacturerInput" placeholder="Search...">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button" id="searchManufacturerButton">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+            <div class="input-group-append">
+                <button class="btn btn-danger" id="clearManufacturerInput" type="button">
+                    <i class="fa fa-eraser"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="table-responsive">
+    <table class="table" id="galleryTable">
+        <thead class="thead-dark">
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                {% if request.user.is_superuser %}
+                <th>Actions</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for gallery in galleries %}
+            <tr>
+                <td>{{ gallery.name }}</td>
+                <td>{{ gallery.description }}</td>
+                <td>
+                    {% if request.user.is_superuser %}
+                    <a href="{% url 'dashboard:edit_gallery' gallery.slug %}" class="btn btn-primary">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </a>
+                    
+                    <button type="button" class="btn btn-danger" onclick="confirmDeleteGallery('{{ gallery.id }}')">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+
+                    <!-- Form for deletion, hidden initially -->
+                    <form id="deleteForm-{{ gallery.id }}"
+                        action="{% url 'dashboard:delete_gallery' gallery.id %}" method="post" style="display: none;">
+                        {% csrf_token %}
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+
+{% endblock content %}

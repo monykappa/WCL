@@ -1,6 +1,7 @@
 from django import forms
 from product.models import *
 from news.models import *
+from gallery.models import *
 
 class ManufacturerForm(forms.ModelForm):
     country = CountryField().formfield()  # This will generate the appropriate form field for the CountryField
@@ -48,3 +49,10 @@ class UserForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+class GalleryForm(forms.ModelForm):
+    image = forms.ImageField(label='Image', required=False)  # Add an image field for uploading images
+
+    class Meta:
+        model = Gallery
+        fields = ['name', 'description']  # Specify fields to include in the form

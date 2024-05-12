@@ -10,7 +10,7 @@ Dashboard | Product Type
 
 
 {% block content %}
-<h1>Drug Type List</h1>
+<h1>Product Type List</h1>
 <!-- Add Drug Type Button -->
 <div class="row mb-3">
     {% if request.user.is_superuser %}
@@ -45,7 +45,7 @@ Dashboard | Product Type
     <table class="table" id="drugTypeTable">
         <thead class="thead-dark">
             <tr>
-                <th>Drug Type Name</th>
+                <th>Product Type Name</th>
                 <th>Description</th>
                 {% if request.user.is_superuser %}
                 <th>Actions</th>
@@ -53,23 +53,24 @@ Dashboard | Product Type
             </tr>
         </thead>
         <tbody>
-            {% for drug_type in drug_types %}
+            {% for product_type in product_types %}
             <tr>
-                <td>{{ drug_type.name }}</td>
-                <td>{{ drug_type.description }}</td>
+                <td>{{ product_type.name }}</td>
+                <td>{{ product_type.description }}</td>
                 {% if request.user.is_superuser %}
                 <td>
                     <div class="btn-group" role="group">
-                        <a href="{% url 'dashboard:edit_product_type' drug_type.slug %}" class="btn btn-primary mr-2">
+                        <a href="{% url 'dashboard:edit_product_type' product_type.slug %}"
+                            class="btn btn-primary mr-2">
                             <i class="fa fa-pencil" aria-hidden="true"></i>
                         </a>
-                        <button type="button" class="btn btn-danger" onclick="confirmDelete('{{ drug_type.id }}')">
+                        <button type="button" class="btn btn-danger" onclick="confirmDelete('{{ product_type.id }}')">
                             <i class="fa fa-trash" aria-hidden="true"></i>
                         </button>
                     </div>
                     <!-- Form for deletion, hidden initially -->
-                    <form id="deleteForm-{{ drug_type.id }}"
-                        action="{% url 'dashboard:delete_product_type' drug_type.id %}" method="post"
+                    <form id="deleteForm-{{ product_type.id }}"
+                        action="{% url 'dashboard:delete_product_type' product_type.id %}" method="post"
                         style="display: none;">
                         {% csrf_token %}
                     </form>
@@ -79,6 +80,7 @@ Dashboard | Product Type
             {% endfor %}
         </tbody>
     </table>
+
 </div>
 
 

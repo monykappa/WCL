@@ -54,6 +54,9 @@
                     <a href="{% url 'dashboard:product_type' %}"><i class="fa-solid fa-pills mr-2"></i> Product type</a>
                 </li>
                 <li>
+                    <a href="{% url 'dashboard:gallery_list' %}"><i class="fa-solid fa-newspaper mr-2"></i> Gallery</a>
+                </li>
+                <li>
                     <a href="{% url 'dashboard:news' %}"><i class="fa-solid fa-newspaper mr-2"></i> News</a>
                 </li>
                 {% if request.user.is_superuser %}

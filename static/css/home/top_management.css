@@ -4,6 +4,24 @@
     height: 200px;
     object-fit: cover;
 }
+h1.top-management{
+    text-transform: uppercase;
+    color: var(--primary-color);
+}
+
+
+@media (min-width: 301px) and (max-width: 767px) {
+    .top-management .row [class^="col-md-"] {
+        width: 50%; 
+        margin-right: 0;
+    }
+    .top-management .row [class^="col-md-12"] {
+        width: 100%; 
+        margin-right: 0;
+    }
+}
+
+
 
 @media (max-width: 399px) {
     .top-management img {
@@ -16,13 +34,22 @@
     .top-management p{
         font-size: 6px;
     }
+    .background-img h1{
+        display: flex;
+        flex-wrap: wrap;
+        font-size: 1.8rem !important;
+    }
 }
+
 
 @media (min-width: 400px) and (max-width: 767px) {
     .top-management img {
         width: 150px;
         height: 150px; 
     }   
+    .background-img h1{
+        font-size: 3.0rem !important;
+    }
 }
 
 @property --gap {
@@ -45,7 +72,7 @@
     aspect-ratio: 1;
     box-sizing: border-box;
     border-radius: 50%;
-    margin: 20px;
+    margin: 10px;
     cursor: pointer;
     padding: calc(var(--border) + var(--gap));
 

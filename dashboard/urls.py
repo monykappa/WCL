@@ -61,6 +61,10 @@ urlpatterns = [
     path('dashboard/news/update-history/<slug:new_slug>/', views.UpdateHistoryView.as_view(), name='update_history'),
     
 
+    # Gallery
+    path('gallery_list/', views.GalleryListView.as_view(), name='gallery_list'),
+    path('gallery/edit/<slug:gallery_slug>/', views.UpdateGalleryView.as_view(), name='edit_gallery'),
+    path('gallery/<int:gallery_id>/delete/', views.DeleteGalleryView.as_view(), name='delete_gallery'),
 ]
 
 

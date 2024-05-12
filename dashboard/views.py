@@ -8,6 +8,10 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from .forms import *
 from product.models import *
+from gallery.models import *
+from gallery.models import Image
+# from .models import Image
+
 from news.models import *
 from .models import *
 from django.views.decorators.http import require_POST
@@ -365,7 +369,7 @@ class ProductTypeView(View):
     def get(self, request):
         form = ProductTypesForm()
         product_types = ProductType.objects.all()
-        return render(request, 'dashboard/product_type.html', {'form': form, 'product_type': product_types})
+        return render(request, 'dashboard/product_type.html', {'form': form, 'product_types': product_types})
 
     def post(self, request):
         form = ProductTypesForm(request.POST)
@@ -487,3 +491,41 @@ class DeleteNewsView(SuperuserRequiredMixin, View):
         new = get_object_or_404(New, id=new_id)
         new.delete()
         return redirect('dashboard:news')
+
+
+# Gallery 
+class GalleryListView(View):
+    template_name = 'dashboard/gallery.html'  # Replace 'gallery_list.html' with your actual template name
+
+    def get(self, request, *args, **kwargs):
+        galleries = Gallery.objects.all()
+        return render(request, self.template_name, {'galleries': galleries})
+
+
+class UpdateGalleryView(View):
+    def get(self, request, gallery_slug):
+        gallery_instance = get_object_or_404(Gallery, slug=gallery_slug)
+        form = GalleryForm(instance=gallery_instance)
+        return render(request, 'dashboard/edit_page/edit_gallery.html', {'form': form, 'gallery': gallery_instance})
+
+    def post(self, request, gallery_slug):
+        gallery_instance = get_object_or_404(Gallery, slug=gallery_slug)
+        form = GalleryForm(request.POST, instance=gallery_instance)
+        if form.is_valid():
+            form.save()
+            # Handle image upload
+            for file in request.FILES.getlist('image'):
+                Image.objects.create(gallery=gallery_instance, image=file, caption="Your caption")  # Adjust caption as needed
+
+            return redirect('dashboard:gallery_list')
+        else:
+            # Handle invalid form submission
+            return render(request, 'dashboard/edit_page/edit_gallery.html', {'form': form, 'gallery': gallery_instance})
+        
+        
+@method_decorator(login_required, name='dispatch')
+class DeleteGalleryView(SuperuserRequiredMixin, View):
+    def post(self, request, gallery_id):
+        gallery = get_object_or_404(Gallery, id=gallery_id)
+        gallery.delete()
+        return redirect('dashboard:gallery_list')
