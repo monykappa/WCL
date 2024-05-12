@@ -47,8 +47,7 @@ Gallery
                 <div class="row Frame hidden-top mt-5 " id="gallery-row Frames">
                     {% for image in gallery.images.all %}
                     <div class="col-md-6 col-lg-3">
-                        <img src="{{ image.image.url }}" alt="{{ image.caption }}"
-                            class="img-fluid gallery-img hidden-top">
+                        <img src="{{ image.image.url }}" alt="{{ image.caption }}" class="img-fluid gallery-img hidden-top">
                     </div>
                     {% endfor %}
                 </div>

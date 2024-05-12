@@ -1,0 +1,81 @@
+.top-management img {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+@media (max-width: 399px) {
+    .top-management img {
+        width: 120px;
+        height: 120px; 
+    }
+    .top-management h3{
+        font-size: 16px;
+    }
+    .top-management p{
+        font-size: 6px;
+    }
+}
+
+@media (min-width: 400px) and (max-width: 767px) {
+    .top-management img {
+        width: 150px;
+        height: 150px; 
+    }   
+}
+
+@property --gap {
+    syntax: '<length>';
+    inherits: true;
+    initial-value: 0;
+}
+
+@property --angle {
+    syntax: '<angle>';
+    inherits: true;
+    initial-value: 0deg;
+}
+
+.top-management img {
+    --border: 15px;
+    --gap: 12px;
+    --color: #6caad0;
+
+    aspect-ratio: 1;
+    box-sizing: border-box;
+    border-radius: 50%;
+    margin: 20px;
+    cursor: pointer;
+    padding: calc(var(--border) + var(--gap));
+
+    --angle: 90deg;
+    background:
+        radial-gradient(farthest-side, var(--color) 97%, #0000 101%) 85.35% 85.35%,
+        conic-gradient(from calc(180deg - var(--angle)/2), #0000 var(--angle), var(--color) 0),
+        radial-gradient(farthest-side, var(--color) 97%, #0000 101%) 14.65% 85.35%;
+    background-size: var(--border) var(--border), auto;
+    background-repeat: no-repeat;
+
+    -webkit-mask:
+        radial-gradient(farthest-side,
+            #000 calc(99% - calc(var(--border) + var(--gap))),
+            #0000 calc(100% - calc(var(--border) + var(--gap))) calc(99% - var(--border)),
+            #000 calc(100% - var(--border)));
+    mask:
+        radial-gradient(farthest-side,
+            #000 calc(99% - calc(var(--border) + var(--gap))),
+            #0000 calc(100% - calc(var(--border) + var(--gap))) calc(99% - var(--border)),
+            #000 calc(100% - var(--border)));
+    transition: --angle .4s, --gap .4s;
+}
+
+img:hover {
+    --angle: 0deg;
+    --gap: 5px;
+}
+
+h3{
+    font-family: var(--primary-font);
+    font-weight: bold;
+}

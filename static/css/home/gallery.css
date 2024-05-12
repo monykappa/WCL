@@ -16,10 +16,14 @@
 }
 img.gallery-img {
     transition: transform 0.3s ease !important; 
+    cursor: pointer !important;
 }
+
+
 
 img.gallery-img:hover {
     transform: scale(1.01) !important; 
+    
 }
 
 

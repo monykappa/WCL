@@ -304,7 +304,7 @@ button.btn-dark-mode {
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
-  background-image: url('{% static "img/icons/icons8-arrow-down-50.png" %}');
+  /* background-image: url('{% static "img/icons/icons8-arrow-down-50.png" %}'); */
   background-size: contain;
   background-repeat: no-repeat;
   width: 20px;

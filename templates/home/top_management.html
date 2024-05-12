@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Ceo Message
+{% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/home/top_management.css'%}">
+
+<link rel="stylesheet" href="{% static 'css/products/products.css' %}">
+<link rel="stylesheet" href="{% static 'css/home/about_us.css' %}">
+<link rel="stylesheet" href="{% static 'css/animation/animation.css'%}">
+
+
+{% endblock css %}
+
+{% block content %}
+<style>
+</style>
+
+<section>
+    <div class="background-img">
+        <div class="row justify-content-center">
+            <div class="col-md-12 text-center">
+                <h1 class="display-4 hidden">Top</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="top-management">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCoYF92bNTcapG0JYRSLyLkitfJ3iCITm897VSlnJRsQ&s" alt="">
+                <h3>Person 1</h3>
+                <p class="text-center">Director</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 text-center">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCoYF92bNTcapG0JYRSLyLkitfJ3iCITm897VSlnJRsQ&s" alt="">
+                <h3>Person 1</h3>
+                <p class="text-center">Director</p>
+            </div>
+            <div class="col-6 text-center">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCoYF92bNTcapG0JYRSLyLkitfJ3iCITm897VSlnJRsQ&s" alt="">
+                <h3>Person 1</h3>
+                <p class="text-center">Director</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 text-center">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCoYF92bNTcapG0JYRSLyLkitfJ3iCITm897VSlnJRsQ&s" alt="">
+                <h3>Person 1</h3>
+                <p class="text-center">Director</p>
+            </div>
+            <div class="col-6 text-center">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCoYF92bNTcapG0JYRSLyLkitfJ3iCITm897VSlnJRsQ&s" alt="">
+                <h3>Person 1</h3>
+                <p class="text-center">Director</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<script src="{% static 'js/home/about_us.js'%}"></script>
+<script src="{% static 'js/animation/hidden_scroll.js'%}"></script>
+{% endblock content %}

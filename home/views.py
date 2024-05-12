@@ -27,3 +27,8 @@ class ContactUsView(View):
 class CeoMessageView(View):
     def get(self, request):
         return render(request, 'home/ceo_message.html')
+
+
+class TopManagementView(View):
+    def get(self, request):
+        return render(request, 'home/top_management.html')
