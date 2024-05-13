@@ -1,0 +1,96 @@
+{% extends 'dashboard/add_page/add.html' %}
+
+{% block content %}
+<style>
+   
+</style>
+<form method="post">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="id_name" class="control-label">{{ form.name.label_tag }}</label>
+                {{ form.name }}
+            </div>
+            
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form.image.label_tag }}
+                {{ form.image }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form.description.label_tag }}
+                {{ form.description }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form.manufacturer.label_tag }}
+                {{ form.manufacturer }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form.generic.label_tag }}
+                {{ form.generic }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form.compositions.label_tag }}
+                {{ form.compositions }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form.pack_sizes.label_tag }}
+                {{ form.pack_sizes }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form.expiry_date.label_tag }}
+                {{ form.expiry_date }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form.category.label_tag }}
+                {{ form.category }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form.product_type.label_tag }}
+                {{ form.product_type }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form.composition_unit.label_tag }}
+                {{ form.composition_unit }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form.pack_size_unit.label_tag }}
+                {{ form.pack_size_unit }}
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Product</button>
+</form>
+{% endblock content %}

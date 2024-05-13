@@ -1,0 +1,7 @@
+<!-- add_composition.html -->
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}  <!-- Render form fields using form.as_p -->
+    <button type="submit">Save Composition</button>
+</form>

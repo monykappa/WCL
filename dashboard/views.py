@@ -177,12 +177,20 @@ class ProductsView(View):
     def get(self, request):
         form = ProductForm()
         products = Product.objects.all()
+        generics = Generic.objects.all()
+        manufacturers = Manufacturer.objects.all()
+        product_types = ProductType.objects.all()
+        categories = Category.objects.all()
         add_generic_form = AddGenericForm()
         add_composition_form = AddCompositionForm()
         add_pack_size_form = AddPackSizeForm()
         return render(request, 'dashboard/products.html', {
             'form': form,
             'products': products,
+            'generics': generics,
+            'manufacturers': manufacturers,
+            'product_types': product_types,
+            'categories': categories,
             'add_generic_form': add_generic_form,
             'add_composition_form': add_composition_form,
             'add_pack_size_form': add_pack_size_form,
@@ -208,15 +216,63 @@ class ProductsView(View):
             add_pack_size_form.save()
 
         products = Product.objects.all()
+        generics = Generic.objects.all()
+        manufacturers = Manufacturer.objects.all()
+        product_types = ProductType.objects.all()
+        categories = Category.objects.all()
         return render(request, 'dashboard/products.html', {
             'form': form,
             'products': products,
+            'generics': generics,
+            'manufacturers': manufacturers,
+            'product_types': product_types,
+            'categories': categories,
             'add_generic_form': AddGenericForm(),
             'add_composition_form': AddCompositionForm(),
             'add_pack_size_form': AddPackSizeForm(),
         })
 
+def refresh_database_view(request):
+    # Perform the database refresh action here
+    # For example, you can query the database to get updated compositions and pack sizes
+    compositions = Composition.objects.all()
+    pack_sizes = PackSize.objects.all()
+    
+    # Create a list of dictionaries containing composition id and label
+    compositions_data = [{'id': composition.id, 'label': str(composition)} for composition in compositions]
+    
+    # Create a list of dictionaries containing pack size id and label
+    pack_sizes_data = [{'id': pack_size.id, 'label': str(pack_size)} for pack_size in pack_sizes]
+    
+    # Return the compositions and pack sizes data as JSON response
+    return JsonResponse({'compositions': compositions_data, 'pack_sizes': pack_sizes_data})
 
+
+
+def add_composition_view(request):
+    if request.method == 'POST':
+        form = AddCompositionForm(request.POST)
+        if form.is_valid():
+            form.save()  # Save the composition if the form is valid
+            # Return JavaScript to close the window/tab
+            return HttpResponse('<script>window.close();</script>')
+    else:
+        form = AddCompositionForm()  # If it's a GET request, create a new form instance
+    return render(request, 'dashboard/add_page/add_composition.html', {'form': form})
+
+
+class AddPackSizeView(View):
+    def get(self, request):
+        form = AddPackSizeForm()
+        return render(request, 'dashboard/add_page/add_pack_size.html', {'form': form})
+
+    def post(self, request):
+        form = AddPackSizeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # Return JavaScript to close the window/tab
+            return HttpResponse('<script>window.close();</script>')
+        return JsonResponse({'success': False})
 
 class ProductDetailsView(View):
     def get(self, request, product_id):

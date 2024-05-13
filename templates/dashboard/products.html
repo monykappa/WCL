@@ -216,36 +216,34 @@ Dashboard | Products
                                         {% endif %}
                                     {% endfor %}
                                 </select>
-                                <button type="button" class="btn btn-primary" data-toggle="modal"
-                                    data-target="#addCompositionModal">
+                                <button type="button" class="btn btn-primary" onclick="openCompositionWindow()">
                                     Add Composition
                                 </button>
+                                <button type="button" class="btn btn-secondary" onclick="refreshDatabase()">
+                                    Refresh Database
+                                </button>
                             </div>
-                            <div class="form-group">
-                                <label for="id_composition_unit" class="form-label">Composition Unit:</label>
-                                <select class="form-control" id="id_composition_unit" name="composition_unit">
-                                    <option value="">Select</option>
-                                    {% for unit in composition_units %}
-                                    <option value="{{ unit.id }}">{{ unit.name }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
+                    
                             <div class="form-group">
                                 <label for="id_pack_sizes" class="form-label">Pack Sizes:</label>
                                 <select class="form-control" id="pack_sizes" name="pack_sizes" multiple>
                                     {% for pack_size in form.pack_sizes.field.choices %}
-                                    {% if pack_size.0 in form.pack_sizes.value %}
-                                    <option value="{{ pack_size.0 }}" selected>{{ pack_size.1 }}</option>
-                                    {% else %}
-                                    <option value="{{ pack_size.0 }}">{{ pack_size.1 }}</option>
-                                    {% endif %}
+                                        {% if pack_size.0 in form.pack_sizes.value %}
+                                            <option value="{{ pack_size.0 }}" selected>{{ pack_size.1 }}</option>
+                                        {% else %}
+                                            <option value="{{ pack_size.0 }}">{{ pack_size.1 }}</option>
+                                        {% endif %}
                                     {% endfor %}
                                 </select>
-                                <button type="button" class="btn btn-primary" data-toggle="modal"
-                                    data-target="#addPackSizeModal">
+                                <button type="button" class="btn btn-primary" onclick="openPackSizeWindow()">
                                     Add Pack Size
                                 </button>
+                                <button type="button" class="btn btn-secondary" onclick="refreshPackSizes()">
+                                    Refresh Pack Sizes
+                                </button>
                             </div>
+                            
+                            
     
                             <div class="form-group">
                                 <label for="id_category" class="form-label">Category:</label>
@@ -265,9 +263,6 @@ Dashboard | Products
                                     {% endfor %}
                                 </select>
                             </div>
-
-
-
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -282,57 +277,75 @@ Dashboard | Products
 </div>
 
 
-<!-- Add Composition Modal -->
-<div class="modal fade" id="addCompositionModal" tabindex="-1" role="dialog" aria-labelledby="addCompositionModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addCompositionModalLabel">Add Composition</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form method="post">
-                    {% csrf_token %}
-                    {{ add_composition_form.as_p }}
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" name="add_composition" class="btn btn-primary">Save changes</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Add Pack Size Modal -->
-<div class="modal fade" id="addPackSizeModal" tabindex="-1" role="dialog" aria-labelledby="addPackSizeModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addPackSizeModalLabel">Add Pack Size</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form method="post">
-                    {% csrf_token %}
-                    {{ add_pack_size_form.as_p }}
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" name="add_pack_size" class="btn btn-primary">Save changes</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
 
+<script>
+    function refreshDatabase() {
+        // Send AJAX request to the server to refresh the database
+        fetch('{% url "dashboard:refresh_database_view" %}')
+            .then(response => response.json())
+            .then(data => {
+                // Clear existing options
+                $('#id_compositions').empty();
+                // Add new options based on the response
+                data.compositions.forEach(composition => {
+                    // Format composition label as "value unit" (e.g., "50 mg")
+                    let label = `${composition.value} ${composition.unit}`;
+                    $('#id_compositions').append(`<option value="${composition.id}">${label}</option>`);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    }
+</script>
+
+<script>
+    function refreshPackSizes() {
+        // Send AJAX request to refresh pack sizes
+        fetch('{% url "dashboard:refresh_database_view" %}')
+            .then(response => response.json())
+            .then(data => {
+                // Clear existing pack size options
+                $('#pack_sizes').empty();
+                // Add new options based on the response
+                data.pack_sizes.forEach(pack_size => {
+                    $('#pack_sizes').append(`<option value="${pack_size.id}">${pack_size.label}</option>`);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    }
+</script>
+
+<script>
+    function openPackSizeWindow() {
+        // Specify the URL of the pack size form
+        var packSizeUrl = "{% url 'dashboard:add_pack_size_view' %}"; // URL pattern name
+    
+        // Define window properties
+        var windowWidth = 400;
+        var windowHeight = 400;
+        var windowFeatures = "width=" + windowWidth + ",height=" + windowHeight + ",top=100,left=100";
+    
+        // Open a new window with the pack size form
+        window.open(packSizeUrl, "_blank", windowFeatures);
+    }
+</script>
+    
+<script>
+    function openCompositionWindow() {
+        // Specify the URL of the composition form
+        var compositionUrl = "{% url 'dashboard:add_composition_view' %}"; // URL pattern name
+    
+        // Define window properties
+        var windowWidth = 400;
+        var windowHeight = 400;
+        var windowFeatures = "width=" + windowWidth + ",height=" + windowHeight + ",top=100,left=100";
+    
+        // Open a new window with the composition form
+        window.open(compositionUrl, "_blank", windowFeatures);
+    }
+    </script>
+    
+    
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         var exportButton = document.querySelector('.btn-success');
@@ -359,5 +372,6 @@ Dashboard | Products
         }
     });
 </script>
+
 
 {% endblock content %}

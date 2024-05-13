@@ -31,8 +31,11 @@ urlpatterns = [
     path('dashboard/get_product_details/<int:product_id>/', views.ProductDetailsView.as_view(), name='get_product_details'),
     path('products/edit/<slug:slug>/', views.EditProductView.as_view(), name='edit_product'),
     path('products/delete/<slug:slug>/', views.DeleteProductView.as_view(), name='delete_product'),
-
     
+    path('dashboard/add-composition/', views.add_composition_view, name='add_composition_view'),
+    path('dashboard/add-pack-size/', views.AddPackSizeView.as_view(), name='add_pack_size_view'),
+
+    path('products/refresh-database/', views.refresh_database_view, name='refresh_database_view'),
 
     # Export to excel
     path('dashboard/export/', views.ExportToExcelView.as_view(), name='export_to_excel'),
