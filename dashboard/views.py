@@ -173,29 +173,50 @@ class DashboardView(View):
         return render(request, 'dashboard/overview.html', context)
 
 # Products
-@method_decorator(login_required, name='dispatch')
 class ProductsView(View):
     def get(self, request):
-        # Fetch all products from the database
+        form = ProductForm()
         products = Product.objects.all()
-        manufacturers = Manufacturer.objects.all()  # Retrieve all manufacturers
-        categories = Category.objects.all()  # Retrieve all categories
-        product_types = ProductType.objects.all()  # Retrieve all drug types
-        
-        category_filter = request.GET.get('category')
-        if category_filter:
-            # Filter products by the selected category
-            products = products.filter(category__name=category_filter)
-            
-        return render(request, 'dashboard/products.html', {'products': products, 'manufacturers': manufacturers, 'categories': categories, 'product_type': product_types})
+        add_generic_form = AddGenericForm()
+        add_composition_form = AddCompositionForm()
+        add_pack_size_form = AddPackSizeForm()
+        return render(request, 'dashboard/products.html', {
+            'form': form,
+            'products': products,
+            'add_generic_form': add_generic_form,
+            'add_composition_form': add_composition_form,
+            'add_pack_size_form': add_pack_size_form,
+        })
 
     def post(self, request):
         form = ProductForm(request.POST, request.FILES)
+        add_generic_form = AddGenericForm(request.POST)
+        add_composition_form = AddCompositionForm(request.POST)
+        add_pack_size_form = AddPackSizeForm(request.POST)
+
         if form.is_valid():
             form.save()
             return redirect('dashboard:products')
-        return render(request, 'dashboard/add_page/add_product.html', {'form': form})
-    
+
+        if add_generic_form.is_valid() and 'add_generic' in request.POST:
+            add_generic_form.save()
+
+        if add_composition_form.is_valid() and 'add_composition' in request.POST:
+            add_composition_form.save()
+
+        if add_pack_size_form.is_valid() and 'add_pack_size' in request.POST:
+            add_pack_size_form.save()
+
+        products = Product.objects.all()
+        return render(request, 'dashboard/products.html', {
+            'form': form,
+            'products': products,
+            'add_generic_form': AddGenericForm(),
+            'add_composition_form': AddCompositionForm(),
+            'add_pack_size_form': AddPackSizeForm(),
+        })
+
+
 
 class ProductDetailsView(View):
     def get(self, request, product_id):
@@ -228,31 +249,50 @@ class EditProductView(SuperuserRequiredMixin, View):
     def get(self, request, slug):
         product = get_object_or_404(Product, slug=slug)
         form = ProductForm(instance=product)
-        # Pass the expiry date value to the form
+        add_generic_form = AddGenericForm()
+        add_composition_form = AddCompositionForm()
+        add_pack_size_form = AddPackSizeForm()
         expiry_date_value = product.expiry_date.strftime('%Y-%m-%d') if product.expiry_date else None
-        return render(request, 'dashboard/edit_page/edit_product.html', {'form': form, 'expiry_date_value': expiry_date_value})
+        return render(request, 'dashboard/edit_page/edit_product.html', {'form': form, 'add_generic_form': add_generic_form, 'add_composition_form': add_composition_form, 'add_pack_size_form': add_pack_size_form, 'expiry_date_value': expiry_date_value})
 
     def post(self, request, slug):
         product = get_object_or_404(Product, slug=slug)
         form = ProductForm(request.POST, request.FILES, instance=product)
-        if form.is_valid():
-            product_instance = form.save(commit=False)
+        add_generic_form = AddGenericForm(request.POST)
+        add_composition_form = AddCompositionForm(request.POST)
+        add_pack_size_form = AddPackSizeForm(request.POST)
 
-            # Check if a new image is uploaded
+        if add_generic_form.is_valid() and 'add_generic' in request.POST:
+            add_generic_form.save()
+            return redirect('dashboard:edit_product', slug=product.slug)
+            
+        elif add_composition_form.is_valid() and 'add_composition' in request.POST:
+            add_composition_form.save()
+            return redirect('dashboard:edit_product', slug=product.slug)
+            
+        elif add_pack_size_form.is_valid() and 'add_pack_size' in request.POST:
+            add_pack_size_form.save()
+            return redirect('dashboard:edit_product', slug=product.slug)
+            
+        elif form.is_valid():
+            product_instance = form.save(commit=False)
             new_image = form.cleaned_data.get('image')
             if new_image:
-                # Update the existing image field with the new image
                 product_instance.image = new_image
-
-            # Save the form instance to the database
             try:
                 product_instance.save()
+                form.save_m2m()
+                return redirect('dashboard:products')
             except ValidationError as e:
-                # If there's a validation error, render the form with the error message
                 form.add_error(None, e)
 
-            return redirect('dashboard:products')
-        return render(request, 'dashboard/edit_page/edit_product.html', {'form': form})
+        return render(request, 'dashboard/edit_page/edit_product.html', {
+            'form': form,
+            'add_generic_form': add_generic_form,
+            'add_composition_form': add_composition_form,
+            'add_pack_size_form': add_pack_size_form,
+        })
+
 
     
 class DeleteProductView(SuperuserRequiredMixin, View):

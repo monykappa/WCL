@@ -30,9 +30,13 @@ class NewsForm(forms.ModelForm):
         
 
 class ProductForm(forms.ModelForm):
+    composition_unit = forms.ModelChoiceField(queryset=CompositionUnit.objects.all(), required=False, label='Composition Unit')
+    pack_size_unit = forms.ModelChoiceField(queryset=PackSizeUnit.objects.all(), required=False, label='Pack Size Unit')
+
     class Meta:
         model = Product
-        fields = ['name', 'image', 'description', 'manufacturer', 'expiry_date', 'category', 'product_type']
+        fields = ['name', 'image', 'description', 'manufacturer', 'generic', 'compositions', 'pack_sizes', 'expiry_date', 'category', 'product_type', 'composition_unit', 'pack_size_unit']
+
 
 
 
@@ -62,3 +66,18 @@ class ImageUploadForm(forms.ModelForm):
     class Meta:
         model = Image
         fields = ['image', 'caption'] 
+
+class AddGenericForm(forms.ModelForm):
+    class Meta:
+        model = Generic
+        fields = ['name', 'description']
+
+class AddCompositionForm(forms.ModelForm):
+    class Meta:
+        model = Composition
+        fields = ['value', 'composition_unit']
+
+class AddPackSizeForm(forms.ModelForm):
+    class Meta:
+        model = PackSize
+        fields = ['value', 'pack_size_unit']

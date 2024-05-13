@@ -94,9 +94,6 @@ Dashboard | Products
                         {% else %}
                         + {{ composition.value_without_decimal }}{{ composition.composition_unit }}
                         {% endif %}
-                        {% if forloop.last %}
-                        /{{ product.product_type }}
-                        {% endif %}
                         {% endfor %}
                     </td>
                     <td>
@@ -200,21 +197,56 @@ Dashboard | Products
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="id_price" class="form-label">Price:</label>
-                                <input type="number" class="form-control" id="id_price" name="price"
-                                    value="{% if form.price.value %}{{ form.price.value }}{% endif %}">
+                                <label for="id_generic" class="form-label">Generic:</label>
+                                <select class="form-control" id="id_generic" name="generic">
+                                    <option value="">Select</option>
+                                    {% for generic in generics %}
+                                    <option value="{{ generic.id }}">{{ generic.name }}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
                             <div class="form-group">
-                                <label for="id_quantity_available" class="form-label">Quantity Available:</label>
-                                <input type="number" class="form-control" id="id_quantity_available"
-                                    name="quantity_available"
-                                    value="{% if form.quantity_available.value %}{{ form.quantity_available.value }}{% endif %}">
+                                <label for="id_compositions" class="form-label">Compositions:</label>
+                                <select class="form-control" id="id_compositions" name="compositions" multiple>
+                                    {% for composition_id, composition_label in form.fields.compositions.choices %}
+                                        {% if composition_id in form.cleaned_data.compositions %}
+                                            <option value="{{ composition_id }}" selected>{{ composition_label }}</option>
+                                        {% else %}
+                                            <option value="{{ composition_id }}">{{ composition_label }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#addCompositionModal">
+                                    Add Composition
+                                </button>
                             </div>
                             <div class="form-group">
-                                <label for="id_expiry_date" class="form-label">Expiry Date:</label>
-                                <input type="date" class="form-control" id="id_expiry_date" name="expiry_date"
-                                    value="{% if form.expiry_date.value %}{{ form.expiry_date.value }}{% endif %}">
+                                <label for="id_composition_unit" class="form-label">Composition Unit:</label>
+                                <select class="form-control" id="id_composition_unit" name="composition_unit">
+                                    <option value="">Select</option>
+                                    {% for unit in composition_units %}
+                                    <option value="{{ unit.id }}">{{ unit.name }}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
+                            <div class="form-group">
+                                <label for="id_pack_sizes" class="form-label">Pack Sizes:</label>
+                                <select class="form-control" id="pack_sizes" name="pack_sizes" multiple>
+                                    {% for pack_size in form.pack_sizes.field.choices %}
+                                    {% if pack_size.0 in form.pack_sizes.value %}
+                                    <option value="{{ pack_size.0 }}" selected>{{ pack_size.1 }}</option>
+                                    {% else %}
+                                    <option value="{{ pack_size.0 }}">{{ pack_size.1 }}</option>
+                                    {% endif %}
+                                    {% endfor %}
+                                </select>
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#addPackSizeModal">
+                                    Add Pack Size
+                                </button>
+                            </div>
+    
                             <div class="form-group">
                                 <label for="id_category" class="form-label">Category:</label>
                                 <select class="form-control" id="id_category" name="category">
@@ -225,18 +257,75 @@ Dashboard | Products
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="id_drug_type" class="form-label">Drug Type:</label>
-                                <select class="form-control" id="id_drug_type" name="drug_type">
+                                <label for="id_product_type" class="form-label">Product Type:</label>
+                                <select class="form-control" id="id_product_type" name="product_type">
                                     <option value="">Select</option>
-                                    {% for drug_type in drug_types %}
-                                    <option value="{{ drug_type.id }}">{{ drug_type.name }}</option>
+                                    {% for product_type in product_types %}
+                                    <option value="{{ product_type.id }}">{{ product_type.name }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
+
+
+
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary" id="saveProductBtn"><i
-                            class="fa-solid fa-floppy-disk"></i></button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="saveProductBtn"><i
+                                class="fa-solid fa-floppy-disk"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Add Composition Modal -->
+<div class="modal fade" id="addCompositionModal" tabindex="-1" role="dialog" aria-labelledby="addCompositionModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addCompositionModalLabel">Add Composition</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ add_composition_form.as_p }}
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="add_composition" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Pack Size Modal -->
+<div class="modal fade" id="addPackSizeModal" tabindex="-1" role="dialog" aria-labelledby="addPackSizeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addPackSizeModalLabel">Add Pack Size</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ add_pack_size_form.as_p }}
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="add_pack_size" class="btn btn-primary">Save changes</button>
+                    </div>
                 </form>
             </div>
         </div>

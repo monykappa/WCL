@@ -35,32 +35,43 @@
     <div class="row justify-content-start" id="product-grid">
         {% for product in products %}
         <div class="col-6 col-md-4 col-lg-3 scroll-fade-in product-item hidden-left" onclick="showModal(this)" href="#">
-            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid mx-auto d-block fade-in-left​​ product-img">
-            {% for composition in product.compositions.all %}
-            <p class="productName">{{ product.name }}  {{ composition.value_without_decimal }}{{ composition.composition_unit }}</p>
+            <img src="{{ product.image.url }}" alt="{{ product.name }}"
+                class="img-fluid mx-auto d-block fade-in-left​​ product-img">
+            <p class="productName">
+                {{ product.name }}
+                {% if product.compositions.all|length > 1 %}
+                {% for pack_size in product.pack_sizes.all %}
+                {{ pack_size.value_without_decimal }}{{ pack_size.pack_size_unit }}
+                {% endfor %}
+                {% else %}
+                {% for composition in product.compositions.all %}
+                {{ composition.value_without_decimal }}{{ composition.composition_unit }}
+                {% endfor %}
+                {% endif %}
+            </p>
 
             <ul class="product-description hidden">
                 <p><i>{{ product.category }}</i></p>
-                <p>{{ product.product_type }}
+                <p>{{ product.product_type }}</p>
                 <li class="mt-2">Generic: {{ product.generic }}</li>
                 {% for pack_size in product.pack_sizes.all %}
                 <li class="mt-2">Pack Size: {{ pack_size.value_without_decimal }}{{ pack_size.pack_size_unit }}</li>
                 {% endfor %}
-
                 <li class="mt-2">Composition:
-                    
-                        {% if forloop.first %}
-                            {{ composition.value_without_decimal }}{{ composition.composition_unit }} 
-                        {% else %}
-                            + {{ composition.value_without_decimal }}{{ composition.composition_unit }}  / {{ product.product_type }}
-                        {% endif %}
-                        {% if forloop.last %}
-                            /{{ product.product_type }}
-                        {% endif %}
+                    {% for composition in product.compositions.all %}
+                    {% if forloop.first %}
+                    {{ composition.value_without_decimal }}{{ composition.composition_unit }}
+                    {% else %}
+                    + {{ composition.value_without_decimal }}{{ composition.composition_unit }}
+                    {% endif %}
+                    {% if forloop.last %}
+                    / {{ product.product_type }}
+                    {% endif %}
                     {% endfor %}
                 </li>
             </ul>
         </div>
+
         {% endfor %}
     </div>
 </section>

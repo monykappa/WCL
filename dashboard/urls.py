@@ -31,6 +31,7 @@ urlpatterns = [
     path('dashboard/get_product_details/<int:product_id>/', views.ProductDetailsView.as_view(), name='get_product_details'),
     path('products/edit/<slug:slug>/', views.EditProductView.as_view(), name='edit_product'),
     path('products/delete/<slug:slug>/', views.DeleteProductView.as_view(), name='delete_product'),
+
     
 
     # Export to excel
