@@ -21,8 +21,9 @@ class Gallery(TimeStampedModel, SlugMixin):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
 
-class Image(TimeStampedModel, SlugMixin):
+class Image(models.Model):
     gallery = models.ForeignKey(Gallery, on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(upload_to='gallery_images/', validators=[validate_file_extension], blank=True, null=True)
     caption = models.CharField(max_length=255, blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
+    

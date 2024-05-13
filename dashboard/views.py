@@ -8,10 +8,11 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from .forms import *
 from product.models import *
-from gallery.models import *
-from gallery.models import Image
-# from .models import Image
+from gallery.models import Gallery, Image as GalleryImage
 
+from .forms import GalleryForm, Image
+
+from django.core.exceptions import ObjectDoesNotExist
 from news.models import *
 from .models import *
 from django.views.decorators.http import require_POST
@@ -494,34 +495,52 @@ class DeleteNewsView(SuperuserRequiredMixin, View):
 
 
 # Gallery 
-class GalleryListView(View):
-    template_name = 'dashboard/gallery.html'  # Replace 'gallery_list.html' with your actual template name
+@method_decorator(login_required, name='dispatch')
+class GalleryListView(SuperuserRequiredMixin, View):
+    template_name = 'dashboard/gallery.html'
 
     def get(self, request, *args, **kwargs):
         galleries = Gallery.objects.all()
         return render(request, self.template_name, {'galleries': galleries})
 
+    def post(self, request, *args, **kwargs):
+    # Process form data and save the new gallery name
+        gallery_name = request.POST.get('galleryName')
+        gallery_description = request.POST.get('galleryDescription')
 
-class UpdateGalleryView(View):
+        # Save the new gallery name to the database
+        new_gallery = Gallery.objects.create(name=gallery_name, description=gallery_description)
+
+        return redirect('dashboard:gallery_list')
+
+
+
+@method_decorator(login_required, name='dispatch')
+class UpdateGalleryView(SuperuserRequiredMixin, View):
     def get(self, request, gallery_slug):
         gallery_instance = get_object_or_404(Gallery, slug=gallery_slug)
         form = GalleryForm(instance=gallery_instance)
-        return render(request, 'dashboard/edit_page/edit_gallery.html', {'form': form, 'gallery': gallery_instance})
+        image_form = ImageUploadForm()  # Create an instance of ImageUploadForm
+        return render(request, 'dashboard/edit_page/edit_gallery.html', {'form': form, 'image_form': image_form, 'gallery': gallery_instance})
 
     def post(self, request, gallery_slug):
         gallery_instance = get_object_or_404(Gallery, slug=gallery_slug)
         form = GalleryForm(request.POST, instance=gallery_instance)
+        image_form = ImageUploadForm(request.POST, request.FILES)  # Bind data from request
         if form.is_valid():
             form.save()
-            # Handle image upload
-            for file in request.FILES.getlist('image'):
-                Image.objects.create(gallery=gallery_instance, image=file, caption="Your caption")  # Adjust caption as needed
-
+            if 'images_to_delete' in request.POST:
+                for image_id in request.POST.getlist('images_to_delete'):
+                    image = GalleryImage.objects.get(id=image_id)  # Use GalleryImage instead of Image
+                    image.delete()
+            if request.FILES.get('image'):  # Check if an image file has been uploaded
+                image_form.instance.gallery = gallery_instance
+                image_form.save()
             return redirect('dashboard:gallery_list')
         else:
             # Handle invalid form submission
-            return render(request, 'dashboard/edit_page/edit_gallery.html', {'form': form, 'gallery': gallery_instance})
-        
+            return render(request, 'dashboard/edit_page/edit_gallery.html', {'form': form, 'image_form': image_form, 'gallery': gallery_instance})
+
         
 @method_decorator(login_required, name='dispatch')
 class DeleteGalleryView(SuperuserRequiredMixin, View):

@@ -4,35 +4,58 @@
 <h1 class="d-inline-block ml-auto">{% block dashboard_title %}Edit Gallery{% endblock dashboard_title %}</h1>
 
 {% block content %}
+
+<style>
+    .col-md-6 {
+        max-width: 100% !important;
+    }
+</style>
+
 <form id="editGalleryForm" method="post" enctype="multipart/form-data" class="mt-4">
     {% csrf_token %}
     <div class="form-group">
-        {{ form.name.label_tag }}
-        {{ form.name }}
+        <label for="id_name" class="form-label">{{ form.name.label }}</label>
+        <input type="text" name="name" id="id_name" class="form-control" value="{{ form.name.value }}">
     </div>
+
     <div class="form-group">
-        {{ form.description.label_tag }}
-        {{ form.description }}
+        <label for="id_description" class="form-label">{{ form.description.label }}</label>
+        <input type="text" name="description" id="id_description" class="form-control"
+            value="{{ form.description.value }}">
     </div>
+
 
     <h2>Images</h2>
     <div class="form-group">
         <div class="row">
             {% for image in gallery.images.all %}
             <div class="col-6 col-md-3">
-                <img src="{{ image.image.url }}" alt="{{ image.caption }}" class="img-fluid" style="max-width: 120px; height: auto;">
+                {% if image.image %}
+                <img src="{{ image.image.url }}" alt="{{ image.caption }}" class="img-fluid"
+                    style="max-width: 120px; height: auto;">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="images_to_delete" value="{{ image.id }}"
+                        id="imageDeleteCheckbox">
+                    <label class="form-check-label" for="imageDeleteCheckbox">
+                        Delete
+                    </label>
+                </div>
+                {% else %}
+                <p>No image available</p>
+                {% endif %}
             </div>
             {% endfor %}
+
         </div>
     </div>
 
     <div class="form-group">
-        <label for="id_image">Add Image:</label>
+        <label for="id_image" class="form-label">Add Image:</label>
         <input type="file" name="image" id="id_image" class="form-control-file">
     </div>
 
     <button type="submit" class="btn btn-primary" id="saveProductChangesButton">
-        <i class="fa-solid fa-floppy-disk"></i> Save Changes
+        <i class="fas fa-floppy-disk"></i>
     </button>
 </form>
 

@@ -65,6 +65,7 @@ urlpatterns = [
     path('gallery_list/', views.GalleryListView.as_view(), name='gallery_list'),
     path('gallery/edit/<slug:gallery_slug>/', views.UpdateGalleryView.as_view(), name='edit_gallery'),
     path('gallery/<int:gallery_id>/delete/', views.DeleteGalleryView.as_view(), name='delete_gallery'),
+    # path('gallery/all_images/', views.AllImagesView.as_view(), name='all_images'),
 ]
 
 

@@ -10,4 +10,3 @@ class GalleryView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['galleries'] = Gallery.objects.all()
         return context
-

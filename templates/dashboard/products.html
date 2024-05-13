@@ -69,13 +69,13 @@ Dashboard | Products
                 <tr>
                     <th>Name</th>
                     <th>Image</th>
-                    <th>Description</th>
+                    <th>Generic</th>
+                    <th>Composition</th>
+                    <th>Pack Size</th>
                     <th>Manufacturer</th>
-                    <th>Price</th>
-                    <th>Quantity Available</th>
                     <th>Expiry Date</th>
                     <th>Category</th>
-                    <th>Drug Type</th>
+                    <th>Type</th>
                     {% if request.user.is_superuser %}
                     <th>Actions</th>
                     {% endif %}
@@ -86,13 +86,28 @@ Dashboard | Products
                 <tr class="product-row" data-product="{{ product.id }}">
                     <td>{{ product.name }}</td>
                     <td><img src="{{ product.image.url }}" alt="{{ product.name }}" style="max-width: 100px;"></td>
-                    <td>{{ product.description|truncatewords:5 }}</td>
+                    <td>{{ product.generic }}</td>
+                    <td>
+                        {% for composition in product.compositions.all %}
+                        {% if forloop.first %}
+                        {{ composition.value_without_decimal }}{{ composition.composition_unit }}
+                        {% else %}
+                        + {{ composition.value_without_decimal }}{{ composition.composition_unit }}
+                        {% endif %}
+                        {% if forloop.last %}
+                        /{{ product.product_type }}
+                        {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for pack_size in product.pack_sizes.all %}
+                        {{ pack_size.value_without_decimal }}{{ pack_size.pack_size_unit }}<br>
+                        {% endfor %}
+                    </td>
                     <td>{{ product.manufacturer.name }}</td>
-                    <td>${{ product.price }}</td>
-                    <td>{{ product.quantity_available }}</td>
                     <td>{{ product.expiry_date }}</td>
                     <td>{{ product.category.name }}</td>
-                    <td>{{ product.drug_type.name }}</td>
+                    <td>{{ product.product_type.name }}</td>
                     {% if request.user.is_superuser %}
                     <td>
                         <a href="{% url 'dashboard:edit_product' product.slug %}" class="btn btn-primary">
@@ -102,7 +117,9 @@ Dashboard | Products
                             <i class="fa fa-trash" aria-hidden="true"></i>
                         </button>
                         <!-- Form for deletion, hidden initially -->
-                        <form id="deleteForm-{{ product.slug }}" action="{% url 'dashboard:delete_product' product.slug %}" method="post" style="display: none;">
+                        <form id="deleteForm-{{ product.slug }}"
+                            action="{% url 'dashboard:delete_product' product.slug %}" method="post"
+                            style="display: none;">
                             {% csrf_token %}
                         </form>
                     </td>
@@ -110,6 +127,7 @@ Dashboard | Products
                 </tr>
                 {% endfor %}
             </tbody>
+
         </table>
     </div>
 </div>
@@ -227,10 +245,10 @@ Dashboard | Products
 
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         var exportButton = document.querySelector('.btn-success');
         if (exportButton) {
-            exportButton.addEventListener('click', function(event) {
+            exportButton.addEventListener('click', function (event) {
                 event.preventDefault(); // Prevent default link behavior
 
                 // Show SweetAlert confirmation

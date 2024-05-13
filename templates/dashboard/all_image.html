@@ -1,0 +1,24 @@
+{% extends 'dashboard/dashboard_base.html' %}
+
+{% block content %}
+
+{% for gallery in galleries %}
+    <h2>{{ gallery.name }}</h2>
+    <div class="row">
+        {% for image in gallery.images.all %}
+            <div class="col-md-3">
+                <img src="{{ image.image.url }}" alt="{{ image.caption }}" class="img-fluid">
+                <p>{{ image.caption }}</p>
+                <form method="post" action="{% url 'dashboard:all_images' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="image_id" value="{{ image.id }}">
+                    <button type="submit" class="btn btn-danger">Remove</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+{% endfor %}
+
+
+
+{% endblock content %}

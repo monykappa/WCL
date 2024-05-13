@@ -50,9 +50,9 @@
                 <li class="mt-2">Composition:
                     
                         {% if forloop.first %}
-                            {{ composition.value_without_decimal }}{{ composition.composition_unit }}
+                            {{ composition.value_without_decimal }}{{ composition.composition_unit }} 
                         {% else %}
-                            + {{ composition.value_without_decimal }}{{ composition.composition_unit }}
+                            + {{ composition.value_without_decimal }}{{ composition.composition_unit }}  / {{ product.product_type }}
                         {% endif %}
                         {% if forloop.last %}
                             /{{ product.product_type }}

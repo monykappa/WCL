@@ -10,30 +10,39 @@ Dashboard | Gallery
 
 {% block content %}
 <h1>Gallery List</h1>
-<!-- Add Manufacturer Button -->
+
 <div class="row mb-3">
     {% if request.user.is_superuser %}
     <div class="col-md-4">
-        <a href="#" id="addManufacturerBtn" class="btn btn-success p-2 text-light rounded" data-toggle="modal"
-            data-target="#manufacturerPopup">
-            <i class="fa fa-add text-light mr-1"></i>Add
-        </a>
+        <a href="#" id="addGalleryBtn" class="btn btn-success p-2 text-light rounded" data-toggle="modal"
+            data-target="#galleryPopup">
+            <i class="fa fa-add text-light mr-1"></i>Add</a>
     </div>
     {% endif %}
 </div>
+
+<!-- <div class="row mb-3">
+    <div class="col-md-4">
+        <a href="" class="btn btn-success p-2 text-light rounded">
+            <i class="fa fa-add text-light mr-1"></i>View all images
+        </a>
+    </div>
+</div> -->
+
+
 
 <!-- Search Input -->
 <div class="row mb-3">
     <div class="col-md-12">
         <div class="input-group">
-            <input type="text" class="form-control" id="searchManufacturerInput" placeholder="Search...">
+            <input type="text" class="form-control" id="searchGalleryInput" placeholder="Search...">
             <div class="input-group-append">
-                <button class="btn btn-primary" type="button" id="searchManufacturerButton">
+                <button class="btn btn-primary" type="button" id="searchGalleryButton">
                     <i class="fa fa-search"></i>
                 </button>
             </div>
             <div class="input-group-append">
-                <button class="btn btn-danger" id="clearManufacturerInput" type="button">
+                <button class="btn btn-danger" id="clearGalleryInput" type="button">
                     <i class="fa fa-eraser"></i>
                 </button>
             </div>
@@ -64,9 +73,10 @@ Dashboard | Gallery
                         <i class="fa fa-pencil" aria-hidden="true"></i>
                     </a>
                     
-                    <button type="button" class="btn btn-danger" onclick="confirmDeleteGallery('{{ gallery.id }}')">
+                    <button type="button" class="btn btn-danger" onclick="confirmDeleteGallery('{{ gallery.id }}', '{{ gallery.name }}')">
                         <i class="fa fa-trash" aria-hidden="true"></i>
                     </button>
+
 
                     <!-- Form for deletion, hidden initially -->
                     <form id="deleteForm-{{ gallery.id }}"
@@ -81,6 +91,40 @@ Dashboard | Gallery
     </table>
 </div>
 
+
+
+<!-- Modal for adding new gallery -->
+<div class="modal fade" id="galleryPopup" tabindex="-1" role="dialog" aria-labelledby="addGalleryModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addGalleryModalLabel">Add New Gallery</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Add form for adding a new gallery with images -->
+                <!-- Make sure to include appropriate form fields for gallery name, description, and image uploads -->
+                <!-- Example: -->
+                <form id="addGalleryForm" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="galleryName">Gallery Name</label>
+                        <input type="text" class="form-control" id="galleryName" name="galleryName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="galleryDescription">Gallery Description</label>
+                        <textarea class="form-control" id="galleryDescription" name="galleryDescription" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="saveGalleryBtn"><i
+                        class="fa-solid fa-floppy-disk"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 {% endblock content %}

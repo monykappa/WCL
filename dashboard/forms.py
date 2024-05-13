@@ -51,8 +51,14 @@ class UserForm(forms.ModelForm):
         return user
 
 class GalleryForm(forms.ModelForm):
-    image = forms.ImageField(label='Image', required=False)  # Add an image field for uploading images
+    image = forms.ImageField(label='Image', required=False)  
 
     class Meta:
         model = Gallery
-        fields = ['name', 'description']  # Specify fields to include in the form
+        fields = ['name', 'description']  
+        
+        
+class ImageUploadForm(forms.ModelForm):
+    class Meta:
+        model = Image
+        fields = ['image', 'caption'] 
