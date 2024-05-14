@@ -105,45 +105,51 @@ class PackSizeUnit(TimeStampedModel, SlugMixin):
 
 class Composition(TimeStampedModel, SlugMixin):
     value = models.DecimalField(max_digits=10, decimal_places=2, null=True)
-    composition_unit = models.ForeignKey(CompositionUnit, on_delete=models.CASCADE,null=True)
-
-    def __str__(self):
-        if self.composition_unit:
-            return f"{self.value.quantize(Decimal('0'))} {self.composition_unit}"
-        else:
-            return str(self.value.quantize(Decimal('0')))
+    composition_unit = models.ForeignKey(CompositionUnit, on_delete=models.CASCADE, null=True)
 
     def value_without_decimal(self):
         return str(self.value.quantize(Decimal('0')))
 
+    def __str__(self):
+        if self.composition_unit:
+            return f"{self.value_without_decimal()} {self.composition_unit}"
+        else:
+            return self.value_without_decimal()
+
     @property
     def name(self):
-        # You can customize the name here
-        return f"Composition: {self.value}"
+        if self.composition_unit:
+            return f"{self.value_without_decimal()}{self.composition_unit}"
+        else:
+            return self.value_without_decimal()
 
     class Meta:
         unique_together = ('value', 'composition_unit',)
 
 class PackSize(TimeStampedModel, SlugMixin):
     value = models.DecimalField(max_digits=10, decimal_places=2)
-    pack_size_unit = models.ForeignKey(PackSizeUnit, on_delete=models.CASCADE,null=True)
+    pack_size_unit = models.ForeignKey(PackSizeUnit, on_delete=models.CASCADE, null=True)
 
     def value_without_decimal(self):
         return str(self.value.quantize(Decimal('0')))
 
     def __str__(self):
         if self.pack_size_unit:
-            return f"{self.value.quantize(Decimal('0'))} {self.pack_size_unit}"
+            return f"{self.value_without_decimal()}{self.pack_size_unit}"
         else:
-            return str(self.value.quantize(Decimal('0')))
+            return self.value_without_decimal()
 
     @property
     def name(self):
-        # You can customize the name here
-        return f"Pack Size: {self.value}"
+        if self.pack_size_unit:
+            return f"{self.value_without_decimal()}{self.pack_size_unit}"
+        else:
+            return self.value_without_decimal()
 
     class Meta:
         unique_together = ('value', 'pack_size_unit',)
+
+
 
 
 class Product(TimeStampedModel, SlugMixin):

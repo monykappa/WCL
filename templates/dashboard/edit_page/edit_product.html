@@ -9,15 +9,11 @@
 <form method="post" id="editProductForm" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-4">
             <div class="form-group">
                 <label for="name">Name:</label>
                 <input type="text" class="form-control" id="name" name="name" value="{{ form.name.value }}">
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
             <div class="form-group">
                 <label for="manufacturer">Manufacturer:</label>
                 <select class="form-control" id="manufacturer" name="manufacturer">
@@ -31,6 +27,48 @@
                 </select>
             </div>
             <div class="form-group">
+                <label for="compositions">Compositions:</label>
+                <select class="form-control" id="id_compositions" name="compositions" multiple>
+                    {% for composition in form.compositions.field.choices %}
+                    {% if composition.0 in form.compositions.value %}
+                    <option value="{{ composition.0 }}" selected>{{ composition.1 }}</option>
+                    {% else %}
+                    <option value="{{ composition.0 }}">{{ composition.1 }}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+                <button type="button" class="btn btn-primary mt-3"
+                    data-composition-url="{% url 'dashboard:add_composition_view' %}" onclick="openCompositionWindow()">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+                <button type="button" class="btn btn-success mt-3" onclick="refreshDatabase()">
+                    <i class="fa-solid fa-arrows-rotate"></i>
+                </button>
+            </div>
+            <div class="form-group">
+                <label for="id_pack_sizes">Pack Sizes:</label>
+                <select class="form-control" id="pack_sizes" name="pack_sizes" multiple>
+                    {% for pack_size in form.pack_sizes.field.choices %}
+                    {% if pack_size.0 in form.pack_sizes.value %}
+                    <option value="{{ pack_size.0 }}" selected>{{ pack_size.1 }}</option>
+                    {% else %}
+                    <option value="{{ pack_size.0 }}">{{ pack_size.1 }}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+                <button type="button" class="btn btn-primary mt-3"
+                    data-pack-size-url="{% url 'dashboard:add_pack_size_view' %}" onclick="openPackSizeWindow()">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+
+                <button type="button" class="btn btn-success mt-3" onclick="refreshDatabase()">
+                    <i class="fa-solid fa-arrows-rotate"></i>
+                </button>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
                 <label for="generic">Generic:</label>
                 <select class="form-control" id="generic" name="generic">
                     {% for generic in form.generic.field.choices %}
@@ -41,39 +79,6 @@
                     {% endif %}
                     {% endfor %}
                 </select>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addGenericModal">
-                    Add Generic
-                </button>
-            </div>
-            <div class="form-group">
-                <label for="compositions">Compositions:</label>
-                <select class="form-control" id="compositions" name="compositions" multiple>
-                    {% for composition in form.compositions.field.choices %}
-                    {% if composition.0 in form.compositions.value %}
-                    <option value="{{ composition.0 }}" selected>{{ composition.1 }}</option>
-                    {% else %}
-                    <option value="{{ composition.0 }}">{{ composition.1 }}</option>
-                    {% endif %}
-                    {% endfor %}
-                </select>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addCompositionModal">
-                    Add Composition
-                </button>
-            </div>
-            <div class="form-group">
-                <label for="pack_sizes">Pack Sizes:</label>
-                <select class="form-control" id="pack_sizes" name="pack_sizes" multiple>
-                    {% for pack_size in form.pack_sizes.field.choices %}
-                    {% if pack_size.0 in form.pack_sizes.value %}
-                    <option value="{{ pack_size.0 }}" selected>{{ pack_size.1 }}</option>
-                    {% else %}
-                    <option value="{{ pack_size.0 }}">{{ pack_size.1 }}</option>
-                    {% endif %}
-                    {% endfor %}
-                </select>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPackSizeModal">
-                    Add Pack Size
-                </button>
             </div>
             <div class="form-group">
                 <label for="category">Category:</label>
@@ -105,7 +110,7 @@
                     value="{{ expiry_date_value }}">
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="form-group" id="currentImageContainer">
                 <label for="current_image">Current Image:</label>
                 {% if form.image.value %}
@@ -136,129 +141,44 @@
 </form>
 
 
-<!-- Add Generic Modal -->
-<div class="modal fade" id="addGenericModal" tabindex="-1" role="dialog" aria-labelledby="addGenericModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addGenericModalLabel">Add Generic</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form method="post">
-                    {% csrf_token %}
-                    {{ add_generic_form.as_p }}
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" name="add_generic" class="btn btn-primary">Save changes</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Add Composition Modal -->
-<div class="modal fade" id="addCompositionModal" tabindex="-1" role="dialog" aria-labelledby="addCompositionModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addCompositionModalLabel">Add Composition</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form method="post">
-                    {% csrf_token %}
-                    {{ add_composition_form.as_p }}
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" name="add_composition" class="btn btn-primary">Save changes</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Add Pack Size Modal -->
-<div class="modal fade" id="addPackSizeModal" tabindex="-1" role="dialog" aria-labelledby="addPackSizeModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addPackSizeModalLabel">Add Pack Size</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form method="post">
-                    {% csrf_token %}
-                    {{ add_pack_size_form.as_p }}
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" name="add_pack_size" class="btn btn-primary">Save changes</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 
 <script>
-    // Function to show SweetAlert confirmation for form submission
-    function confirmFormSubmission(event) {
-        event.preventDefault(); // Prevent the default form submission
+    function refreshDatabase() {
+        fetch('{% url "dashboard:refresh_database_view" %}')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Clear existing options for compositions
+                $('#id_compositions').empty();
+                // Clear existing options for pack sizes
+                $('#pack_sizes').empty();
 
-        Swal.fire({
-            title: 'Save Changes?',
-            text: 'Are you sure you want to save the changes?',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, save changes!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Submit the form if confirmed
-                document.getElementById('editProductForm').submit();
-            }
-        });
+                // Add new options for compositions based on the response
+                if (data.compositions && Array.isArray(data.compositions)) {
+                    data.compositions.forEach(composition => {
+                        $('#id_compositions').append(`<option value="${composition.id}">${composition.label}</option>`);
+                    });
+                } else {
+                    throw new Error('Invalid compositions data');
+                }
+
+                // Add new options for pack sizes based on the response
+                if (data.pack_sizes && Array.isArray(data.pack_sizes)) {
+                    data.pack_sizes.forEach(pack_size => {
+                        $('#pack_sizes').append(`<option value="${pack_size.id}">${pack_size.label}</option>`);
+                    });
+                } else {
+                    throw new Error('Invalid pack sizes data');
+                }
+            })
+            .catch(error => console.error('Error:', error.message));
     }
 
-    // Attach the confirmation function to the Enter key press event
-    document.addEventListener('keydown', function (event) {
-        if (event.key === 'Enter') {
-            confirmFormSubmission(event);
-        }
-    });
-
-    // Attach the confirmation function to the button click event
-    document.getElementById('saveProductChangesButton').addEventListener('click', confirmFormSubmission);
-
-
-
-    function previewImage(event) {
-        var reader = new FileReader();
-        reader.onload = function () {
-            var imagePreview = document.createElement('img');
-            imagePreview.src = reader.result;
-            imagePreview.style.maxWidth = '100%';
-            imagePreview.style.height = 'auto';
-            var newImagePreviewContainer = document.getElementById('newImagePreviewContainer');
-            newImagePreviewContainer.innerHTML = ''; // Clear previous image preview
-            newImagePreviewContainer.appendChild(imagePreview);
-        };
-        reader.readAsDataURL(event.target.files[0]);
-    }
 </script>
 
 

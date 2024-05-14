@@ -39,7 +39,7 @@ class SuperuserRequiredMixin(UserPassesTestMixin):
         return render(self.request, 'dashboard/error_pages/403.html', status=403)
 
 # User
-class UserView(View):
+class UserView(SuperuserRequiredMixin, View):
 
     template_name = 'dashboard/user.html'
 
@@ -75,6 +75,8 @@ class UserView(View):
         user.is_staff = is_staff
         user.save()
         return JsonResponse({'status': 'success', 'user_id': user.id})
+
+@method_decorator(login_required, name='dispatch')
 class EditUserView(SuperuserRequiredMixin, View):
     def get(self, request, user_id):
         user = get_object_or_404(User, id=user_id)
@@ -93,7 +95,9 @@ class EditUserView(SuperuserRequiredMixin, View):
         user.save()
         return redirect('dashboard:user')  # Redirect to the user list page after saving changes
     
-class DeleteUserView(View):
+
+@method_decorator(login_required, name='dispatch')    
+class DeleteUserView(SuperuserRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         user_id = kwargs['user_id']
         user = User.objects.get(id=user_id)
@@ -172,6 +176,36 @@ class DashboardView(View):
 
         return render(request, 'dashboard/overview.html', context)
 
+
+@method_decorator(login_required, name='dispatch')
+class AddCompositionView(View):
+    def get(self, request):
+        form = AddCompositionForm()
+        return render(request, 'dashboard/add_page/add_composition.html', {'form': form})
+
+    def post(self, request):
+        form = AddCompositionForm(request.POST)
+        if form.is_valid():
+            form.save()  # Save the composition if the form is valid
+            # Return JavaScript to close the window/tab
+            return HttpResponse('<script>window.close();</script>')
+        return render(request, 'dashboard/add_page/add_composition.html', {'form': form})
+
+
+@method_decorator(login_required, name='dispatch')
+class AddPackSizeView(View):
+    def get(self, request):
+        form = AddPackSizeForm()
+        return render(request, 'dashboard/add_page/add_pack_size.html', {'form': form})
+
+    def post(self, request):
+        form = AddPackSizeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # Return JavaScript to close the window/tab
+            return HttpResponse('<script>window.close();</script>')
+        return render(request, 'dashboard/add_page/add_pack_size.html', {'form': form})
+
 # Products
 class ProductsView(View):
     def get(self, request):
@@ -232,75 +266,58 @@ class ProductsView(View):
             'add_pack_size_form': AddPackSizeForm(),
         })
 
-def refresh_database_view(request):
-    # Perform the database refresh action here
-    # For example, you can query the database to get updated compositions and pack sizes
-    compositions = Composition.objects.all()
-    pack_sizes = PackSize.objects.all()
-    
-    # Create a list of dictionaries containing composition id and label
-    compositions_data = [{'id': composition.id, 'label': str(composition)} for composition in compositions]
-    
-    # Create a list of dictionaries containing pack size id and label
-    pack_sizes_data = [{'id': pack_size.id, 'label': str(pack_size)} for pack_size in pack_sizes]
-    
-    # Return the compositions and pack sizes data as JSON response
-    return JsonResponse({'compositions': compositions_data, 'pack_sizes': pack_sizes_data})
-
-
-
-def add_composition_view(request):
-    if request.method == 'POST':
-        form = AddCompositionForm(request.POST)
-        if form.is_valid():
-            form.save()  # Save the composition if the form is valid
-            # Return JavaScript to close the window/tab
-            return HttpResponse('<script>window.close();</script>')
-    else:
-        form = AddCompositionForm()  # If it's a GET request, create a new form instance
-    return render(request, 'dashboard/add_page/add_composition.html', {'form': form})
-
-
-class AddPackSizeView(View):
+@method_decorator(login_required, name='dispatch')
+class RefreshDatabaseView(View):
     def get(self, request):
-        form = AddPackSizeForm()
-        return render(request, 'dashboard/add_page/add_pack_size.html', {'form': form})
+        # Perform the database refresh action here
+        # For example, you can query the database to get updated compositions and pack sizes
+        compositions = Composition.objects.all()
+        pack_sizes = PackSize.objects.all()
+        
+        # Create a list of dictionaries containing composition id and label
+        compositions_data = [{'id': composition.id, 'label': str(composition)} for composition in compositions]
+        
+        # Create a list of dictionaries containing pack size id and label
+        pack_sizes_data = [{'id': pack_size.id, 'label': str(pack_size)} for pack_size in pack_sizes]
+        
+        # Return the compositions and pack sizes data as JSON response
+        return JsonResponse({'compositions': compositions_data, 'pack_sizes': pack_sizes_data})
 
-    def post(self, request):
-        form = AddPackSizeForm(request.POST)
-        if form.is_valid():
-            form.save()
-            # Return JavaScript to close the window/tab
-            return HttpResponse('<script>window.close();</script>')
-        return JsonResponse({'success': False})
 
+
+
+@method_decorator(login_required, name='dispatch')
 class ProductDetailsView(View):
     def get(self, request, product_id):
         try:
             product = Product.objects.get(pk=product_id)
             # Generate image URL
-            if product.image:
-                image_url = settings.MEDIA_URL + str(product.image)
-            else:
-                image_url = None
+            image_url = settings.MEDIA_URL + str(product.image) if product.image else None
+
             # Prepare product data
             product_data = {
                 'name': product.name,
-                'slug': product.slug,  # Include the slug attribute
+                'slug': product.slug,
                 'image': image_url,
                 'description': product.description,
-                'manufacturer': product.manufacturer.name,
-                'price': product.price,
-                'quantity_available': product.quantity_available,
                 'expiry_date': product.expiry_date,
+                'created_at': product.created_at,
+                'updated_at': product.updated_at,
+                'manufacturer': product.manufacturer.name,
+                'generic': product.generic.name if product.generic else '',
+                'compositions': [{'id': comp.id, 'name': comp.name} for comp in product.compositions.all()],
+                'pack_sizes': [{'id': ps.id, 'name': ps.name} for ps in product.pack_sizes.all()],
                 'category': product.category.name,
-                'drug_type': product.drug_type.name,
+                'product_type': product.product_type.name,
+                # Add more fields as necessary
             }
+
             # Return JSON response with product data
             return JsonResponse(product_data)
         except Product.DoesNotExist:
             return JsonResponse({'error': 'Product not found'}, status=404)
 
+@method_decorator(login_required, name='dispatch')
 class EditProductView(SuperuserRequiredMixin, View):
     def get(self, request, slug):
         product = get_object_or_404(Product, slug=slug)
@@ -350,7 +367,7 @@ class EditProductView(SuperuserRequiredMixin, View):
         })
 
 
-    
+@method_decorator(login_required, name='dispatch')
 class DeleteProductView(SuperuserRequiredMixin, View):
     def post(self, request, slug):
         # Retrieve the product
@@ -462,6 +479,7 @@ class DeleteManufacturerView(SuperuserRequiredMixin, View):
         return redirect('dashboard:manufacturer')
 
 # Product type
+@method_decorator(login_required, name='dispatch')
 class ProductTypeView(View):
     def get(self, request):
         form = ProductTypesForm()

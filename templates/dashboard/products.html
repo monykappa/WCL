@@ -153,6 +153,7 @@ Dashboard | Products
 
 
 <!-- Add product Modal form -->
+<!-- Add product Modal form -->
 <div class="modal fade" id="productPopup" tabindex="-1" role="dialog" aria-labelledby="productPopupLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -167,7 +168,8 @@ Dashboard | Products
                 <form method="post" id="productForm" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <!-- First Row -->
                             <div class="form-group">
                                 <label for="id_name" class="form-label">Product Name:</label>
                                 <input type="text" class="form-control" id="id_name" name="name"
@@ -185,6 +187,9 @@ Dashboard | Products
                                 <textarea class="form-control" id="id_description"
                                     name="description">{% if form.description.value %}{{ form.description.value }}{% endif %}</textarea>
                             </div>
+                        </div>
+                        <div class="col-md-4">
+                            <!-- Second Row -->
                             <div class="form-group">
                                 <label for="id_manufacturer" class="form-label">Manufacturer:</label>
                                 <select class="form-control" id="id_manufacturer" name="manufacturer">
@@ -194,8 +199,6 @@ Dashboard | Products
                                     {% endfor %}
                                 </select>
                             </div>
-                        </div>
-                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="id_generic" class="form-label">Generic:</label>
                                 <select class="form-control" id="id_generic" name="generic">
@@ -205,46 +208,6 @@ Dashboard | Products
                                     {% endfor %}
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label for="id_compositions" class="form-label">Compositions:</label>
-                                <select class="form-control" id="id_compositions" name="compositions" multiple>
-                                    {% for composition_id, composition_label in form.fields.compositions.choices %}
-                                        {% if composition_id in form.cleaned_data.compositions %}
-                                            <option value="{{ composition_id }}" selected>{{ composition_label }}</option>
-                                        {% else %}
-                                            <option value="{{ composition_id }}">{{ composition_label }}</option>
-                                        {% endif %}
-                                    {% endfor %}
-                                </select>
-                                <button type="button" class="btn btn-primary" onclick="openCompositionWindow()">
-                                    Add Composition
-                                </button>
-                                <button type="button" class="btn btn-secondary" onclick="refreshDatabase()">
-                                    Refresh Database
-                                </button>
-                            </div>
-                    
-                            <div class="form-group">
-                                <label for="id_pack_sizes" class="form-label">Pack Sizes:</label>
-                                <select class="form-control" id="pack_sizes" name="pack_sizes" multiple>
-                                    {% for pack_size in form.pack_sizes.field.choices %}
-                                        {% if pack_size.0 in form.pack_sizes.value %}
-                                            <option value="{{ pack_size.0 }}" selected>{{ pack_size.1 }}</option>
-                                        {% else %}
-                                            <option value="{{ pack_size.0 }}">{{ pack_size.1 }}</option>
-                                        {% endif %}
-                                    {% endfor %}
-                                </select>
-                                <button type="button" class="btn btn-primary" onclick="openPackSizeWindow()">
-                                    Add Pack Size
-                                </button>
-                                <button type="button" class="btn btn-secondary" onclick="refreshPackSizes()">
-                                    Refresh Pack Sizes
-                                </button>
-                            </div>
-                            
-                            
-    
                             <div class="form-group">
                                 <label for="id_category" class="form-label">Category:</label>
                                 <select class="form-control" id="id_category" name="category">
@@ -264,9 +227,50 @@ Dashboard | Products
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-4">
+                            <!-- Third Row -->
+                            <div class="form-group">
+                                <label for="id_pack_sizes" class="form-label">Pack Sizes:</label>
+                                <select class="form-control" id="pack_sizes" name="pack_sizes" multiple>
+                                    {% for pack_size in form.pack_sizes.field.choices %}
+                                    {% if pack_size.0 in form.pack_sizes.value %}
+                                    <option value="{{ pack_size.0 }}" selected>{{ pack_size.1 }}</option>
+                                    {% else %}
+                                    <option value="{{ pack_size.0 }}">{{ pack_size.1 }}</option>
+                                    {% endif %}
+                                    {% endfor %}
+                                </select>
+                                <button type="button" class="btn btn-primary mt-3" onclick="openPackSizeWindow()">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                                <button type="button" class="btn btn-success mt-3" onclick="refreshDatabase()">
+                                    <i class="fa-solid fa-arrows-rotate"></i>
+                                </button>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_compositions" class="form-label">Compositions:</label>
+                                <select class="form-control" id="id_compositions" name="compositions" multiple>
+                                    {% for composition_id, composition_label in form.fields.compositions.choices %}
+                                    {% if composition_id in form.cleaned_data.compositions %}
+                                    <option value="{{ composition_id }}" selected>{{ composition_label }}</option>
+                                    {% else %}
+                                    <option value="{{ composition_id }}">{{ composition_label }}</option>
+                                    {% endif %}
+                                    {% endfor %}
+                                </select>
+                                <button type="button" class="btn btn-primary mt-3" onclick="openCompositionWindow()">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                                <button type="button" class="btn btn-success mt-3" onclick="refreshDatabase()">
+                                    <i class="fa-solid fa-arrows-rotate"></i>
+                                </button>
+                            </div>
+                        </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i
+                                class="fa-solid fa-xmark"></i></button>
                         <button type="submit" class="btn btn-primary" id="saveProductBtn"><i
                                 class="fa-solid fa-floppy-disk"></i></button>
                     </div>
@@ -277,76 +281,57 @@ Dashboard | Products
 </div>
 
 
-
-
 <script>
     function refreshDatabase() {
-        // Send AJAX request to the server to refresh the database
         fetch('{% url "dashboard:refresh_database_view" %}')
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
-                // Clear existing options
+                // Clear existing options for compositions
                 $('#id_compositions').empty();
-                // Add new options based on the response
-                data.compositions.forEach(composition => {
-                    // Format composition label as "value unit" (e.g., "50 mg")
-                    let label = `${composition.value} ${composition.unit}`;
-                    $('#id_compositions').append(`<option value="${composition.id}">${label}</option>`);
-                });
-            })
-            .catch(error => console.error('Error:', error));
-    }
-</script>
-
-<script>
-    function refreshPackSizes() {
-        // Send AJAX request to refresh pack sizes
-        fetch('{% url "dashboard:refresh_database_view" %}')
-            .then(response => response.json())
-            .then(data => {
-                // Clear existing pack size options
+                // Clear existing options for pack sizes
                 $('#pack_sizes').empty();
-                // Add new options based on the response
-                data.pack_sizes.forEach(pack_size => {
-                    $('#pack_sizes').append(`<option value="${pack_size.id}">${pack_size.label}</option>`);
-                });
-            })
-            .catch(error => console.error('Error:', error));
-    }
-</script>
 
-<script>
+                // Add new options for compositions based on the response
+                if (data.compositions && Array.isArray(data.compositions)) {
+                    data.compositions.forEach(composition => {
+                        $('#id_compositions').append(`<option value="${composition.id}">${composition.label}</option>`);
+                    });
+                } else {
+                    throw new Error('Invalid compositions data');
+                }
+
+                // Add new options for pack sizes based on the response
+                if (data.pack_sizes && Array.isArray(data.pack_sizes)) {
+                    data.pack_sizes.forEach(pack_size => {
+                        $('#pack_sizes').append(`<option value="${pack_size.id}">${pack_size.label}</option>`);
+                    });
+                } else {
+                    throw new Error('Invalid pack sizes data');
+                }
+            })
+            .catch(error => console.error('Error:', error.message));
+    }
+
     function openPackSizeWindow() {
-        // Specify the URL of the pack size form
-        var packSizeUrl = "{% url 'dashboard:add_pack_size_view' %}"; // URL pattern name
-    
-        // Define window properties
-        var windowWidth = 400;
-        var windowHeight = 400;
-        var windowFeatures = "width=" + windowWidth + ",height=" + windowHeight + ",top=100,left=100";
-    
-        // Open a new window with the pack size form
-        window.open(packSizeUrl, "_blank", windowFeatures);
+        openWindow("{% url 'dashboard:add_pack_size_view' %}");
     }
-</script>
-    
-<script>
+
     function openCompositionWindow() {
-        // Specify the URL of the composition form
-        var compositionUrl = "{% url 'dashboard:add_composition_view' %}"; // URL pattern name
-    
-        // Define window properties
+        openWindow("{% url 'dashboard:add_composition_view' %}");
+    }
+
+    function openWindow(url) {
         var windowWidth = 400;
         var windowHeight = 400;
         var windowFeatures = "width=" + windowWidth + ",height=" + windowHeight + ",top=100,left=100";
-    
-        // Open a new window with the composition form
-        window.open(compositionUrl, "_blank", windowFeatures);
+        window.open(url, "_blank", windowFeatures);
     }
-    </script>
-    
-    
-<script>
+
     document.addEventListener("DOMContentLoaded", function () {
         var exportButton = document.querySelector('.btn-success');
         if (exportButton) {

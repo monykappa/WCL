@@ -1,21 +1,35 @@
-<!-- add_pack_size.html -->
-<div class="modal fade" id="addPackSizeModal" tabindex="-1" role="dialog" aria-labelledby="addPackSizeModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addPackSizeModalLabel">Add Pack Size</h5>
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Add Pack Size</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="{{ form.value.id_for_label }}" class="form-label">Value</label>
+                <input type="number" name="{{ form.value.name }}" class="form-control" id="{{ form.value.id_for_label }}" value="{{ form.value.value|default_if_none:'' }}">
+                {% if form.value.errors %}
+                    <div class="text-danger">{{ form.value.errors }}</div>
+                {% endif %}
             </div>
-            <div class="modal-body">
-                <form method="post" id="addPackSizeForm">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-                </form>
+            <div class="mb-3">
+                <label for="{{ form.pack_size_unit.id_for_label }}" class="form-label">Pack Size Unit</label>
+                <select name="{{ form.pack_size_unit.name }}" class="form-control" id="{{ form.pack_size_unit.id_for_label }}">
+                    {% for choice in form.pack_size_unit.field.choices %}
+                        <option value="{{ choice.0 }}" {% if choice.0 == form.pack_size_unit.value %}selected{% endif %}>{{ choice.1 }}</option>
+                    {% endfor %}
+                </select>
+                {% if form.pack_size_unit.errors %}
+                    <div class="text-danger">{{ form.pack_size_unit.errors }}</div>
+                {% endif %}
             </div>
-        </div>
+            <button type="submit" class="btn btn-primary">Save Pack Size</button>
+        </form>
     </div>
-</div>
+</body>
+</html>

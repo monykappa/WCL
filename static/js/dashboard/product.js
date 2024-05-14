@@ -125,6 +125,21 @@ document.addEventListener('DOMContentLoaded', function() {
             fetch('/dashboard/get_product_details/' + productId + '/')
                 .then(response => response.json())
                 .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                        return;
+                    }
+
+                    // Generate compositions display string
+                    let compositionsDisplay = '';
+                    data.compositions.forEach((comp, index) => {
+                        if (index === 0) {
+                            compositionsDisplay += `${comp.name}`;
+                        } else {
+                            compositionsDisplay += ` + ${comp.name}`;
+                        }
+                    });
+
                     // Populate modal with product data
                     var modalBody = document.getElementById('productModalBody');
                     modalBody.innerHTML = `
@@ -135,13 +150,16 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                             <div class="col-md-4">
                                 <p><strong>Manufacturer:</strong> ${data.manufacturer}</p>
-                                <p><strong>Price:</strong> $${data.price}</p>
                                 <p><strong>Category:</strong> ${data.category}</p>
-                                <p><strong>Quantity Available:</strong> ${data.quantity_available}</p>
+                                <p><strong>Product Type:</strong> ${data.product_type}</p>
+                                <p><strong>Generic:</strong> ${data.generic}</p>
                                 <p><strong>Expiry Date:</strong> ${data.expiry_date}</p>
-                                <p><strong>Drug Type:</strong> ${data.drug_type}</p>
+                                <p><strong>Created At:</strong> ${data.created_at}</p>
+                                <p><strong>Updated At:</strong> ${data.updated_at}</p>
                             </div>
                             <div class="col-md-4">
+                                <p><strong>Compositions:</strong> ${compositionsDisplay}</p>
+                                <p><strong>Pack Sizes:</strong> ${data.pack_sizes.map(ps => ps.name).join(', ')}</p>
                                 <p><strong>Description:</strong> ${data.description}</p>
                             </div>
                         </div>
@@ -157,6 +175,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+
 
 
 function sortTableByPrice(order) {

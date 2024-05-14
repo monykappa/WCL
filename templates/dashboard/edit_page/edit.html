@@ -91,7 +91,7 @@
             
             <div class="container mt-5 custom-ctn">
                 <div class="row justify-content-center">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="card">
                             <div class="card-body">
                                 {% block content %}
@@ -113,6 +113,10 @@
     <script src="{% static 'js/dashboard/edit/confirm_save.js'%}"></script>
     <script src="{% static 'js/dashboard/fullscreen_image/fullscreen_img.js'%}"></script>
     <script src="{% static 'js/darkmode/dark_mode.js'%}"></script>
+    <script src="{% static 'js/dashboard/edit/edit_product.js'%}"></script>
+    {% block js %}
+    {% endblock js %}
+
     <script>
         $(document).ready(function () {
             $('#sidebarCollapse').on('click', function () {
