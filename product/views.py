@@ -1,16 +1,30 @@
 
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
+from django.views import View
 
 from .models import *
 
 
-# Create your views here.
-def products(request):
-    products = Product.objects.all().prefetch_related('compositions', 'pack_sizes')  # Prefetch related data to optimize database queries
-    context = {'products': products}
-    return render(request, 'products/products.html', context)
+class BaseView(View):
+    def get_context_data(self, **kwargs):
+        categories = Category.objects.all()
+        context = {'categories': categories}
+        context.update(kwargs)
+        return context
+
+class ProductsView(BaseView):
+    def get(self, request):
+        context = self.get_context_data()
+        return render(request, 'products/products.html', context)
+
+class CategoryPageView(BaseView):
+    def get(self, request, category_slug):
+        category = get_object_or_404(Category, slug=category_slug)
+        products = category.product_set.all()
+        context = self.get_context_data(category=category, products=products)
+        return render(request, 'products/category/category_page.html', context)
 
 
-def product_detail(request):
-    return render(request, 'products/products.html')
+# def product_detail(request):
+#     return render(request, 'products/products.html')

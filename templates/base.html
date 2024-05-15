@@ -63,8 +63,8 @@
 
                         <span class="mx-md-2 d-inline-block"></span>
 
-                        <a href="https://www.facebook.com/CEOMrPhyrun" class=""><span class="fab  fa-facebook"></span> <span
-                                class="d-none d-md-inline-block">Facebook</span></a>
+                        <a href="https://www.facebook.com/CEOMrPhyrun" class=""><span class="fab  fa-facebook"></span>
+                            <span class="d-none d-md-inline-block">Facebook</span></a>
 
                     </div>
                 </div>
@@ -89,20 +89,19 @@
                         <li><a href="#" id="vision-link" class="nav-link">Vision</a></li>
 
                         <li class="has-children">
-                            <a href="{% url 'product:products'%}" id="product-link" class="navs-link">Our
-                                Products</a>
+                            <a href="{% url 'product:products' %}" id="product-link" class="navs-link">Our Products</a>
                             <ul class="dropdown arrow-top">
-                                <li><a href="#" id="anti-infective-link" class="nav-link">Anti Infection</a>
-                                </li>
-                                <li><a href="#pricing-section" id="vitamin-link" class="nav-link">Vitamin</a>
-                                </li>
-                                <li><a href="#faq-section" id="anti-virus-link" class="nav-link">Anti-Virus</a>
-                                </li>
+                                {% for category in categories %}
+                                    <li><a href="{% url 'product:category_page' category.slug %}" class="nav-link">{{ category.name }}</a></li>
+                                {% endfor %}
                             </ul>
                         </li>
+                        
+
                         <li><a href="#" id="awards-link" class="nav-link">Awards</a></li>
                         <li><a href="{% url 'gallery:gallery'%}" id="gallery-link" class="nav-link">Gallery</a></li>
-                        <li><a href="{% url 'home:top_management' %}" id="top-management-link" class="nav-link">Top Management</a></li>
+                        <li><a href="{% url 'home:top_management' %}" id="top-management-link" class="nav-link">Top
+                                Management</a></li>
                         <li><a href="{% url 'home:about_us'%}" id="about-us-link" class="nav-link">About Us</a>
                         </li>
                         <li><a href="{% url 'home:contact_us' %}" id="contact-link" class="nav-link">Contact</a>
@@ -118,7 +117,7 @@
         </div>
     </header>
 
-    
+
     <!-- Main content -->
     <div class="main-content">
         {% block content %}

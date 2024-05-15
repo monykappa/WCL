@@ -4,7 +4,7 @@ from news.models import *
 from gallery.models import *
 
 class ManufacturerForm(forms.ModelForm):
-    country = CountryField().formfield()  # This will generate the appropriate form field for the CountryField
+    country = CountryField().formfield() 
 
     class Meta:
         model = Manufacturer

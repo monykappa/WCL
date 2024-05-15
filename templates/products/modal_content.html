@@ -1,0 +1,28 @@
+<!-- modal_content.html -->
+<div id="fullscreen" class="fullscreen hidden-bottom" style="display: none;">
+    <span class="close-btn" onclick="closeFullScreen()">
+        <i class="fa fa-times" style="color:red;" aria-hidden="true"></i>
+    </span>
+    <img id="fullscreen-img" src="" alt="Full Screen Image">
+    <div class="zoom-controls">
+        <button onclick="zoomIn()">Zoom In <i class="fa fa-plus" aria-hidden="true"></i>
+        </button>
+        <button onclick="zoomOut()">Zoom Out <i class="fa fa-minus" aria-hidden="true"></i>
+        </button>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div id="productModal" class="modal">
+    <div class="modal-content">
+        <span class="close" style="color:red;" onclick="closeModal()">&times;</span>
+        <div class="modal-image" onclick="showFullScreen(this)">
+            <img id="modal-image" src="" alt="Product Image" class="img-fluid mx-auto d-block">
+            <p class="text-center mt-2 text-view-img">Click to view image</p>
+        </div>
+        <div class="modal-description">
+            <div id="productName"></div>
+            <p id="description"></p>
+        </div>
+    </div>
+</div>
