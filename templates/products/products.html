@@ -10,15 +10,8 @@
 {% endblock css %}
 
 {% block content %}
-<section>
-    <div class="background-img">
-        <div class="row justify-content-center">
-            <div class="col-md-12 text-center">
-                <h1 class="display-4 hidden-top">Our Products</h1>
-            </div>
-        </div>
-    </div>
-</section>
+
+{% include 'home/background_section.html' with title="Our Products" %}
 
 <section class="product-desc-ctn mb-5">
     <div class="product-desc">

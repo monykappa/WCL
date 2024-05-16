@@ -29,15 +29,7 @@ Ceo Message
 </style>
 
 
-<section>
-    <div class="background-img">
-        <div class="row justify-content-center">
-            <div class="col-md-12 text-center">
-                <h1 class="display-4 hidden-top">Ceo Message</h1>
-            </div>
-        </div>
-    </div>
-</section>
+{% include 'home/background_section.html' with title="Ceo Message" %}
 
 <div class="upper-curve">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
@@ -57,7 +49,7 @@ Ceo Message
             </div>
         </div>
         <div class="col-md-6 pr-5">
-            <h1 class="text-left hidden-top"> <span class="highlight-txt">Message from the CEO:</span></h1>
+            <h1 class="text-left hidden-top"> <span class="highlight-txt">Message from the CEO</span></h1>
             <p class="hidden-top mt-2">It is my most immense pleasure to welcome you to World Cure Life Sciences
                 Company. The idea behind it all
                 is to reach out to the millions of people in the country who are deprived of the most basic needs in
