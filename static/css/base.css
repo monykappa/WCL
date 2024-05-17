@@ -780,7 +780,8 @@ p.footer-description {
   color: #fff;
   text-align: justify !important;
   text-justify: inter-word !important;
-  word-spacing: -0.3rem;
+  word-spacing: -0.1rem;
+  line-height: 30px; 
 }
 
 footer.footer {

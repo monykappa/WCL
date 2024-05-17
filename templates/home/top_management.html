@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-Ceo Message
+Top Management | WCL
 {% endblock title %}
 
 {% block css %}
@@ -18,6 +18,7 @@ Ceo Message
 
 {% block content %}
 <style>
+
 </style>
 
 {% include 'home/background_section.html' with title="Top Management" %}
@@ -30,48 +31,50 @@ Ceo Message
     </svg>
 </div>
 
-
 <section class="top-management">
     <h1 class="font-weight-bold top-management text-center hidden-top">Top Management in WCL</h1>
-    <div class="container mt-5">
+    <div class="mt-5 position-relative">
+        <div class="row">
+            <div class="col-md-12 text-center hidden-top">
+                <img src="{% static 'img/ceo/ceo_img.png' %}" alt="">
+                <h3>Khy Phearun</h3>
+                <p class="text-center position">CEO</p>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-1">
+                <div class="connection-line hidden-top"></div>
+            </div>
+        </div>
+        <div class="row position-relative director-manager-wrapper">
+            <div class="col-md-6 director-manager hidden-top">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCoYF92bNTcapG0JYRSLyLkitfJ3iCITm897VSlnJRsQ&s"
+                    alt="">
+                <h3>Ty Sambo</h3>
+                <p class="text-center position">Director</p>
+            </div>
+            <div class="col-md-6 director-manager hidden-top">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCoYF92bNTcapG0JYRSLyLkitfJ3iCITm897VSlnJRsQ&s"
+                    alt="">
+                <h3>Qasim Adil</h3>
+                <p class="text-center position">Country General Manager</p>
+            </div>
+            <div class="horizontal-line hidden-top"></div>
+        </div>
         <div class="row">
             <div class="col-md-12 text-center hidden-top">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCoYF92bNTcapG0JYRSLyLkitfJ3iCITm897VSlnJRsQ&s"
                     alt="">
-                <h3>Person 1</h3>
-                <p class="text-center">Director</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 text-center hidden-top">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCoYF92bNTcapG0JYRSLyLkitfJ3iCITm897VSlnJRsQ&s"
-                    alt="">
-                <h3>Person 2</h3>
-                <p class="text-center">Director</p>
-            </div>
-            <div class="col-md-6 text-center hidden-top">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCoYF92bNTcapG0JYRSLyLkitfJ3iCITm897VSlnJRsQ&s"
-                    alt="">
-                <h3>Person 3</h3>
-                <p class="text-center">Director</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 text-center hidden-top">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCoYF92bNTcapG0JYRSLyLkitfJ3iCITm897VSlnJRsQ&s"
-                    alt="">
-                <h3>Person 2</h3>
-                <p class="text-center">Director</p>
-            </div>
-            <div class="col-md-6 text-center hidden-top">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCoYF92bNTcapG0JYRSLyLkitfJ3iCITm897VSlnJRsQ&s"
-                    alt="">
-                <h3>Person 3</h3>
-                <p class="text-center">Director</p>
+                <h3>Person 4</h3>
+                <p class="text-center position">Manager</p>
             </div>
         </div>
     </div>
 </section>
+
+
+
+
 <div class="lower-curve">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
         <path fill="#478bbc" fill-opacity="1"

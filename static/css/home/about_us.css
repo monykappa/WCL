@@ -1,6 +1,7 @@
-body p{
-    font-size:18px !important;
+body p {
+    font-size: 18px !important;
 }
+
 /* body img{
     margin: 0 auto;
 } */
@@ -9,18 +10,18 @@ body p{
     height: 500px !important;
 }
 
-section.quote{
+section.quote {
     background-color: #d7e8f5;
     text-align: center;
-    padding:2rem 0;
+    padding: 2rem 0;
 }
 
-section.quote h1{
+section.quote h1 {
     font-family: var(--secondary-font);
 }
 
 section.about-us p {
-    color:#000;
+    color: #000;
     font-size: 18px;
 }
 
@@ -30,11 +31,12 @@ section.about-us p {
     object-fit: cover;
 } */
 
-.hidden-top{
+.hidden-top {
     transform: translateY(-10%) !important;
     transition: 1s !important;
 }
-.hidden-bottom{
+
+.hidden-bottom {
     transform: translateY(10%) !important;
     transition: 1s !important;
 }
@@ -45,13 +47,16 @@ section.about-us p {
     transform: translateX(0) !important;
 }
 
-section.goal-ctn h1{
+section.goal-ctn h1 {
     font-weight: normal !important;
+
 }
-section.goal-ctn span{
-    color:#000 !important;
+
+section.goal-ctn span {
+    color: #000 !important;
     font-size: 50px !important;
     font-weight: bold !important;
+    color: #b8444f !important;
 }
 
 /* section.person img{

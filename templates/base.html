@@ -46,9 +46,9 @@
 
                 <div class="col-12">
 
-                    <a href="#" class=""><span class="mr-2  icon-envelope-open-o"></span> <span
+                    <a href="https://www.worldcurelifesciences.com" class=""><span class="mr-2  icon-envelope-open-o"></span> <span
                             class="d-none d-md-inline-block"><i class="fa fa-globe" aria-hidden="true"></i>
-                            www.wcl.com</span></a>
+                            www.worldcurelifesciences.com</span></a>
 
                     <span class="mx-md-2 d-inline-block"></span>
                     <a href="tel:+8550121991925" class=""><span class="mr-2 icon-phone"></span> <span
@@ -58,8 +58,8 @@
                         <i class="fas fa-moon"></i></button>
                     <div class="float-right">
 
-                        <a href="#" class=""><span class="fab fa-youtube"></span> <span
-                                class="d-none d-md-inline-block">Youtube</span></a>
+                        <!-- <a href="#" class=""><span class="fab fa-youtube"></span> <span
+                                class="d-none d-md-inline-block">Youtube</span></a> -->
 
                         <span class="mx-md-2 d-inline-block"></span>
 
@@ -130,11 +130,12 @@
                 <div class="col-md-3 mb-3">
                     <h3>Follow Us</h3>
 
-                    <ul class="list-unstyled d-flex justify-content-between social-media-list">
-                        <li><a href="https://www.facebook.com/CEOMrPhyrun"><i class="fab fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fab fa-youtube"></i></a></li>
-                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-                        <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                    <ul class="list-unstyled d-flex  social-media-list">
+                        <li class="mr-2"><a href="https://www.facebook.com/CEOMrPhyrun"><i class="fab fa-facebook"></i></a></li>
+                        <li  class="ml-2"><a href="https://kh.linkedin.com/in/khy-phearun-6a043a242"><i class="fab fa-linkedin-in"></i></a></li>
+                        <!-- <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i></a></li> -->
+                        
                     </ul>
                 </div>
 
@@ -147,28 +148,21 @@
                     <h3>Website Pages</h3>
                     <ul class="list-unstyled">
                         <li><a href="{% url 'home:home' %}">Home</a></li>
-                        <li><a href="#">Manufacturing Facility</a></li>
-                        <li><a href="#">Quality Management</a></li>
-                        <li><a href="#">Contract Manufacturing</a></li>
-                        <li><a href="#">Distribution Partnerships</a></li>
-                        <li><a href="#">News & Updates</a></li>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Contact Us</a></li>
-                        <li><a href="#">Careers</a></li>
-
+                        <li><a href="{% url 'home:ceo_message' %}">CEO Message</a></li>
+                        <li><a href="#">Vision</a></li>
+                        <li><a href="{% url 'home:top_management' %}">Top Management</a></li>
+                        <li><a href="{% url 'product:products' %}">Our Products</a></li>
+                        <li><a href="{% url 'gallery:gallery' %}">Gallery</a></li>
+                        <li><a href="{% url 'home:about_us' %}">About Us</a></li>
+                        <li><a href="{% url 'home:contact_us' %}">Contact Us</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4 mb-4">
                     <h3>Our Products</h3>
                     <ul class="list-unstyled">
-                        <li><a href="#">Anti Infectives</a></li>
-                        <li><a href="#">Cardiovascular</a></li>
-                        <li><a href="#">Anti-Viral</a></li>
-                        <li><a href="#">Central Nervous System</a></li>
-                        <li><a href="#">Diabetes Care</a></li>
-                        <li><a href="#">Gastrointestinal Tract</a></li>
-                        <li><a href="#">Hepatic Care</a></li>
-                        <li><a href="#">Haematinics</a></li>
+                        {% for category in categories %}
+                        <li><a href="{% url 'product:category_page' category.slug %}" class="">{{ category.name }}</a></li>
+                        {% endfor %}
                     </ul>
                 </div>
 
@@ -184,7 +178,7 @@
             </div>
         </div>
         <div class="container text-center mt-3">
-            <p class="text-muted">Copyright © 2024 WCL</p>
+            <p class="text-muted">Copyright © 2024 <a href="https://www.worldcurelifesciences.com" class="text-light">World Cure Life Sciences</a></p>
         </div>
     </footer>
     </div>

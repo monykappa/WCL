@@ -9,6 +9,67 @@ h1.top-management{
     color: var(--primary-color);
 }
 
+.top-management {
+    position: relative;
+}
+
+.connection-line {
+    position: absolute;
+    left: 50%;
+    top: 0px;
+    width: 2px;
+    height: 300px;
+
+    border: 3px solid #6caad0;
+    border-radius: 50px;
+    transform: translateX(-50%);
+}
+
+.horizontal-line {
+    position: absolute;
+    top: 40%;
+    width: 30%;
+    height: 2px;
+
+    border: 3px solid #6caad0;
+    border-radius: 50px;
+    left: 35%;
+}
+
+.director-manager-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.director-manager {
+    position: relative;
+    text-align: center;
+}
+
+@media (max-width:767px) {
+    .connection-line {
+
+        left: 50%;
+        top: 0px;
+        width: 2px;
+        height: 260px;
+    }
+
+    .horizontal-line {
+        top: 35%;
+        width: 20%;
+        height: 2px;
+        left: 41%;
+    }
+    p.position{
+        font-size: .755rem !important;
+    
+    }
+}
+
+
 
 @media (min-width: 301px) and (max-width: 767px) {
     .top-management .row [class^="col-md-"] {

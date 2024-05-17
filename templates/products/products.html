@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Anti Infective | WCL {% endblock title %}
+{% block title %}Products | WCL {% endblock title %}
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/products/products.css'%}">
@@ -53,10 +53,17 @@
                     {% if not forloop.last %} + {% endif %}
                     {% endfor %}
                 </li>
+                
+                {% with pack_sizes_text="" %}
+                <li class="mt-2">Pack Size:
+                    {% for pack_size in product.pack_sizes.all %}
+                    {% assign pack_sizes_text = pack_sizes_text + pack_size.value_without_decimal +
+                    pack_size.pack_size_unit %}
+                    {% if not forloop.last %} & {% endif %} {% endfor %}
+                    {{ pack_sizes_text }}
+                </li>
+                {% endwith %}
 
-                {% for pack_size in product.pack_sizes.all %}
-                <li class="mt-2">Pack Size: {{ pack_size.value_without_decimal }}{{ pack_size.pack_size_unit }}</li>
-                {% endfor %}
                 <li class="mt-2">Composition:
                     {% for composition in product.compositions.all %}
                     {% if forloop.first %}
