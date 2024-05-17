@@ -18,56 +18,64 @@
 
 {% for category in categories %}
 
-    <section class="product-content container">
-        
-        <div class="category-header">
-            <h2 class="category-name">{{ category.name }}</h2>
-            <button class="see-more-btn" role="button"><a href="{% url 'product:category_page' category.slug %}">See more</a></button>
-        </div>
+<section class="product-content container">
 
-        <div class="row justify-content-start mt-3 mb-5" id="product-grid">
-            {% for product in category.product_set.all %}
-                <div class="col-6 col-md-4 col-lg-3 scroll-fade-in product-item hidden-left" onclick="showModal(this)" href="#">
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid mx-auto d-block fade-in-left​​ product-img">
-                    <p class="productName">
-                        {{ product.name }}
-                        {% if product.compositions.all|length > 1 %}
-                            {% for pack_size in product.pack_sizes.all %}
-                                {{ pack_size.value_without_decimal }}{{ pack_size.pack_size_unit }}
-                            {% endfor %}
-                        {% else %}
-                            {% for composition in product.compositions.all %}
-                                {{ composition.value_without_decimal }}{{ composition.composition_unit }}
-                            {% endfor %}
-                        {% endif %}
-                    </p>
-                    
-                    <ul class="product-description hidden">
-                        <p><i>{{ category.name }}</i></p>
-                        <p>{{ product.product_type }}</p>
-                        <li class="mt-2">Generic: {{ product.generic }}</li>
-                        {% for pack_size in product.pack_sizes.all %}
-                            <li class="mt-2">Pack Size: {{ pack_size.value_without_decimal }}{{ pack_size.pack_size_unit }}</li>
-                        {% endfor %}
-                        <li class="mt-2">Composition:
-                            {% for composition in product.compositions.all %}
-                                {% if forloop.first %}
-                                    {{ composition.value_without_decimal }}{{ composition.composition_unit }}
-                                {% else %}
-                                    + {{ composition.value_without_decimal }}{{ composition.composition_unit }}
-                                {% endif %}
-                                {% if forloop.last %}
-                                    / {{ product.product_type }}
-                                {% endif %}
-                            {% endfor %}
-                        </li>
-                    </ul>
-                </div>
-            {% endfor %}
+    <div class="category-header">
+        <h2 class="category-name">{{ category.name }}</h2>
+        <button class="see-more-btn" role="button"><a href="{% url 'product:category_page' category.slug %}">See
+                more</a></button>
+    </div>
+
+    <div class="row justify-content-start mt-3 mb-5" id="product-grid">
+        {% for product in category.product_set.all %}
+        <div class="col-6 col-md-4 col-lg-3 scroll-fade-in product-item hidden-left" onclick="showModal(this)" href="#">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}"
+                class="img-fluid mx-auto d-block fade-in-left​​ product-img">
+            <p class="productName">
+                {{ product.name }}
+                {% if product.compositions.all|length > 1 %}
+                {% for pack_size in product.pack_sizes.all %}
+                {{ pack_size.value_without_decimal }}{{ pack_size.pack_size_unit }}
+                {% endfor %}
+                {% else %}
+                {% for composition in product.compositions.all %}
+                {{ composition.value_without_decimal }}{{ composition.composition_unit }}
+                {% endfor %}
+                {% endif %}
+            </p>
+
+            <ul class="product-description hidden">
+                <p><i>{{ category.name }}</i></p>
+                <p>{{ product.product_type }}</p>
+                <li class="mt-2">Generic:
+                    {% for generic in product.generics.all %}
+                    {{ generic }}
+                    {% if not forloop.last %} + {% endif %}
+                    {% endfor %}
+                </li>
+
+                {% for pack_size in product.pack_sizes.all %}
+                <li class="mt-2">Pack Size: {{ pack_size.value_without_decimal }}{{ pack_size.pack_size_unit }}</li>
+                {% endfor %}
+                <li class="mt-2">Composition:
+                    {% for composition in product.compositions.all %}
+                    {% if forloop.first %}
+                    {{ composition.value_without_decimal }}{{ composition.composition_unit }}
+                    {% else %}
+                    + {{ composition.value_without_decimal }}{{ composition.composition_unit }}
+                    {% endif %}
+                    {% if forloop.last %}
+                    / {{ product.product_type }}
+                    {% endif %}
+                    {% endfor %}
+                </li>
+            </ul>
         </div>
+        {% endfor %}
+    </div>
     <hr>
 
-    </section>
+</section>
 {% endfor %}
 
 
