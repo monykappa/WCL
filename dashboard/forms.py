@@ -35,7 +35,7 @@ class ProductForm(forms.ModelForm):
 
     class Meta:
         model = Product
-        fields = ['name', 'image', 'description', 'manufacturer', 'generic', 'compositions', 'pack_sizes', 'expiry_date', 'category', 'product_type', 'composition_unit', 'pack_size_unit']
+        fields = ['name', 'image', 'description', 'manufacturer', 'generics', 'compositions', 'pack_sizes', 'category', 'product_type', 'composition_unit', 'pack_size_unit']
 
 
 

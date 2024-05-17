@@ -9,5 +9,5 @@ class GalleryView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['galleries'] = Gallery.objects.all()
-        context['categories'] = Category.objects.all()  # Include categories in the context
+        context['categories'] = Category.objects.order_by('name')  # Include categories in the context
         return context

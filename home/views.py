@@ -5,18 +5,18 @@ from news.models import *
 from django.http import JsonResponse
 from django.views import View
 from product.models import *
-
+from django.shortcuts import render, get_object_or_404
 
 
 # Create a base view class with the Category model included in the context
 class BaseView(View):
     def get_context_data(self, **kwargs):
         context = {}
-        context['categories'] = Category.objects.all()
+        # Fetch all categories and sort them alphabetically by name
+        context['categories'] = Category.objects.all().order_by('name')
         context.update(kwargs)
         return context
 
-# Modify each view to inherit from the BaseView class
 class HomeView(BaseView):
     def get(self, request):
         news_items = New.objects.filter(is_published=True)
@@ -39,3 +39,15 @@ class TopManagementView(BaseView):
     def get(self, request):
         return render(request, 'home/top_management.html', self.get_context_data())
 
+# Ensure the products views also inherit from BaseView and sort categories alphabetically
+class ProductsView(BaseView):
+    def get(self, request):
+        context = self.get_context_data()
+        return render(request, 'products/products.html', context)
+
+class CategoryPageView(BaseView):
+    def get(self, request, category_slug):
+        category = get_object_or_404(Category, slug=category_slug)
+        products = category.product_set.all()
+        context = self.get_context_data(category=category, products=products)
+        return render(request, 'products/category/category_page.html', context)

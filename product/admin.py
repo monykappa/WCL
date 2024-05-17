@@ -6,7 +6,7 @@ class TimeStampedModelAdmin(admin.ModelAdmin):
     readonly_fields = ('created_at', 'updated_at')
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'created_at', 'manufacturer', 'get_composition', 'get_pack_size', 'description', 'display_image', 'expiry_date', 'category', 'product_type')
+    list_display = ('name', 'created_at', 'manufacturer', 'get_composition', 'get_pack_size', 'description', 'display_image', 'category', 'product_type')
 
     def get_composition(self, obj):
         return ", ".join([str(comp) for comp in obj.compositions.all()])

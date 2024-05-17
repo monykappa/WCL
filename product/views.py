@@ -8,7 +8,8 @@ from .models import *
 
 class BaseView(View):
     def get_context_data(self, **kwargs):
-        categories = Category.objects.all()
+        # Fetch all categories and sort them alphabetically by name
+        categories = Category.objects.all().order_by('name')
         context = {'categories': categories}
         context.update(kwargs)
         return context
@@ -24,6 +25,7 @@ class CategoryPageView(BaseView):
         products = category.product_set.all()
         context = self.get_context_data(category=category, products=products)
         return render(request, 'products/category/category_page.html', context)
+
 
 
 # def product_detail(request):
