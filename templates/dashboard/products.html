@@ -98,8 +98,12 @@ Dashboard | Products
                     </td>
                     <td>
                         {% for pack_size in product.pack_sizes.all %}
-                        {{ pack_size.value_without_decimal }}{{ pack_size.pack_size_unit }}<br>
-                        {% endfor %}
+                        {% if forloop.first %}
+                            {{ pack_size.value }}{{ pack_size.pack_size_unit }}
+                        {% else %}
+                            & {{ pack_size.value }}{{ pack_size.pack_size_unit }}
+                        {% endif %}
+                    {% endfor %}
                     </td>
                     <td>{{ product.manufacturer.name }}</td>
                     <td>{{ product.expiry_date }}</td>
@@ -201,13 +205,13 @@ Dashboard | Products
                             </div>
                             <div class="form-group">
                                 <label for="id_generic" class="form-label">Generic:</label>
-                                <select class="form-control" id="id_generic" name="generic">
+                                <select class="form-control" id="id_generic" name="generic" multiple>
                                     <option value="">Select</option>
                                     {% for generic in generics %}
-                                    <option value="{{ generic.id }}">{{ generic.name }}</option>
+                                    <option value="{{ generic.id }}" {% if generic.id in form.generics.value %}selected{% endif %}>{{ generic.name }}</option>
                                     {% endfor %}
                                 </select>
-                            </div>
+                            </div>                            
                             <div class="form-group">
                                 <label for="id_category" class="form-label">Category:</label>
                                 <select class="form-control" id="id_category" name="category">

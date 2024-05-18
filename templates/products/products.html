@@ -15,7 +15,6 @@
 
 <hr>
 
-
 {% for category in categories %}
 
 <section class="product-content container">
@@ -27,7 +26,7 @@
     </div>
 
     <div class="row justify-content-start mt-3 mb-5" id="product-grid">
-        {% for product in category.product_set.all %}
+        {% for product in category.product_set.all|slice:":4" %}
         <div class="col-6 col-md-4 col-lg-3 scroll-fade-in product-item hidden-left" onclick="showModal(this)" href="#">
             <img src="{{ product.image.url }}" alt="{{ product.name }}"
                 class="img-fluid mx-auto d-block fade-in-left​​ product-img">
@@ -35,42 +34,46 @@
                 {{ product.name }}
                 {% if product.compositions.all|length > 1 %}
                 {% for pack_size in product.pack_sizes.all %}
-                {{ pack_size.value_without_decimal }}{{ pack_size.pack_size_unit }}
+                {% if forloop.first %}
+                {{ pack_size.value }}{{ pack_size.pack_size_unit }}
+                {% else %}
+                & {{ pack_size.value }}{{ pack_size.pack_size_unit }}
+                {% endif %}
                 {% endfor %}
                 {% else %}
                 {% for composition in product.compositions.all %}
                 {{ composition.value_without_decimal }}{{ composition.composition_unit }}
+                {% if not forloop.last %}&{% endif %}
                 {% endfor %}
                 {% endif %}
             </p>
 
+
             <ul class="product-description hidden">
                 <p><i>{{ category.name }}</i></p>
                 <p>{{ product.product_type }}</p>
-                <li class="mt-2">Generic:
+                <li class="mt-2"><b>Generic:</b>
                     {% for generic in product.generics.all %}
                     {{ generic }}
                     {% if not forloop.last %} + {% endif %}
                     {% endfor %}
                 </li>
-                
 
 
-                <li class="mt-2">Pack size:
+
+                <li class="mt-2"><b>Pack size:</b>
                     {% for pack_size in product.pack_sizes.all %}
                     {% if forloop.first %}
-                    {{ pack_size.value_without_decimal }}{{ pack_size.pack_size_unit }}
+                    {{ pack_size.value }}{{ pack_size.pack_size_unit }}
                     {% else %}
-                    & {{ pack_size.value_without_decimal }}{{ pack_size.pack_size_unit }}
-                    {% endif %}
-                    {% if forloop.last %}
-                    / {{ product.product_type }}
+                    & {{ pack_size.value }}{{ pack_size.pack_size_unit }}
                     {% endif %}
                     {% endfor %}
                 </li>
-            
 
-                <li class="mt-2">Composition:
+
+
+                <li class="mt-2"><b>Composition:</b>
                     {% for composition in product.compositions.all %}
                     {% if forloop.first %}
                     {{ composition.value_without_decimal }}{{ composition.composition_unit }}
@@ -93,7 +96,6 @@
 
 
 
-
 {% include 'products/modal_content.html' %}
 
 
@@ -101,4 +103,4 @@
 <script src="{% static 'js/products/products.js'%}"></script>
 <script src="{% static 'js/products/product_detail.js'%}"></script>
 <script src="{% static 'js/animation/hidden_scroll.js'%}"></script>
-{% endblock content %}
+{% endblock content %}`

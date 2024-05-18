@@ -291,31 +291,27 @@ class ProductDetailsView(View):
     def get(self, request, product_id):
         try:
             product = Product.objects.get(pk=product_id)
-            # Generate image URL
             image_url = settings.MEDIA_URL + str(product.image) if product.image else None
 
-            # Prepare product data
             product_data = {
                 'name': product.name,
                 'slug': product.slug,
                 'image': image_url,
                 'description': product.description,
-                'expiry_date': product.expiry_date,
                 'created_at': product.created_at,
                 'updated_at': product.updated_at,
                 'manufacturer': product.manufacturer.name,
-                'generic': product.generic.name if product.generic else '',
+                'generics': [{'id': gen.id, 'name': gen.name} for gen in product.generics.all()],
                 'compositions': [{'id': comp.id, 'name': comp.name} for comp in product.compositions.all()],
                 'pack_sizes': [{'id': ps.id, 'name': ps.name} for ps in product.pack_sizes.all()],
                 'category': product.category.name,
                 'product_type': product.product_type.name,
-                # Add more fields as necessary
             }
 
-            # Return JSON response with product data
             return JsonResponse(product_data)
         except Product.DoesNotExist:
             return JsonResponse({'error': 'Product not found'}, status=404)
+
 
 @method_decorator(login_required, name='dispatch')
 class EditProductView(SuperuserRequiredMixin, View):
@@ -325,8 +321,12 @@ class EditProductView(SuperuserRequiredMixin, View):
         add_generic_form = AddGenericForm()
         add_composition_form = AddCompositionForm()
         add_pack_size_form = AddPackSizeForm()
-        expiry_date_value = product.expiry_date.strftime('%Y-%m-%d') if product.expiry_date else None
-        return render(request, 'dashboard/edit_page/edit_product.html', {'form': form, 'add_generic_form': add_generic_form, 'add_composition_form': add_composition_form, 'add_pack_size_form': add_pack_size_form, 'expiry_date_value': expiry_date_value})
+        return render(request, 'dashboard/edit_page/edit_product.html', {
+            'form': form,
+            'add_generic_form': add_generic_form,
+            'add_composition_form': add_composition_form,
+            'add_pack_size_form': add_pack_size_form,
+        })
 
     def post(self, request, slug):
         product = get_object_or_404(Product, slug=slug)
@@ -354,7 +354,7 @@ class EditProductView(SuperuserRequiredMixin, View):
                 product_instance.image = new_image
             try:
                 product_instance.save()
-                form.save_m2m()
+                form.save_m2m()  # Save the many-to-many relationships
                 return redirect('dashboard:products')
             except ValidationError as e:
                 form.add_error(None, e)

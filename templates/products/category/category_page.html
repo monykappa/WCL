@@ -1,70 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
 
-    {% extends 'base.html' %}
-    {% load static %}
+{% block title %}
+{{ category.name }} | WCL
+{% endblock title %}
 
-    {% block title %}
-        {{ category.name }} | WCL
-    {% endblock title %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/products/products.css'%}">
+<link rel="stylesheet" href="{% static 'css/products/product_detail.css'%}">
+<link rel="stylesheet" href="{% static 'css/animation/animation.css'%}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-    {% block css %}
-    <link rel="stylesheet" href="{% static 'css/products/products.css'%}">
-    <link rel="stylesheet" href="{% static 'css/products/product_detail.css'%}">
-    <link rel="stylesheet" href="{% static 'css/animation/animation.css'%}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+{% endblock css %}
 
-    {% endblock css %}
-
-    {% block content %}
-    {% include 'home/background_section.html' with title=category.name %}
-
-
-    <section class="product-desc-ctn mb-5">
-        <div class="product-desc">
-            <p class="hidden-top">{{ category.description }}</p>
-        </div>
-    </section>
-
-    <hr>
+{% block content %}
+{% include 'home/background_section.html' with title=category.name %}
 
 
-    <section class="product-content container">
-        <!-- <h2 class="hidden-top">{{ category.name }}</h2> -->
-        <div class="row justify-content-start mt-3 mb-5" id="product-grid">
-            {% for product in products %}
-            <div class="col-6 col-md-4 col-lg-3 scroll-fade-in product-item hidden-left" onclick="showModal(this)" href="#">
-                <img src="{{ product.image.url }}" alt="{{ product.name }}"
-                    class="img-fluid mx-auto d-block fade-in-left​​ product-img">
-                <p class="productName">{{ product.name }}</p>
-                <ul class="product-description hidden">
-                    <p><i>{{ category.name }}</i></p>
-                    <p>{{ product.product_type }}</p>
-                    <li class="mt-2">Generic: {{ product.generic }}</li>
+<section class="product-desc-ctn mb-5">
+    <div class="product-desc">
+        <p class="hidden-top">{{ category.description }}</p>
+    </div>
+</section>
+
+<hr>
+
+
+<section class="product-content container">
+    <!-- <h2 class="hidden-top">{{ category.name }}</h2> -->
+    <div class="row justify-content-start mt-3 mb-5" id="product-grid">
+        {% for product in products %}
+        <div class="col-6 col-md-4 col-lg-3 scroll-fade-in product-item hidden-left" onclick="showModal(this)" href="#">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}"
+                class="img-fluid mx-auto d-block fade-in-left​​ product-img">
+                <p class="productName">
+                    {{ product.name }}
+                    {% if product.compositions.all|length > 1 %}
                     {% for pack_size in product.pack_sizes.all %}
-                    <li class="mt-2">Pack Size: {{ pack_size.value_without_decimal }}{{ pack_size.pack_size_unit }}</li>
+                    {% if forloop.first %}
+                    {{ pack_size.value }}{{ pack_size.pack_size_unit }}
+                    {% else %}
+                    & {{ pack_size.value }}{{ pack_size.pack_size_unit }}
+                    {% endif %}
                     {% endfor %}
-                    <li class="mt-2">Composition:
-                        {% for composition in product.compositions.all %}
+                    {% else %}
+                    {% for composition in product.compositions.all %}
+                    {{ composition.value_without_decimal }}{{ composition.composition_unit }}
+                    {% if not forloop.last %}&{% endif %}
+                    {% endfor %}
+                    {% endif %}
+                </p>
+            <ul class="product-description hidden">
+                <p><i>{{ category.name }}</i></p>
+                <p>{{ product.product_type }}</p>
+                <li class="mt-2"><b>Generic:</b>
+                    {% for generic in product.generics.all %}
+                    {{ generic }}
+                    {% if not forloop.last %} + {% endif %}
+                    {% endfor %}
+                </li>
+                <li class="mt-2"><b>Pack size:</b>
+                    {% for pack_size in product.pack_sizes.all %}
                         {% if forloop.first %}
-                        {{ composition.value_without_decimal }}{{ composition.composition_unit }}
+                            {{ pack_size.value }}{{ pack_size.pack_size_unit }}
                         {% else %}
-                        + {{ composition.value_without_decimal }}{{ composition.composition_unit }}
+                            & {{ pack_size.value }}{{ pack_size.pack_size_unit }}
                         {% endif %}
-                        {% if forloop.last %}
-                        / {{ product.product_type }}
-                        {% endif %}
-                        {% endfor %}
-                    </li>
-                </ul>
-            </div>
-            {% endfor %}
+                    {% endfor %}
+                </li>
+                
+                <li class="mt-2"><b>Composition:</b>
+                    {% for composition in product.compositions.all %}
+                    {% if forloop.first %}
+                    {{ composition.value_without_decimal }}{{ composition.composition_unit }}
+                    {% else %}
+                    + {{ composition.value_without_decimal }}{{ composition.composition_unit }}
+                    {% endif %}
+                    {% if forloop.last %}
+                    / {{ product.product_type }}
+                    {% endif %}
+                    {% endfor %}
+                </li>
+            </ul>
         </div>
-    </section>
+        {% endfor %}
+    </div>
+</section>
 
-    {% include 'products/modal_content.html' %}
+{% include 'products/modal_content.html' %}
 
 
 
-    <script src="{% static 'js/products/products.js'%}"></script>
-    <script src="{% static 'js/products/product_detail.js'%}"></script>
-    <script src="{% static 'js/animation/hidden_scroll.js'%}"></script>
-    {% endblock content %}
+<script src="{% static 'js/products/products.js'%}"></script>
+<script src="{% static 'js/products/product_detail.js'%}"></script>
+<script src="{% static 'js/animation/hidden_scroll.js'%}"></script>
+{% endblock content %}

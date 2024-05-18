@@ -69,17 +69,14 @@
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <label for="generic">Generic:</label>
-                <select class="form-control" id="generic" name="generic">
-                    {% for generic in form.generic.field.choices %}
-                    {% if generic.0 == form.generic.value %}
-                    <option value="{{ generic.0 }}" selected>{{ generic.1 }}</option>
-                    {% else %}
-                    <option value="{{ generic.0 }}">{{ generic.1 }}</option>
-                    {% endif %}
+                <label for="generics">Generic:</label>
+                <select class="form-control" id="generics" name="generics" multiple>
+                    {% for generic in form.generics.field.queryset %}
+                    <option value="{{ generic.id }}" {% if generic.id in form.generics.value %}selected{% endif %}>{{ generic.name }}</option>
                     {% endfor %}
                 </select>
             </div>
+            
             <div class="form-group">
                 <label for="category">Category:</label>
                 <select class="form-control" id="category" name="category">
@@ -103,11 +100,6 @@
                     {% endif %}
                     {% endfor %}
                 </select>
-            </div>
-            <div class="form-group">
-                <label for="expiry_date">Expiry Date:</label>
-                <input type="date" class="form-control" id="expiry_date" name="expiry_date"
-                    value="{{ expiry_date_value }}">
             </div>
         </div>
         <div class="col-md-4">

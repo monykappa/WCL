@@ -11,6 +11,7 @@ import os
 from datetime import datetime, date
 from django_countries.fields import CountryField
 import pytz 
+from decimal import Decimal, ROUND_DOWN
 from django.utils.text import slugify
 from django.core.validators import MinValueValidator, MaxValueValidator
 
@@ -108,7 +109,10 @@ class Composition(TimeStampedModel, SlugMixin):
     composition_unit = models.ForeignKey(CompositionUnit, on_delete=models.CASCADE, null=True)
 
     def value_without_decimal(self):
-        return str(self.value.quantize(Decimal('0')))
+        if self.value is not None:
+            value_as_string = format(self.value, 'f').rstrip('0').rstrip('.')
+            return value_as_string
+        return ''
 
     def __str__(self):
         if self.composition_unit:
@@ -127,24 +131,21 @@ class Composition(TimeStampedModel, SlugMixin):
         unique_together = ('value', 'composition_unit',)
 
 class PackSize(TimeStampedModel, SlugMixin):
-    value = models.DecimalField(max_digits=10, decimal_places=2)
+    value = models.CharField(max_length=20, null=True)  
     pack_size_unit = models.ForeignKey(PackSizeUnit, on_delete=models.CASCADE, null=True)
-
-    def value_without_decimal(self):
-        return str(self.value.quantize(Decimal('0')))
 
     def __str__(self):
         if self.pack_size_unit:
-            return f"{self.value_without_decimal()}{self.pack_size_unit}"
+            return f"{self.value}{self.pack_size_unit}"
         else:
-            return self.value_without_decimal()
+            return self.value
 
     @property
     def name(self):
         if self.pack_size_unit:
-            return f"{self.value_without_decimal()}{self.pack_size_unit}"
+            return f"{self.value}{self.pack_size_unit}"
         else:
-            return self.value_without_decimal()
+            return self.value
 
     class Meta:
         unique_together = ('value', 'pack_size_unit',)

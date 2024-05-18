@@ -111,14 +111,11 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
-
 document.addEventListener('DOMContentLoaded', function() {
-    // Handle click event on table rows
     document.querySelectorAll('.product-row').forEach(function(row) {
         row.addEventListener('click', function(event) {
-            // Check if the click target is a button or a link within the row
             if (event.target.closest('button') || event.target.closest('a')) {
-                return; // Do nothing if the click was on a button or a link
+                return;
             }
             event.preventDefault();
             var productId = this.getAttribute('data-product');
@@ -130,7 +127,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         return;
                     }
 
-                    // Generate compositions display string
                     let compositionsDisplay = '';
                     data.compositions.forEach((comp, index) => {
                         if (index === 0) {
@@ -140,7 +136,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                     });
 
-                    // Populate modal with product data
                     var modalBody = document.getElementById('productModalBody');
                     modalBody.innerHTML = `
                         <div class="row">
@@ -152,8 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <p><strong>Manufacturer:</strong> ${data.manufacturer}</p>
                                 <p><strong>Category:</strong> ${data.category}</p>
                                 <p><strong>Product Type:</strong> ${data.product_type}</p>
-                                <p><strong>Generic:</strong> ${data.generic}</p>
-                                <p><strong>Expiry Date:</strong> ${data.expiry_date}</p>
+                                <p><strong>Generics:</strong> ${data.generics.map(gen => gen.name).join(', ')}</p>
                                 <p><strong>Created At:</strong> ${data.created_at}</p>
                                 <p><strong>Updated At:</strong> ${data.updated_at}</p>
                             </div>
@@ -164,12 +158,10 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                         </div>
                     `;
-                    // Show modal
                     $('#productModal').modal('show');
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    // Handle error scenario (e.g., display error message to user)
                     alert('Product details could not be loaded. Please try again later.');
                 });
         });
