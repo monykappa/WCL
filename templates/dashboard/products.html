@@ -90,9 +90,9 @@ Dashboard | Products
                     <td>
                         {% for composition in product.compositions.all %}
                         {% if forloop.first %}
-                        {{ composition.value_without_decimal }}{{ composition.composition_unit }}
+                        {{ composition.value_without_decimal }} {{ composition.composition_unit }}
                         {% else %}
-                        + {{ composition.value_without_decimal }}{{ composition.composition_unit }}
+                        + {{ composition.value_without_decimal }} {{ composition.composition_unit }}
                         {% endif %}
                         {% endfor %}
                     </td>

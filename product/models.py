@@ -34,26 +34,27 @@ class TimeStampedModel(models.Model):
         abstract = True
 
 # Define the slug generator function
-def generate_slug(value):
+def generate_slug(model_class, value):
     base_slug = slugify(value)
     slug = base_slug
     counter = 1
-    while Product.objects.filter(slug=slug).exists():
+    while model_class.objects.filter(slug=slug).exists():
         slug = f"{base_slug}-{counter}"
         counter += 1
     return slug
 
-# Define a mixin class for generating slugs
+
 class SlugMixin(models.Model):
     slug = models.SlugField(unique=True, max_length=250, null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if self.name:  # Check if name is not empty
-            self.slug = generate_slug(self.name)  # Generate slug from the name field
+            self.slug = generate_slug(self.__class__, self.name)  # Generate slug from the name field
         super().save(*args, **kwargs)
 
     class Meta:
         abstract = True  # Set abstract to True so that this class is not directly used as a model
+
 
 # Example usage of the SlugMixin in your models
 class ProductType(TimeStampedModel, SlugMixin):
