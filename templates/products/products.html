@@ -54,15 +54,21 @@
                     {% endfor %}
                 </li>
                 
-                {% with pack_sizes_text="" %}
-                <li class="mt-2">Pack Size:
+
+
+                <li class="mt-2">Pack size:
                     {% for pack_size in product.pack_sizes.all %}
-                    {% assign pack_sizes_text = pack_sizes_text + pack_size.value_without_decimal +
-                    pack_size.pack_size_unit %}
-                    {% if not forloop.last %} & {% endif %} {% endfor %}
-                    {{ pack_sizes_text }}
+                    {% if forloop.first %}
+                    {{ pack_size.value_without_decimal }}{{ pack_size.pack_size_unit }}
+                    {% else %}
+                    & {{ pack_size.value_without_decimal }}{{ pack_size.pack_size_unit }}
+                    {% endif %}
+                    {% if forloop.last %}
+                    / {{ product.product_type }}
+                    {% endif %}
+                    {% endfor %}
                 </li>
-                {% endwith %}
+            
 
                 <li class="mt-2">Composition:
                     {% for composition in product.compositions.all %}
