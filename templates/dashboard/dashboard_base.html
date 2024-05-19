@@ -59,6 +59,15 @@
                 <li>
                     <a href="{% url 'dashboard:news' %}"><i class="fa-solid fa-newspaper mr-2"></i> News</a>
                 </li>
+                <li>
+                    <a href="{% url 'dashboard:news' %}"><i class="fa-solid fa-newspaper mr-2"></i> Generic</a>
+                </li>
+                <li>
+                    <a href="{% url 'dashboard:news' %}"><i class="fa-solid fa-newspaper mr-2"></i> Composition</a>
+                </li>
+                <li>
+                    <a href="{% url 'dashboard:news' %}"><i class="fa-solid fa-newspaper mr-2"></i> Pack Size</a>
+                </li>
                 {% if request.user.is_superuser %}
                 <li>
                     <a href="{% url 'dashboard:user' %}"><i class="fa-solid fa-user mr-2"></i> Users</a>

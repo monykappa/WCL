@@ -662,3 +662,5 @@ class DeleteGalleryView(SuperuserRequiredMixin, View):
         gallery = get_object_or_404(Gallery, id=gallery_id)
         gallery.delete()
         return redirect('dashboard:gallery_list')
+
+

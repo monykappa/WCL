@@ -3,33 +3,46 @@
 <h1 class="d-inline-block ml-auto">{% block dashboard_title %}Overview{% endblock dashboard_title%}
 </h1>
 {% block content %}
-
-<div class="container">
+<style>
+    i.overview-icon {
+        display: inline-flex; /* Use inline-flex to allow horizontal centering */
+        justify-content: center; /* Horizontally center the icon */
+        align-items: center; /* Vertically center the icon */
+        background-color: #559bcf;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        color: #fff;
+    }
+    
+    
+</style><div class="container">
     <div class="row justify-content-center text-center">
         <div class="col-md-6 border p-3">
-            <h2>Products</h2>
+            <i class="fa-solid fa-sitemap fa-2x overview-icon mb-3"></i>
+            <h3>Products</h3>
             <p>Total Products: {{ products|length }}</p>
         </div>
         <div class="col-md-6 border p-3">
-            <h2>Category</h2>
+            <i class="fa-solid fa-list fa-2x overview-icon mb-3"></i>
+            <h3>Category</h3>
             <p>Total Category: {{ categories|length }}</p>
         </div>
     </div>
 
     <div class="row justify-content-center text-center">
         <div class="col-md-6 border p-3">
-            <h2>Manufacturers</h2>
+            <i class="fa-solid fa-industry fa-2x overview-icon mb-3"></i>
+            <h3>Manufacturers</h3>
             <p>Total Manufacturers: {{ manufacturers|length }}</p>
         </div>
         <div class="col-md-6 border p-3">
-            <h2>Product Types</h2>
+            <i class="fa-solid fa-pills fa-2x overview-icon mb-3"></i>
+            <h3>Product Types</h3>
             <p>Total Product Types: {{ product_types|length }}</p>
         </div>
     </div>
 </div>
-
-
-
 
 
 {% endblock content %}

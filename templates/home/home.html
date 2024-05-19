@@ -205,8 +205,23 @@
 
 
 
+<!-- The Modal -->
+<div id="productModal" class="modal">
+    <div class="modal-content">
+        <span class="close" style="color:red;" onclick="closeModal()">&times;</span>
+        <div class="modal-image" onclick="showFullScreen(this)">
+            <img id="modal-image" src="" alt="Product Image" class="img-fluid mx-auto d-block">
+        </div>
+        <div class="modal-description">
+            <div id="productName"></div>
+            <p id="description"></p>
+        </div>
+    </div>
+</div>
 
 
+<script src="{% static 'js/products/products.js'%}"></script>
+<script src="{% static 'js/products/product_detail.js'%}"></script>
 <script src="{% static 'js/home/home.js'%}"></script>
 <script src="{% static 'js/animation/hidden_scroll.js'%}"></script>
 {% endblock content %}
