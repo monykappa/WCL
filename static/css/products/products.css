@@ -72,7 +72,7 @@ p.text-view-img {
     /* Updated initial position */
     padding: 20px;
     border: 1px solid #888;
-    width: 60%;
+    width: 60%; 
     display: flex;
     flex-direction: row;
     opacity: 0;
@@ -154,12 +154,14 @@ p.productName {
 }
 
 
-.​​product-img img {
-    object-fit: fill;
+img.img-fluid{
+    max-width:100% !important;
+    height: 100% !important;
+    object-fit: cover;
+
 }
 
 #product-grid .col-6:hover {
-    background-color: #eaf3ff;
     transform: scale(1.01);
 }
 
@@ -395,6 +397,9 @@ p.productName {
 
     .product-desc p {
         font-size: 20px;
+    }
+    #product-grid .col-6{
+        padding:0 !important; 
     }
 
 }
