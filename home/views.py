@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from django.views import View
 from product.models import *
 from django.shortcuts import render, get_object_or_404
+import random
 
 
 # Create a base view class with the Category model included in the context
@@ -20,9 +21,14 @@ class BaseView(View):
 class HomeView(BaseView):
     def get(self, request):
         news_items = New.objects.filter(is_published=True)
-        context = {'news_items': news_items}
-        return render(request, 'home/home.html', self.get_context_data(**context))
+        all_products = list(Product.objects.all())
+        random_products = random.sample(all_products, min(len(all_products), 8))  # Get up to 8 random products
 
+        context = {
+            'news_items': news_items,
+            'random_products': random_products
+        }
+        return render(request, 'home/home.html', self.get_context_data(**context))
 class AboutUsView(BaseView):
     def get(self, request):
         return render(request, 'home/about_us.html', self.get_context_data())

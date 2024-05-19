@@ -134,50 +134,74 @@
 
 
 <hr>
-<!-- 
-<section class="product-ctn-home container">
-    <h1 class="hidden-top">Our Products</h1>
-    <div class="row justify-content-start mt-5" id="product-grid">
-        <div class="col-6 col-md-4 col-3 hidden-top">
-            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1"
-                class="img-fluid mx-auto d-block fade-in-left">
-            <p class="productName">Product 1</p>
-            <ul class="product-description">
-                <li>vitamin a</li>
-                <li>vitamin b</li>
-            </ul>
-        </div>
+<section class="product-content container">
 
-        <div class="col-6 col-md-4 col-3 hidden-top">
-            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1"
-                class="img-fluid mx-auto d-block fade-in-left">
-            <p class="productName">Product 1</p>
-            <ul class="product-description">
-                <li>vitamin a</li>
-                <li>vitamin b</li>
-            </ul>
-        </div>
-        <div class="col-6 col-md-4 col-3 hidden-top">
-            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1"
-                class="img-fluid mx-auto d-block fade-in-left">
-            <p class="productName">Product 1</p>
-            <ul class="product-description">
-                <li>vitamin a</li>
-                <li>vitamin b</li>
-            </ul>
-        </div>
-        <div class="col-6 col-md-4 col-3 hidden-top">
-            <img src="https://assets.sainsburys-groceries.co.uk/gol/8075006/1/640x640.jpg" alt="Product 1"
-                class="img-fluid mx-auto d-block fade-in-left">
-            <p class="productName">Product 1</p>
-            <ul class="product-description ">
-                <li>vitamin a</li>
-                <li>vitamin b</li>
-            </ul>
-        </div>
-        <p><a href="{% url 'product:products'%}">See more></a></p>
+    <div class="category-header">
+        <h2 class="category-name">Our Products</h2>
+        <a href="{% url 'product:products' %}" class="btn bg-light border-secondary text-primary">See more</a>
     </div>
-</section> -->
+
+    <div class="row justify-content-start mt-3 mb-5" id="product-grid">
+        {% for product in random_products %}
+        <div class="col-6 col-md-4 col-lg-3 scroll-fade-in product-item hidden-left" onclick="showModal(this)" href="#">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid mx-auto d-block fade-in-left product-img">
+            <p class="productName">
+                {{ product.name }}
+                {% if product.compositions.all|length > 1 %}
+                {% for pack_size in product.pack_sizes.all %}
+                {% if forloop.first %}
+                {{ pack_size.value }}{{ pack_size.pack_size_unit }}
+                {% else %}
+                & {{ pack_size.value }}{{ pack_size.pack_size_unit }}
+                {% endif %}
+                {% endfor %}
+                {% else %}
+                {% for composition in product.compositions.all %}
+                {{ composition.value_without_decimal }}{{ composition.composition_unit }}
+                {% if not forloop.last %}&{% endif %}
+                {% endfor %}
+                {% endif %}
+            </p>
+
+            <ul class="product-description hidden">
+                <p>{{ product.product_type }}</p>
+                <li class="mt-2"><b>Generic:</b>
+                    {% for generic in product.generics.all %}
+                    {{ generic }}
+                    {% if not forloop.last %} + {% endif %}
+                    {% endfor %}
+                </li>
+
+                <li class="mt-2"><b>Pack size:</b>
+                    {% for pack_size in product.pack_sizes.all %}
+                    {% if forloop.first %}
+                    {{ pack_size.value }}{{ pack_size.pack_size_unit }}
+                    {% else %}
+                    & {{ pack_size.value }}{{ pack_size.pack_size_unit }}
+                    {% endif %}
+                    {% endfor %}
+                </li>
+
+                <li class="mt-2"><b>Composition:</b>
+                    {% for composition in product.compositions.all %}
+                    {% if forloop.first %}
+                    {{ composition.value_without_decimal }}{{ composition.composition_unit }}
+                    {% else %}
+                    + {{ composition.value_without_decimal }}{{ composition.composition_unit }}
+                    {% endif %}
+                    {% if forloop.last %}
+                    / {{ product.product_type }}
+                    {% endif %}
+                    {% endfor %}
+                </li>
+            </ul>
+        </div>
+        {% endfor %}
+    </div>
+    <hr>
+
+</section>
+
 
 
 

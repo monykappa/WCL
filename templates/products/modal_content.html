@@ -1,3 +1,12 @@
+
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/products/products.css'%}">
+<link rel="stylesheet" href="{% static 'css/products/product_detail.css'%}">
+<link rel="stylesheet" href="{% static 'css/animation/animation.css'%}">
+{% endblock css %}
+
+
 <!-- modal_content.html -->
 <div id="fullscreen" class="fullscreen hidden-bottom" style="display: none;">
     <span class="close-btn" onclick="closeFullScreen()">
@@ -26,3 +35,6 @@
         </div>
     </div>
 </div>
+
+<script src="{% static 'js/products/products.js'%}"></script>
+<script src="{% static 'js/products/product_detail.js'%}"></script>

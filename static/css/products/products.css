@@ -159,6 +159,7 @@ p.productName {
 }
 
 #product-grid .col-6:hover {
+    background-color: #eaf3ff;
     transform: scale(1.01);
 }
 

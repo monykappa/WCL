@@ -3,12 +3,6 @@
 
 {% block title %}Products | WCL {% endblock title %}
 
-{% block css %}
-<link rel="stylesheet" href="{% static 'css/products/products.css'%}">
-<link rel="stylesheet" href="{% static 'css/products/product_detail.css'%}">
-<link rel="stylesheet" href="{% static 'css/animation/animation.css'%}">
-{% endblock css %}
-
 {% block content %}
 
 {% include 'home/background_section.html' with title="Our Products" %}
@@ -100,7 +94,5 @@
 
 
 
-<script src="{% static 'js/products/products.js'%}"></script>
-<script src="{% static 'js/products/product_detail.js'%}"></script>
-<script src="{% static 'js/animation/hidden_scroll.js'%}"></script>
+
 {% endblock content %}`
