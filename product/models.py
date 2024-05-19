@@ -105,7 +105,7 @@ class PackSizeUnit(TimeStampedModel, SlugMixin):
         return self.name
     
 
-class Composition(TimeStampedModel, SlugMixin):
+class Composition(TimeStampedModel):
     value = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     composition_unit = models.ForeignKey(CompositionUnit, on_delete=models.CASCADE, null=True)
 
@@ -124,12 +124,10 @@ class Composition(TimeStampedModel, SlugMixin):
     @property
     def name(self):
         if self.composition_unit:
-            return f"{self.value_without_decimal()}{self.composition_unit}"
+            return f"{self.value_without_decimal()} {self.composition_unit.name}"
         else:
             return self.value_without_decimal()
 
-    class Meta:
-        unique_together = ('value', 'composition_unit',)
 
 class PackSize(TimeStampedModel, SlugMixin):
     value = models.CharField(max_length=20, null=True)  

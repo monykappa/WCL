@@ -6,6 +6,7 @@ body.modal-open {
     overflow: hidden;
 }
 
+
 h2 {
     font-weight: bold;
 }
@@ -155,8 +156,8 @@ p.productName {
 
 
 img.img-fluid{
-    max-width:100% !important;
-    height: 100% !important;
+    /* max-width:100% !important; */
+    height: 200px !important;
     object-fit: cover;
 
 }
@@ -289,7 +290,7 @@ img.img-fluid{
 
 @media(min-width:200px) and (max-width:450px) {
     .modal-content {
-        top: 55%;
+        top: 60%;
         display: block;
         width: 90%;
         max-height: auto;
@@ -303,8 +304,13 @@ img.img-fluid{
     }
 
     .modal-description {
-        text-align: left;
-        width: 100%;
+            width: 100%;
+            margin-top: 20px;
+            text-align: left;
+            max-height: 50vh;
+            overflow-y: auto;
+
+        
     }
     h2.category-name{
         font-size: 18px;
@@ -313,6 +319,7 @@ img.img-fluid{
         font-size: .575rem;
         padding: .25rem 1rem;
     }
+  
 }
 
 @media(min-width:451px) and (max-width:651.98px) {

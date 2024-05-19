@@ -103,7 +103,7 @@ WSGI_APPLICATION = "WCL.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "database_wcl",
+        "NAME": "wcl_db",
         "USER": "root",
         "PASSWORD": "",
         "HOST": "localhost",
