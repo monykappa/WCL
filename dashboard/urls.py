@@ -71,6 +71,15 @@ urlpatterns = [
     path('gallery/edit/<slug:gallery_slug>/', views.UpdateGalleryView.as_view(), name='edit_gallery'),
     path('gallery/<int:gallery_id>/delete/', views.DeleteGalleryView.as_view(), name='delete_gallery'),
     # path('gallery/all_images/', views.AllImagesView.as_view(), name='all_images'),
+    
+    
+    # Generic
+    path('generic/', views.GenericView.as_view(), name='generic'),
+    path('generic/edit/<slug:generic_slug>/', views.EditGenericView.as_view(), name='edit_generic'),
+    path('generic/<int:generic_id>/delete/', views.DeleteGenericView.as_view(), name='delete_generic'),
+    
+    
+    
 ]
 
 

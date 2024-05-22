@@ -215,7 +215,7 @@ class ProductsView(View):
         manufacturers = Manufacturer.objects.all()
         product_types = ProductType.objects.all()
         categories = Category.objects.all()
-        add_generic_form = AddGenericForm()
+        add_generic_form = GenericForm()
         add_composition_form = AddCompositionForm()
         add_pack_size_form = AddPackSizeForm()
         return render(request, 'dashboard/products.html', {
@@ -232,7 +232,7 @@ class ProductsView(View):
 
     def post(self, request):
         form = ProductForm(request.POST, request.FILES)
-        add_generic_form = AddGenericForm(request.POST)
+        add_generic_form = GenericForm(request.POST)
         add_composition_form = AddCompositionForm(request.POST)
         add_pack_size_form = AddPackSizeForm(request.POST)
 
@@ -261,7 +261,7 @@ class ProductsView(View):
             'manufacturers': manufacturers,
             'product_types': product_types,
             'categories': categories,
-            'add_generic_form': AddGenericForm(),
+            'add_generic_form': GenericForm(),
             'add_composition_form': AddCompositionForm(),
             'add_pack_size_form': AddPackSizeForm(),
         })
@@ -318,7 +318,7 @@ class EditProductView(SuperuserRequiredMixin, View):
     def get(self, request, slug):
         product = get_object_or_404(Product, slug=slug)
         form = ProductForm(instance=product)
-        add_generic_form = AddGenericForm()
+        add_generic_form = GenericForm()
         add_composition_form = AddCompositionForm()
         add_pack_size_form = AddPackSizeForm()
         return render(request, 'dashboard/edit_page/edit_product.html', {
@@ -331,7 +331,7 @@ class EditProductView(SuperuserRequiredMixin, View):
     def post(self, request, slug):
         product = get_object_or_404(Product, slug=slug)
         form = ProductForm(request.POST, request.FILES, instance=product)
-        add_generic_form = AddGenericForm(request.POST)
+        add_generic_form = GenericForm(request.POST)
         add_composition_form = AddCompositionForm(request.POST)
         add_pack_size_form = AddPackSizeForm(request.POST)
 
@@ -664,3 +664,61 @@ class DeleteGalleryView(SuperuserRequiredMixin, View):
         return redirect('dashboard:gallery_list')
 
 
+@method_decorator(login_required, name='dispatch')
+class GenericView(View):
+    def get(self, request):
+        form = GenericForm()
+        # Handle AJAX requests to fetch specific generic data
+        if request.headers.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
+            generic_id = request.GET.get('generic_id')
+            try:
+                generic = Generic.objects.get(id=generic_id)
+                data = {
+                    'name': generic.name,
+                    'description': generic.description,
+                }
+                return JsonResponse(data)
+            except Generic.DoesNotExist:
+                return JsonResponse({'error': 'Generic not found'}, status=404)
+        else:
+            generics = Generic.objects.all()
+            return render(request, 'dashboard/generic.html', {'generics': generics, 'form': form})
+
+    def post(self, request):
+        form = GenericForm(request.POST)
+        # Handle form submission
+        if form.is_valid():
+            form.save()
+            if request.headers.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
+                return JsonResponse({'success': 'Generic added successfully'})
+            else:
+                return redirect('dashboard:generic')
+        else:
+            if request.headers.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
+                errors = form.errors.as_json()
+                return JsonResponse({'errors': errors}, status=400)
+            else:
+                return render(request, 'dashboard/generic.html', {'form': form})
+
+@method_decorator(login_required, name='dispatch')
+class EditGenericView(SuperuserRequiredMixin, View):
+    def get(self, request, generic_slug):
+        generic = get_object_or_404(Generic, slug=generic_slug)
+        form = GenericForm(instance=generic)
+        return render(request, 'dashboard/edit_page/edit_generic.html', {'form': form})
+
+    def post(self, request, generic_slug):
+        generic = get_object_or_404(Generic, slug=generic_slug)
+        form = GenericForm(request.POST, instance=generic)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard:generic') 
+        return render(request, 'dashboard/edit_page/edit_generic.html', {'form': form})
+
+
+@method_decorator(login_required, name='dispatch')
+class DeleteGenericView(SuperuserRequiredMixin, View):
+    def post(self, request, generic_id):
+        generic = get_object_or_404(Generic, id=generic_id)
+        generic.delete()
+        return redirect('dashboard:generic')

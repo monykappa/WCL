@@ -1,0 +1,53 @@
+{% extends 'dashboard/edit_page/edit.html' %}
+{% load static %}
+
+<h1 class="d-inline-block ml-auto">{% block dashboard_title %}Edit Generic{% endblock dashboard_title%}</h1>
+
+{% block content %}
+<form method="post" id="editGenericForm">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" class="form-control" id="name" name="name" value="{{ form.name.value }}">
+    </div>
+    <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea class="form-control" id="description" name="description">{{ form.description.value }}</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary" id="saveGenericChangesButton"><i
+        class="fa-solid fa-floppy-disk"></i></button>
+</form>
+
+<script>
+    // Function to show SweetAlert confirmation for form submission
+    function confirmFormSubmission(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        Swal.fire({
+            title: 'Save Changes?',
+            text: 'Are you sure you want to save the changes?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, save changes!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Submit the form if confirmed
+                document.getElementById('editGenericForm').submit();
+            }
+        });
+    }
+
+    // Attach the confirmation function to the Enter key press event
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            confirmFormSubmission(event);
+        }
+    });
+
+    // Attach the confirmation function to the form submission event
+    document.getElementById('editGenericForm').addEventListener('submit', confirmFormSubmission);
+</script>
+
+{% endblock content %}

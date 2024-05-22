@@ -232,7 +232,8 @@ h3 {
 #sidebar ul li a {
     margin: 1rem 0;
     padding: 10px 10px 10px 20px;
-    font-size: 1.1em;
+    
+    font-size: 0.90em;
     /* border-bottom: 1px solid rgba(128, 128, 128, 0.418); */
     display: block;
 }

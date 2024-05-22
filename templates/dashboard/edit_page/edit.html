@@ -33,6 +33,7 @@
                 <h3 class="ml-3">Hello, Guest!</h3>
                 {% endif %}
             </div>
+
             <ul class="list-unstyled components">
                 <li class="active">
                     <a href="{% url 'dashboard:dashboard' %}"><i class="fa-solid fa-chart-simple mr-2"></i> Overview</a>
@@ -50,10 +51,19 @@
                     <a href="{% url 'dashboard:product_type' %}"><i class="fa-solid fa-pills mr-2"></i> Product type</a>
                 </li>
                 <li>
-                    <a href="{% url 'dashboard:gallery_list' %}"><i class="fa-solid fa-image"></i> Gallery</a>
+                    <a href="{% url 'dashboard:gallery_list' %}"><i class="fa-solid fa-image mr-2"></i> Gallery</a>
                 </li>
                 <li>
                     <a href="{% url 'dashboard:news' %}"><i class="fa-solid fa-newspaper mr-2"></i> News</a>
+                </li>
+                <li>
+                    <a href="{% url 'dashboard:generic' %}"><i class="fa-solid fa-dna mr-2"></i> Generic</a>
+                </li>
+                <li>
+                    <a href="{% url 'dashboard:news' %}"><i class="fa-solid fa-flask mr-2"></i> Composition</a>
+                </li>
+                <li>
+                    <a href="{% url 'dashboard:news' %}"><i class="fa-solid fa-box mr-2"></i> Pack Size</a>
                 </li>
                 {% if request.user.is_superuser %}
                 <li>
@@ -61,6 +71,7 @@
                 </li>
                 {% endif %}
             </ul>
+            
             <a href="{% url 'dashboard:logout' %}" class="btn-danger btn ml-3">Log out</a>
             <button id="darkModeButton" class="btn">
                 <i class="fas fa-moon"></i></button>

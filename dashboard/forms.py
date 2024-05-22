@@ -67,7 +67,7 @@ class ImageUploadForm(forms.ModelForm):
         model = Image
         fields = ['image', 'caption'] 
 
-class AddGenericForm(forms.ModelForm):
+class GenericForm(forms.ModelForm):
     class Meta:
         model = Generic
         fields = ['name', 'description']

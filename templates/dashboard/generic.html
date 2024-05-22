@@ -1,0 +1,128 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% load static %}
+
+{% block title %}
+Dashboard | Generic
+{% endblock title %}
+
+
+<h1 class="d-inline-block ml-auto">{% block dashboard_title %}Generic{% endblock dashboard_title%}</h1>
+
+{% block content %}
+<h1>Generic List</h1>
+
+<div class="row mb-3">
+    {% if request.user.is_superuser %}
+    <div class="col-md-4">
+        <a href="#" id="addGenericBtn" class="btn btn-success p-2 text-light rounded" data-toggle="modal"
+            data-target="#genericPopup">
+            <i class="fa fa-add text-light mr-1"></i>Add</a>
+    </div>
+    {% endif %}
+</div>
+
+
+
+<!-- Search Input -->
+<div class="row mb-3">
+    <div class="col-md-12">
+        <div class="input-group">
+            <input type="text" class="form-control" id="searchGenericInput" placeholder="Search...">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button" id="searchGenericButton">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+            <div class="input-group-append">
+                <button class="btn btn-danger" id="clearGenericInput" type="button">
+                    <i class="fa fa-eraser"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="table-container">
+    <div class="table-responsive">
+        <table class="table" id="genericTable">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    {% if request.user.is_superuser %}
+                    <th>Actions</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for generic in generics %}
+                <tr>
+                    <td>{{ generic.name }}</td>
+                    <td>{{ generic.description }}</td>
+                    {% if request.user.is_superuser %}
+                    <td>
+                        <a href="{% url 'dashboard:edit_generic' generic.slug %}" class="btn btn-primary">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a>
+
+                        <!-- Place your script containing confirmDeleteGeneric function definition before this -->
+                        <button type="button" class="btn btn-danger"
+                            onclick="confirmDeleteGeneric('{{ generic.id }}', '{{ generic.name }}')">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
+
+                        <!-- Form for deletion, hidden initially -->
+                        <form id="deleteForm-{{ generic.id }}" action="{% url 'dashboard:delete_generic' generic.id %}"
+                            method="post" style="display: none;">
+                            {% csrf_token %}
+                        </form>
+
+
+
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!-- Hidden form -->
+<div class="modal fade" id="genericPopup" tabindex="-1" role="dialog" aria-labelledby="genericPopupLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="genericPopupLabel">Add Generic</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" id="genericForm">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_name" class="form-label">Generic Name:</label>
+                        <input type="text" class="form-control" id="id_name" name="name"
+                            value="{% if form.name.value %}{{ form.name.value }}{% endif %}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_description" class="form-label">Description:</label>
+                        <textarea class="form-control" id="id_description" name="description"
+                            required>{% if form.description.value %}{{ form.description.value }}{% endif %}</textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="saveGenericBtn"><i
+                            class="fa-solid fa-floppy-disk"></i> Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{% endblock content %}
