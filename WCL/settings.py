@@ -30,7 +30,7 @@ DEBUG = True
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['.vercel.app']
 
 
 SESSION_COOKIE_AGE = 86400  # 24 hours cookie to log out user from dashboard
