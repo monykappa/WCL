@@ -1,10 +1,54 @@
 body {
     font-family: var(--secondary-font);
 }
+
 body.modal-open {
     overflow: hidden;
 }
 
+
+h2 {
+    font-weight: bold;
+}
+
+
+p.text-view-img {
+    color: grey !important;
+}
+
+
+.see-more-btn{
+    background-color: #FFFFFF;
+    border: 0;
+    border-radius: .5rem;
+    box-sizing: border-box;
+    color: #111827;
+    font-size: .875rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+    padding: .55rem 1rem;
+    text-align: center;
+    text-decoration: none #D1D5DB solid;
+    text-decoration-thickness: auto;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.see-more-btn:hover {
+    background-color: rgb(249, 250, 251);
+}
+
+.see-more-btn:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+
+.see-more-btn:focus-visible {
+    box-shadow: none;
+}
 
 .modal {
     display: none;
@@ -15,23 +59,26 @@ body.modal-open {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0,0,0,0.4);
-    transition: opacity 0.3s ease, transform 0.3s ease; /* Added transform */
+    background-color: rgba(0, 0, 0, 0.4);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    /* Added transform */
 }
 
 .modal-content {
-    background-color: #fefefe;
+    background-color: #f3f3f3;
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -200%); /* Updated initial position */
+    transform: translate(-50%, -200%);
+    /* Updated initial position */
     padding: 20px;
     border: 1px solid #888;
-    width: 60%;
+    width: 60%; 
     display: flex;
     flex-direction: row;
     opacity: 0;
-    transition: opacity 0.3s ease, transform 0.3s ease; /* Added transform */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    /* Added transform */
 }
 
 .modal-image {
@@ -61,69 +108,11 @@ body.modal-open {
     cursor: pointer;
 }
 
-.product-description{
+.product-description {
     display: none;
 }
 
-.background-img {
-    position: relative;
-    /* Make sure the container is positioned relatively */
-    width: 100%;
-    height: 300px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-image: url('https://donvalleypharma.com/wp-content/uploads/home-slider-image-new-scaled-Oct-1-2020-at-02-34-01.jpg');
-    background-size: fill;
-    background-repeat: no-repeat;
-    background-position: center;
-}
 
-.background-img::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    mix-blend-mode: multiply;
-}
-
-.background-img {
-    position: relative;
-    /* Make sure the container is positioned relatively */
-    width: 100%;
-    height: 300px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-image: url('https://donvalleypharma.com/wp-content/uploads/home-slider-image-new-scaled-Oct-1-2020-at-02-34-01.jpg');
-    background-size: fill;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
-.background-img::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    mix-blend-mode: multiply;
-}
-
-.background-img h1 {
-    margin: 0;
-    font-size: 3.5rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    color: white;
-    position: relative;
-    z-index: 1;
-}
 
 section.product-desc-ctn {
     width: 70%;
@@ -145,25 +134,33 @@ section.product-ctn .row img {
 }
 
 
-.modal-description #productName{
+.modal-description #productName {
     font-size: 26px;
 }
+
 p.productName {
     color: #000 !important;
-    margin: 3px;
+    margin: 5px;
     text-align: center;
 }
 
 #product-grid .col-6 {
-    border-radius:5px ;
+    border-radius: 5px;
     cursor: pointer;
     box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
     margin: 5px;
-    padding: 5px;
+    padding: 0px;
     max-width: calc(25% - 10px);
     transition: 0.1s ease-in;
 }
 
+
+img.img-fluid{
+    /* max-width:100% !important; */
+    height: 200px !important;
+    object-fit: cover;
+
+}
 
 #product-grid .col-6:hover {
     transform: scale(1.01);
@@ -173,14 +170,14 @@ p.productName {
     opacity: 0 !important;
     filter: blur(5px) !important;
     transform: translateX(-100%) !important;
-    transition: all 1s !important; 
+    transition: all 1s !important;
 }
 
 .hidden-right {
     opacity: 0 !important;
     filter: blur(5px) !important;
     transform: translateX(100%) !important;
-    transition: all 1s !important ;
+    transition: all 1s !important;
 }
 
 .hidden-top {
@@ -207,6 +204,19 @@ p.productName {
 
 
 
+.category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.category-name {
+    margin: 0;
+}
+
+.button-38 {
+    margin-left: auto;
+}
 
 
 /* Styles for full-screen image */
@@ -222,15 +232,19 @@ p.productName {
     justify-content: center;
     align-items: center;
     z-index: 9999;
-    overflow: hidden; /* Ensure no overflow */
+    overflow: hidden;
+    /* Ensure no overflow */
     /* Added */
-    padding: 20px; /* Add padding to make space for close button */
+    padding: 20px;
+    /* Add padding to make space for close button */
 }
 
 .fullscreen img {
     max-width: 100%;
-    max-height: calc(100% - 40px); /* Subtract padding */
-    transition: transform 0.3s ease; /* Smooth transition for zoom effect */
+    max-height: calc(100% - 40px);
+    /* Subtract padding */
+    transition: transform 0.3s ease;
+    /* Smooth transition for zoom effect */
 }
 
 .close-btn {
@@ -240,7 +254,8 @@ p.productName {
     cursor: pointer;
     color: white;
     font-size: 24px;
-    z-index: 99999; /* Ensure close button is above image and zoom controls */
+    z-index: 99999;
+    /* Ensure close button is above image and zoom controls */
 }
 
 .zoom-controls {
@@ -248,15 +263,19 @@ p.productName {
     background-color: #00000041;
     padding: 1rem;
     display: flex;
-    justify-content: center; /* Center align horizontally */
-    margin-top: 20px; /* Adjust as needed */
-    z-index: 99999; /* Ensure zoom controls are above image */
+    justify-content: center;
+    /* Center align horizontally */
+    margin-top: 20px;
+    /* Adjust as needed */
+    z-index: 99999;
+    /* Ensure zoom controls are above image */
 }
-.zoom-controls button{
+
+.zoom-controls button {
     background-color: rgba(255, 255, 255, 0.775);
     outline: 0;
     border-radius: 5px;
-    padding:0.6rem;
+    padding: 0.6rem;
     border: none;
     margin: 0 1rem;
 }
@@ -269,43 +288,77 @@ p.productName {
     }
 }
 
-@media(min-width:200px) and (max-width:450px){
-    .modal-content{
-        top:55%;
+@media(min-width:200px) and (max-width:450px) {
+    .modal-content {
+        top: 60%;
         display: block;
-        width:90%;
-        max-height:auto;
+        width: 90%;
+        max-height: auto;
     }
-    .modal-image{
+
+    .modal-image {
         width: 200px;
         display: block;
-        margin:0 auto;
-        padding:0;
+        margin: 0 auto;
+        padding: 0;
     }
-    .modal-description{
-        text-align: center;
-        width:100%;  
+
+    .modal-description {
+            width: 100%;
+            margin-top: 20px;
+            text-align: left;
+            max-height: 50vh;
+            overflow-y: auto;
+
+        
+    }
+    h2.category-name{
+        font-size: 18px;
+    }
+    .see-more-btn{
+        font-size: .575rem;
+        padding: .25rem 1rem;
+    }
+  
+}
+
+@media(min-width:451px) and (max-width:651.98px) {
+    .modal-content {
+        display: block;
+        top: 55%;
+        width: 90%;
+        /* height: 400px; */
+        margin: 0 auto;
+        max-height: auto;
+    }
+
+    .modal-content img {
+        width: 200px;
+        height: auto;
+    }
+
+    .modal-description {
+        width: 100%;
+        padding-right: 1rem;
+    }
+
+    .modal-description #productName {
+        font-size: 22px;
+    }
+
+    .modal-image {
+        width: auto;
     }
 }
 
-@media(min-width:451px) and (max-width:767px){
-    .modal-content{
-        display: block;
-        top:55%;
-        width:90%;
+@media(min-width:651px) and (max-width:767px) {
+    .modal-content {
+        display: flex;
+        top: 50%;
+        width: 90%;
         /* height: 400px; */
-        margin:0 auto;
+        margin: 0 auto;
         max-height: auto;
-    }
-    .modal-description{
-        width:100%;
-        padding-right:1rem;  
-    }
-    .modal-description #productName{
-        font-size: 22px;
-    }
-    .modal-image{
-        width: auto;
     }
 }
 
@@ -326,9 +379,10 @@ p.productName {
     #product-grid .col-md-4 {
         max-width: calc(33.33% - 10px);
     }
-    .modal-content{
-        top:50%;
-        width:80%;
+
+    .modal-content {
+        top: 50%;
+        width: 80%;
     }
 
     section.product-desc-ctn {
@@ -343,12 +397,16 @@ p.productName {
         width: 90%;
         margin-top: 2rem;
     }
-    .modal-content{
-        width:80%;
+
+    .modal-content {
+        width: 80%;
     }
 
     .product-desc p {
         font-size: 20px;
+    }
+    #product-grid .col-6{
+        padding:0 !important; 
     }
 
 }

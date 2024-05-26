@@ -22,7 +22,7 @@ import pycountry  # type: ignore
 from django.conf import settings
 import csv
 import openpyxl  # type: ignore
-import requests
+# import requests
 from openpyxl.drawing.image import Image # type: ignore
 from io import BytesIO
 import os
@@ -207,6 +207,7 @@ class AddPackSizeView(View):
         return render(request, 'dashboard/add_page/add_pack_size.html', {'form': form})
 
 # Products
+@method_decorator(login_required, name='dispatch')
 class ProductsView(View):
     def get(self, request):
         form = ProductForm()

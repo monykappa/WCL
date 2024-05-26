@@ -21,60 +21,79 @@ function filterTable() {
 document.getElementById('searchInput').addEventListener('input', filterTable);
 
 
-document.getElementById('clearSearchInput').addEventListener('click', function() {
-    document.getElementById('searchInput').value = ''; 
-    filterTable(); 
+document.getElementById('clearSearchInput').addEventListener('click', function () {
+    document.getElementById('searchInput').value = '';
+    filterTable();
 });
 
+// Function to validate the form
+document.addEventListener("DOMContentLoaded", function () {
     // Function to validate the form
     function validateForm() {
-        try {
-            var nameInput = document.getElementById('id_name').value.trim();
-            if (nameInput === '') {
-                Swal.fire("Error", "Please enter the product type name", "error");
-            } else {
-                submitForm();
-            }
-        } catch (error) {
-            console.error("Error in validateForm:", error);
+        var productTypeName = document.getElementById('product_type_name').value.trim();
+        if (productTypeName === '') {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Please enter a product type name.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+            return false;
+        }
+        return true;
+    }
+
+    // Function to handle form submission without confirmation
+    function confirmFormSubmission(event) {
+        event.preventDefault();
+        if (validateForm()) {
+            // Submit the form
+            var form = document.getElementById('productTypeForm');
+            var formData = new FormData(form);
+
+            fetch(form.action, {
+                method: form.method,
+                body: formData
+            })
+                .then(response => {
+                    if (response.ok) {
+                        // Show success message
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Product type added successfully!',
+                            icon: 'success',
+                            timer: 1000, // 1 second
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        });
+
+                        setTimeout(function () {
+                            location.reload();
+                        }, 1500);
+                    } else {
+                        // Show error message if form submission failed
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Failed to add product type. Please try again later.',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
         }
     }
 
-    // Function to handle form submission
-    function submitForm() {
-        var form = document.getElementById('productTypeForm');
-        var formData = new FormData(form);
+    // Attach the form submission function to the "Save" button click event
+    document.getElementById('saveProductTypeBtn').addEventListener('click', confirmFormSubmission);
 
-        fetch(form.action, {
-            method: form.method,
-            body: formData
-        })
-        .then(response => {
-            if (response.ok) {
-                // Show success message
-                Swal.fire({
-                    title: 'Success!',
-                    text: 'Product type added successfully!',
-                    icon: 'success',
-                    timer: 1000, // 1 second
-                    timerProgressBar: true,
-                    showConfirmButton: false
-                });
+    // Attach the form submission function to the Enter key press event
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' && $('#productTypePopup').hasClass('show')) {
+            confirmFormSubmission(event);
+        }
+    });
+});
 
-                setTimeout(function () {
-                    location.reload();
-                }, 1500); // Reload page after 1.5 seconds
-            } else {
-                // Show error message if form submission failed
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Failed to add product type. Please try again later.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }

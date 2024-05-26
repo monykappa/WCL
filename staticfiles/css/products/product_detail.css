@@ -10,7 +10,7 @@ section.product-detail p {
 
 /* Override hidden scroll */
 .hidden-bottom {
-  
+
     transition: 0.3s !important;
 }
 
@@ -27,15 +27,19 @@ section.product-detail p {
     justify-content: center;
     align-items: center;
     z-index: 9999;
-    overflow: hidden; /* Ensure no overflow */
+    overflow: hidden;
+    /* Ensure no overflow */
     /* Added */
-    padding: 20px; /* Add padding to make space for close button */
+    padding: 20px;
+    /* Add padding to make space for close button */
 }
 
 .fullscreen img {
     max-width: 100%;
-    max-height: calc(100% - 40px); /* Subtract padding */
-    transition: transform 0.3s ease; /* Smooth transition for zoom effect */
+    max-height: calc(100% - 40px);
+    /* Subtract padding */
+    transition: transform 0.3s ease;
+    /* Smooth transition for zoom effect */
 }
 
 .close-btn {
@@ -45,7 +49,8 @@ section.product-detail p {
     cursor: pointer;
     color: white;
     font-size: 24px;
-    z-index: 99999; /* Ensure close button is above image and zoom controls */
+    z-index: 99999;
+    /* Ensure close button is above image and zoom controls */
 }
 
 .zoom-controls {
@@ -53,30 +58,28 @@ section.product-detail p {
     background-color: #00000041;
     padding: 1rem;
     display: flex;
-    justify-content: center; /* Center align horizontally */
-    margin-top: 20px; /* Adjust as needed */
-    z-index: 99999; /* Ensure zoom controls are above image */
+    justify-content: center;
+    /* Center align horizontally */
+    margin-top: 20px;
+    /* Adjust as needed */
+    z-index: 99999;
+    /* Ensure zoom controls are above image */
 }
-.zoom-controls button{
+
+.zoom-controls button {
     background-color: rgba(255, 255, 255, 0.775);
     outline: 0;
     border-radius: 5px;
-    padding:0.6rem;
+    padding: 0.6rem;
     border: none;
     margin: 0 1rem;
 }
 
 
-.img-fluid{
-    display: flex;
-    margin:0 auto;
-    max-width: 70% !important;
-    height: 80% !important;
-    object-fit: contain;
-}
-.product-detail-img{
+
+.product-detail-img {
     cursor: pointer;
-    border:1px solid rgba(82, 80, 80, 0.101);
+    border: 1px solid rgba(82, 80, 80, 0.101);
 }
 
 
@@ -88,9 +91,11 @@ section.product-detail p {
 .hidden-right {
     transform: translateX(10%) !important;
 }
+
 .show {
     transform: translateX(0) !important;
 }
+
 .back-button-ctn {
     width: 80%;
     display: flex;
@@ -100,19 +105,20 @@ section.product-detail p {
 }
 
 .back-button-ctn a {
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: #fff;
     width: 40px;
     height: 40px;
     background-color: #8fc0de;
     border-radius: 50%;
-    text-decoration: none; 
+    text-decoration: none;
     transition: 0.3s;
 }
+
 .back-button-ctn a:hover {
- background-color: #599bc6;
+    background-color: #599bc6;
 }
 
 
@@ -120,19 +126,23 @@ section.product-detail p {
     section.product-detail {
         margin-top: 1rem;
     }
-    section.product-detail img{
+
+    section.product-detail img {
         display: flex;
-        margin:0 auto;
+        margin: 0 auto;
         margin-bottom: 3rem;
-        width:60%;
+        width: 60%;
     }
-    .zoom-controls{
-        margin-top:5rem;
+
+    .zoom-controls {
+        margin-top: 5rem;
     }
-    .zoom-controls button{
+
+    .zoom-controls button {
         font-size: 12px;
     }
-    .fullscreen img{
+
+    .fullscreen img {
         max-width: 90%;
     }
 }

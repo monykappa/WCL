@@ -1,4 +1,3 @@
-// Preview Image in full screen
 document.addEventListener('DOMContentLoaded', function () {
     const imageInput = document.getElementById('id_image');
     const imagePreview = document.getElementById('imagePreview');
@@ -112,23 +111,31 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
-
-
-// Modal for product details
 document.addEventListener('DOMContentLoaded', function() {
-    // Handle click event on table rows
     document.querySelectorAll('.product-row').forEach(function(row) {
         row.addEventListener('click', function(event) {
-            // Check if the click target is a button or a link within the row
             if (event.target.closest('button') || event.target.closest('a')) {
-                return; // Do nothing if the click was on a button or a link
+                return;
             }
             event.preventDefault();
             var productId = this.getAttribute('data-product');
             fetch('/dashboard/get_product_details/' + productId + '/')
                 .then(response => response.json())
                 .then(data => {
-                    // Populate modal with product data
+                    if (data.error) {
+                        alert(data.error);
+                        return;
+                    }
+
+                    let compositionsDisplay = '';
+                    data.compositions.forEach((comp, index) => {
+                        if (index === 0) {
+                            compositionsDisplay += `${comp.name}`;
+                        } else {
+                            compositionsDisplay += ` + ${comp.name}`;
+                        }
+                    });
+
                     var modalBody = document.getElementById('productModalBody');
                     modalBody.innerHTML = `
                         <div class="row">
@@ -138,23 +145,23 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                             <div class="col-md-4">
                                 <p><strong>Manufacturer:</strong> ${data.manufacturer}</p>
-                                <p><strong>Price:</strong> $${data.price}</p>
                                 <p><strong>Category:</strong> ${data.category}</p>
-                                <p><strong>Quantity Available:</strong> ${data.quantity_available}</p>
-                                <p><strong>Expiry Date:</strong> ${data.expiry_date}</p>
-                                <p><strong>Drug Type:</strong> ${data.drug_type}</p>
+                                <p><strong>Product Type:</strong> ${data.product_type}</p>
+                                <p><strong>Generics:</strong> ${data.generics.map(gen => gen.name).join(', ')}</p>
+                                <p><strong>Created At:</strong> ${data.created_at}</p>
+                                <p><strong>Updated At:</strong> ${data.updated_at}</p>
                             </div>
                             <div class="col-md-4">
+                                <p><strong>Compositions:</strong> ${compositionsDisplay}</p>
+                                <p><strong>Pack Sizes:</strong> ${data.pack_sizes.map(ps => ps.name).join(', ')}</p>
                                 <p><strong>Description:</strong> ${data.description}</p>
                             </div>
                         </div>
                     `;
-                    // Show modal
                     $('#productModal').modal('show');
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    // Handle error scenario (e.g., display error message to user)
                     alert('Product details could not be loaded. Please try again later.');
                 });
         });
@@ -162,4 +169,64 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+
+
+function sortTableByPrice(order) {
+    var table = document.getElementById('productTable').querySelector('tbody');
+    var rows = Array.from(table.querySelectorAll('tr.product-row'));
+
+    rows.sort(function(rowA, rowB) {
+        var priceA = parseFloat(rowA.querySelector('td:nth-child(5)').innerText.replace('$', ''));
+        var priceB = parseFloat(rowB.querySelector('td:nth-child(5)').innerText.replace('$', ''));
+
+        if (order === 'desc') {
+            return priceB - priceA; // Sort in descending order by price
+        } else {
+            return priceA - priceB; // Sort in ascending order by price
+        }
+    });
+
+    // Re-append sorted rows to the table
+    rows.forEach(function(row) {
+        table.appendChild(row);
+    });
+}
+
+function sortTableAlphabetically(order) {
+    var table = document.getElementById('productTable').querySelector('tbody');
+    var rows = Array.from(table.querySelectorAll('tr.product-row'));
+
+    rows.sort(function(rowA, rowB) {
+        var valueA = rowA.querySelector('td:nth-child(3)').innerText.trim(); // Assuming title is in the third column
+        var valueB = rowB.querySelector('td:nth-child(3)').innerText.trim(); // Adjust this index based on your table structure
+
+        if (order === 'desc') {
+            return valueB.localeCompare(valueA); // Sort in descending order alphabetically
+        } else {
+            return valueA.localeCompare(valueB); // Sort in ascending order alphabetically
+        }
+    });
+
+    // Re-append sorted rows to the table
+    rows.forEach(function(row) {
+        table.appendChild(row);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Sort the table initially by price in ascending order
+    sortTableByPrice('asc');
+
+    // Add event listener to the select dropdown for price sorting
+    document.getElementById('sortPrice').addEventListener('change', function() {
+        var sortOrder = this.value;
+        sortTableByPrice(sortOrder);
+    });
+
+    // Add event listener to the select dropdown for alphabetical sorting
+    document.getElementById('sortAlpha').addEventListener('change', function() {
+        var sortOrder = this.value;
+        sortTableAlphabetically(sortOrder);
+    });
+});
 

@@ -1,0 +1,82 @@
+.main-content {
+    margin: 0vh !important;
+}
+
+span.highlight-txt {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+.lower-curve svg {
+    display: block;
+    background-color: #fff !important;
+}
+.upper-curve svg {
+    display: block;
+    background-color: #fff !important;
+}
+.dark-mode .upper-curve svg {
+    background-color: #1c2128 !important;
+}
+.dark-mode .lower-curve svg {
+    background-color: #1c2128 !important;
+}
+.dark-mode .upper-curve path{
+    fill: #3b4858 !important;
+}
+.dark-mode .lower-curve path{
+    fill: #3b4858 !important;
+}
+
+
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px !important;
+    margin: 0px !important;
+}
+
+
+
+p {
+    line-height: 40px !important;
+}
+
+h1 {
+    text-transform: uppercase;
+    font-weight: bold;
+    color: var(-primary-color);
+}
+
+@media (max-width: 767px) {
+    .box {
+        height: 300px !important;
+        width: 250px !important;
+    }
+
+    h1 {
+        margin-top: 5vh;
+        font-size: 24px;
+    }
+
+    .col-md-6 {
+        margin-right: 2vh;
+        padding-right: 0 !important;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    .ceo-ctn .col-md-6 {
+        width: 100%;
+        /* Override col-md-6 width to make it full width */
+        flex: 0 0 100%;
+        /* Override flex property to ensure full width */
+        max-width: 100%;
+        /* Set max-width to ensure full width */
+    }
+
+    h1 {
+        margin-top: 5vh;
+    }
+}

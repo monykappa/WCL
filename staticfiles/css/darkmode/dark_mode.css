@@ -23,6 +23,14 @@ body.dark-mode h3 {
     border: 1px solid #fff !important;
 }
 
+.dark-mode .btn{
+    color:#fff !important;
+}
+.dark-mode .btn:hover{
+    background-color: #fff;
+    color:var(--primary-color) !important;
+}
+
 
 
 .dark-mode .table th {
@@ -55,21 +63,39 @@ body.dark-mode h3 {
 .dark-mode #sidebar .sidebar-header {
     background-color: #1c2128 !important;
 }
+
 /* .dark-mode form{
     background-color: #22272e !important;
 } */
-.dark-mode .form-group{
+.dark-mode .form-group {
     background-color: #22272e !important;
 }
+
 .dark-mode input {
     background-color: #22272e !important;
     color: #fff !important;
 }
 
-.dark-mode tr.product-row:hover{
+.dark-mode tr.product-row:hover {
     background-color: #4e4f51;
 }
 
+.dark-mode .row p {
+    color: #fff !important;
+}
+
+.dark-mode .row strong {
+    color: #fff;
+}
+
+.dark-mode select.form-control {
+    background-color: #22272e !important;
+    color: #fff !important;
+}
+
+.dark-mode .card-body {
+    background-color: #22272e !important;
+}
 
 .dark-mode .modal-content {
     background-color: #22272e !important;
@@ -82,6 +108,11 @@ body.dark-mode h3 {
 
 .dark-mode span {
     color: #fff !important;
+}
+
+
+.dark-mode p.text-view-img{
+    color:grey !important;
 }
 
 .dark-mode #sidebarCollapse {
@@ -145,16 +176,17 @@ body.dark-mode h3 {
     background-color: #3d495a !important;
 }
 
-.dark-mode  .upper-curve svg {
+.dark-mode .upper-curve svg {
     display: block;
     background-color: #3d495a !important;
 }
-.dark-mode section.welcome-ctn{
- background-color: #3d495a  !important;
+
+.dark-mode section.welcome-ctn {
+    background-color: #3d495a !important;
 }
 
-.dark-mode .goal-ctn h1 span{
-    color:#ff0000 !important;
+.dark-mode .goal-ctn h1 span {
+    color: #ff0000 !important;
 }
 
 /* base css */
@@ -189,21 +221,36 @@ body.dark-mode h3 {
     color: #fff !important;
 }
 
-.dark-mode footer{
+.dark-mode footer {
     background-color: #3b4858 !important;
 }
 
 /* product page */
 
-.dark-mode p.productName{
-    color:#fff !important
+.dark-mode p.productName {
+    color: #fff !important
 }
-.dark-mode #product-grid .col-6{
-    border:1px solid gray !important;
+
+.dark-mode #product-grid .col-6 {
+    border: 1px solid gray !important;
 }
 
 /* about us */
 
-.dark-mode .quote{
+.dark-mode .quote {
     background-color: #3d495a !important;
+}
+
+/* Gallery */
+.dark-mode .Frame {
+    border-color: #bfbfbf #dcdcdc #e5e5e5 #dcdcdc;
+    background: #f5f5f5;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#E5E4DF), to(#CDCDC6));
+    background-image: -webkit-linear-gradient(#e5dfdf, #000000);
+    background-image: -moz-linear-gradient(#E5E4DF, #CDCDC6);
+    background-image: -o-linear-gradient(#E5E4DF, #CDCDC6);
+    background-image: linear-gradient(#E5E4DF, #CDCDC6);
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, .6), 0 5px 2px rgba(0, 0, 0, .1), 0 10px 20px rgba(0, 0, 0, .8);
+    position: relative;
+    overflow: hidden;
 }

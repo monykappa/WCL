@@ -10,8 +10,24 @@
 body {
     font-family: "Inter", sans-serif;
     color: #000 !important;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.1s ease, color 0.1s ease;
 }
+
+/* Website custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px; 
+    height: 8px; 
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(6, 180, 255, 0.397);
+    border-radius: 4px; 
+}
+
+::-webkit-scrollbar-track {
+    background-color: rgb(255, 255, 255); 
+}
+
 
 body h1 {
     color: #000 !important;
@@ -52,6 +68,51 @@ a:focus {
 .table thead {
     border: 1px solid #000;
 }
+
+.table .thead-dark th{
+    border: 1px solid #000;
+
+}
+
+.table-container {
+    position: relative;
+}
+
+.table-container .table-responsive {
+    max-height: 500px; /* Set the maximum height of the container */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+/* Fixed table header */
+.table-container thead {
+    position: sticky;
+    top: 0;
+    background-color: #343a40; /* Adjust the background color as needed */
+    z-index: 1000; /* Ensure the header is above other elements */
+}
+
+/* Thin scrollbar track */
+.table-container .table-responsive::-webkit-scrollbar {
+    width: 6px; /* Width of the scrollbar */
+}
+
+/* Thin scrollbar thumb */
+.table-container .table-responsive::-webkit-scrollbar-thumb {
+    background-color: #888; /* Color of the scrollbar thumb */
+    border-radius: 3px; /* Radius of the scrollbar thumb */
+}
+
+/* Thin scrollbar track for Firefox */
+.table-container .table-responsive {
+    scrollbar-width: thin; /* Set the width of the scrollbar */
+}
+
+/* Thin scrollbar thumb for Firefox */
+.table-container .table-responsive {
+    scrollbar-color: #888; /* Color of the scrollbar thumb */
+}
+
+
+
 
 button#darkModeButton {
     background-color: #1c2128 !important;
@@ -171,7 +232,8 @@ h3 {
 #sidebar ul li a {
     margin: 1rem 0;
     padding: 10px 10px 10px 20px;
-    font-size: 1.1em;
+    
+    font-size: 0.90em;
     /* border-bottom: 1px solid rgba(128, 128, 128, 0.418); */
     display: block;
 }
@@ -299,6 +361,11 @@ tr.product-row{
 }
 tr.product-row:hover{
     background-color: #d1dae7;
+}
+
+.row strong{
+    font-weight: bold !important;
+    color:#000;
 }
 
 

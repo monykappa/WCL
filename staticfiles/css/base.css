@@ -7,16 +7,18 @@ body {
   height: 100%;
   position: relative;
 }
-body p{
+
+body p {
   text-align: justify;
   text-justify: inter-word;
   word-spacing: 0.1em;
-  color:#000;
+  color: #000;
 }
 
 :root {
   --primary-font: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --secondary-font: "Inter", sans-serif;
+  --primary-color: #478bbc;
 }
 
 .content-wrapper {
@@ -68,7 +70,7 @@ h6,
 
 ul li a {
   font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-
+  font-size: 14px;
 }
 
 a {
@@ -81,6 +83,7 @@ a,
 a:hover {
   text-decoration: none !important;
 }
+
 
 .hero {
   height: 100vh;
@@ -98,14 +101,16 @@ a:hover {
 .top-bar a {
   color: #666666;
 }
-button.btn-dark-mode{
-  outline:0;
-  border:none;
+
+button.btn-dark-mode {
+  outline: 0;
+  border: none;
   margin-left: 10px;
   border-radius: 2px;
   background-color: #000 !important;
-  color:#fff !important;
+  color: #fff !important;
 }
+
 /*  */
 
 
@@ -115,7 +120,7 @@ button.btn-dark-mode{
   margin-bottom: 0px;
   z-index: 1999;
   position: relative;
-    width: 100% !important;
+  width: 100% !important;
   padding: 1rem;
 }
 
@@ -125,6 +130,7 @@ button.btn-dark-mode{
     padding-bottom: 0.5rem;
   }
 }
+
 
 .site-navbar .toggle-button {
   position: absolute;
@@ -142,11 +148,96 @@ button.btn-dark-mode{
   z-index: 3;
 }
 
+@media (min-width: 991.99px) and (max-width:1080px) {
+  .site-navbar .site-navigation .site-menu>li>a{
+    margin-right:0px !important;
+  }
+  .site-navbar {
+    padding: 1em 0em 1em 0rem !important;
+  }
+
+  .col-1,
+  .col-2,
+  .col-3,
+  .col-4,
+  .col-5,
+  .col-6,
+  .col-7,
+  .col-8,
+  .col-9,
+  .col-10,
+  .col-11,
+  .col-12,
+  .col,
+  .col-auto,
+  .col-sm-1,
+  .col-sm-2,
+  .col-sm-3,
+  .col-sm-4,
+  .col-sm-5,
+  .col-sm-6,
+  .col-sm-7,
+  .col-sm-8,
+  .col-sm-9,
+  .col-sm-10,
+  .col-sm-11,
+  .col-sm-12,
+  .col-sm,
+  .col-sm-auto,
+  .col-md-1,
+  .col-md-2,
+  .col-md-3,
+  .col-md-4,
+  .col-md-5,
+  .col-md-6,
+  .col-md-7,
+  .col-md-8,
+  .col-md-9,
+  .col-md-10,
+  .col-md-11,
+  .col-md-12,
+  .col-md,
+  .col-md-auto,
+  .col-lg-1,
+  .col-lg-2,
+  .col-lg-3,
+  .col-lg-4,
+  .col-lg-5,
+  .col-lg-6,
+  .col-lg-7,
+  .col-lg-8,
+  .col-lg-9,
+  .col-lg-10,
+  .col-lg-11,
+  .col-lg-12,
+  .col-lg,
+  .col-lg-auto,
+  .col-xl-1,
+  .col-xl-2,
+  .col-xl-3,
+  .col-xl-4,
+  .col-xl-5,
+  .col-xl-6,
+  .col-xl-7,
+  .col-xl-8,
+  .col-xl-9,
+  .col-xl-10,
+  .col-xl-11,
+  .col-xl-12,
+  .col-xl,
+  .col-xl-auto {
+    padding-right: 0px !important;
+    padding-left:20px !important;
+  }
+}
+
 @media (max-width: 991.98px) {
   .site-navbar .site-logo {
     float: left;
     position: relative;
   }
+
+
 
   /* .top-bar{
     display: none;
@@ -213,7 +304,7 @@ button.btn-dark-mode{
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
-  background-image: url('{% static "img/icons/icons8-arrow-down-50.png" %}');
+  /* background-image: url('{% static "img/icons/icons8-arrow-down-50.png" %}'); */
   background-size: contain;
   background-repeat: no-repeat;
   width: 20px;
@@ -661,7 +752,20 @@ button.btn-dark-mode{
 
 
 
-footer {}
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(6, 180, 255, 0.397);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgb(255, 255, 255);
+}
+
 
 .footer-ctn {
   max-width: 90% !important;
@@ -676,7 +780,8 @@ p.footer-description {
   color: #fff;
   text-align: justify !important;
   text-justify: inter-word !important;
-  word-spacing: -0.3rem;
+  word-spacing: -0.1rem;
+  line-height: 30px; 
 }
 
 footer.footer {
@@ -689,18 +794,19 @@ footer ul {
   margin-top: 2vh;
 }
 
-footer .row{
-  color:#fff;
+footer .row {
+  color: #fff;
 }
 
-p.text-muted{
+p.text-muted {
+  text-align: center !important;
   font-family: var(--secondary-font);
-  color:#ffffff98 !important;
+  color: #ffffff98 !important;
 }
 
 
-footer .row a{
-  color:#fff;
+footer .row a {
+  color: #fff;
 }
 
 footer li a {
@@ -726,5 +832,5 @@ footer ul.social-media-list li a {
 
 footer ul.social-media-list li a:hover {
   background-color: #d82628;
-  color:#fff;
+  color: #fff;
 }
