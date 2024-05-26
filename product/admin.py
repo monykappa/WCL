@@ -35,6 +35,7 @@ admin.site.register(CompositionUnit, TimeStampedModelAdmin)
 admin.site.register(Generic, TimeStampedModelAdmin)
 admin.site.register(PackSizeUnit, TimeStampedModelAdmin)
 admin.site.register(Composition, TimeStampedModelAdmin)
+admin.site.register(EachComposition, TimeStampedModelAdmin)
 admin.site.register(PackSize, TimeStampedModelAdmin)
 
 

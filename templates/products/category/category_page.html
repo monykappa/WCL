@@ -75,10 +75,16 @@
                     {% else %}
                     + {{ composition.value_without_decimal }}{{ composition.composition_unit }}
                     {% endif %}
-                    {% if forloop.last %}
-                    / {{ product.product_type }}
-                    {% endif %}
                     {% endfor %}
+                    /
+                    {% if product.each_compositions.exists %}
+                    {% for each_composition in product.each_compositions.all %}
+                    {{ each_composition.value_without_decimal }}{{ each_composition.composition_unit }}
+                    {% if not forloop.last %} + {% endif %}
+                    {% endfor %}
+                    {% else %}
+                    {{ product.product_type }}
+                    {% endif %}
                 </li>
             </ul>
         </div>

@@ -150,6 +150,28 @@ class PackSize(TimeStampedModel, SlugMixin):
         unique_together = ('value', 'pack_size_unit',)
 
 
+class EachComposition(TimeStampedModel):
+    value = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    composition_unit = models.ForeignKey(CompositionUnit, on_delete=models.CASCADE, null=True)
+
+    def value_without_decimal(self):
+        if self.value is not None:
+            value_as_string = format(self.value, 'f').rstrip('0').rstrip('.')
+            return value_as_string
+        return ''
+
+    def __str__(self):
+        if self.composition_unit:
+            return f"{self.value_without_decimal()} {self.composition_unit}"
+        else:
+            return self.value_without_decimal()
+
+    @property
+    def name(self):
+        if self.composition_unit:
+            return f"{self.value_without_decimal()} {self.composition_unit.name}"
+        else:
+            return self.value_without_decimal()
 
 
 class Product(TimeStampedModel, SlugMixin):
@@ -164,6 +186,7 @@ class Product(TimeStampedModel, SlugMixin):
     pack_sizes = models.ManyToManyField(PackSize, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     product_type = models.ForeignKey(ProductType, on_delete=models.CASCADE)
+    each_compositions = models.ManyToManyField(EachComposition, blank=True)
 
     def __str__(self):
         return self.name
