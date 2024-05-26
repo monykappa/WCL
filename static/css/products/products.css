@@ -290,7 +290,7 @@ img.img-fluid{
 
 @media(min-width:200px) and (max-width:450px) {
     .modal-content {
-        top: 60%;
+        top: 63%;
         display: block;
         width: 90%;
         max-height: auto;
@@ -325,9 +325,8 @@ img.img-fluid{
 @media(min-width:451px) and (max-width:651.98px) {
     .modal-content {
         display: block;
-        top: 55%;
+        top: 65%;
         width: 90%;
-        /* height: 400px; */
         margin: 0 auto;
         max-height: auto;
     }
@@ -339,8 +338,13 @@ img.img-fluid{
 
     .modal-description {
         width: 100%;
-        padding-right: 1rem;
-    }
+        margin-top: 20px;
+        text-align: left;
+        max-height: 50vh;
+        overflow-y: auto;
+
+    
+}
 
     .modal-description #productName {
         font-size: 22px;
@@ -354,12 +358,20 @@ img.img-fluid{
 @media(min-width:651px) and (max-width:767px) {
     .modal-content {
         display: flex;
-        top: 50%;
+        top: 60%;
         width: 90%;
         /* height: 400px; */
         margin: 0 auto;
         max-height: auto;
     }
+    .modal-description {
+        width: 100%;
+        margin-top: 20px;
+        text-align: left;
+        max-height: 50vh;
+        overflow-y: auto;
+    
+}
 }
 
 @media (max-width: 767px) {
@@ -381,7 +393,7 @@ img.img-fluid{
     }
 
     .modal-content {
-        top: 50%;
+        top: 60%;
         width: 80%;
     }
 
