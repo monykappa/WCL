@@ -176,7 +176,7 @@
                     {% for pack_size in product.pack_sizes.all %}
                     {% if forloop.first %}
                     {{ pack_size.value }}{{ pack_size.pack_size_unit }}
-                    {% else %}
+                    {% else %}`
                     & {{ pack_size.value }}{{ pack_size.pack_size_unit }}
                     {% endif %}
                     {% endfor %}
