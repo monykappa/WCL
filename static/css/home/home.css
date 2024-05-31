@@ -96,7 +96,7 @@ button {
   top: 50%;
   margin: 0 5vh;
   transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.291);
+  background-color: transparent;
   color: white;
   border: none;
   border-radius: 50%;
@@ -117,9 +117,6 @@ button {
   display: block;
   background-color:#83b5d8 !important;
 } 
-button:hover {
-  background-color: red;
-}
 
 section.custom-shape{
   margin-top: 5rem;
